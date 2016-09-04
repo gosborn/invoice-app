@@ -1,0 +1,40 @@
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*
+    - 'bin/**/*'
+    - 'vendor/bundle/**/*'
+    - 'config/*'
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
+  Rails:
+    Enabled: true
+Style/GuardClause:
+  MinBodyLength: 1
+Documentation:
+  Enabled: false
+DotPosition:
+  EnforcedStyle: trailing
+AndOr:
+  Enabled: true
+Metrics/LineLength:
+  Max: 180
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+Metrics/ParameterLists:
+  Severity: refactor
+Metrics/PerceivedComplexity:
+  Severity: refactor
+CyclomaticComplexity:
+  Severity: refactor
+MethodLength:
+  Severity: refactor
+ClassLength:
+  Severity: refactor
+Style/RegexpLiteral:
+  Enabled: false
