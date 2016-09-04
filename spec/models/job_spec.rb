@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Job, type: :model do
   example { expect(subject).to be_an(ActiveRecord::Base) }
 
   describe 'schema' do
@@ -26,27 +26,43 @@ RSpec.describe User, type: :model do
         end
       end
 
-      describe 'email' do
+      describe 'title' do
         example do
-          expect(subject).to have_db_column(:email).
+          expect(subject).to have_db_column(:title).
             of_type(:string)
         end
       end
 
-      describe 'validation' do
-        describe 'email' do
-          let(:model) { User.create(email: 'an email') }
-          example { expect(model).to validate_presence_of(:email) }
-          example { expect(model).to validate_uniqueness_of(:email).case_insensitive }
+      describe 'hourly_rate' do
+        example do
+          expect(subject).to have_db_column(:hourly_rate).
+            of_type(:float)
+        end
+      end
+
+      describe 'tax_rate' do
+        example do
+          expect(subject).to have_db_column(:tax_rate).
+            of_type(:float)
+        end
+      end
+
+      describe 'user_id' do
+        example do
+          expect(subject).to have_db_column(:user_id).of_type(:integer)
         end
       end
     end
-  end
 
-  describe 'associations' do
-    describe 'jobs' do
-      example do
-        expect(subject).to have_many(:jobs)
+    describe 'indices' do
+      describe 'user' do
+        example { expect(subject).to have_db_index(:user_id) }
+      end
+    end
+
+    describe 'associations' do
+      describe 'tracker' do
+        example { expect(subject).to belong_to(:user) }
       end
     end
   end
