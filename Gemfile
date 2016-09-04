@@ -16,12 +16,16 @@ gem 'devise'
 group :development, :test do
   gem 'rubocop'
   gem 'byebug'
-  gem 'pry-rails'
-  gem 'web-console', '~> 2.0'
+  gem 'pry-rails' 
   gem 'spring'
   gem 'rspec-rails'
 end
 
+group :development do
+  gem 'web-console', '~> 2.0'
+end
+
 group :test do
-  gem 'simplecov'
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers'
 end
