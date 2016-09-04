@@ -27,3 +27,13 @@ The app produces invoices for each user, which contain the data of one or more T
 ##Running the app
 
 Navigate to the directory this project has been downloaded to. In the console run `rails c -p 3000` and visit `localhost:3000` in a web browser.
+
+###Code linting
+
+This project uses [Rubocop](https://github.com/bbatsov/rubocop) to check the style of the code. Run by typing `rubocop` in the directory of the project.
+
+###Testing
+
+This project uses rspec for test cases. Run by typing `rspec` to recursively run all test suites.
+
+To examine test coverage, run `COVERAGE=true rspec` to utilize [simplecov](https://github.com/colszowka/simplecov), which generates a coverage report.
