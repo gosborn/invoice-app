@@ -21,4 +21,6 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-gem 'simplecov', :require => false, :group => :test
+group :test do
+  gem 'simplecov'
+end
