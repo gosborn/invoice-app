@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
 
   has_many :jobs
+  has_many :time_entries, through: :jobs
 end

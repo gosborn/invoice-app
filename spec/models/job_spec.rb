@@ -61,8 +61,14 @@ RSpec.describe Job, type: :model do
     end
 
     describe 'associations' do
-      describe 'tracker' do
+      describe 'user' do
         example { expect(subject).to belong_to(:user) }
+      end
+
+      describe 'time_entries' do
+        example do
+          expect(subject).to have_many(:time_entries)
+        end
       end
     end
   end
