@@ -1,15 +1,9 @@
 require 'rails_helper'
 
 describe HomeController do
-
   describe 'GET index' do
-
-    def make_request
-      get :index
-    end
-
     context 'when not logged in' do
-      before { make_request }
+      before { get :index }
 
       it 'returns redirect to login' do
         expect(response).to redirect_to('/users/sign_in')
@@ -17,11 +11,11 @@ describe HomeController do
     end
 
     context 'when logged in' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { create(:user) }
 
       before do
         login_as user
-        make_request
+        get :index
       end
 
       it 'returns 302' do
