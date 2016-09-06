@@ -28,4 +28,7 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'webmock'
+  gem 'capybara'
 end

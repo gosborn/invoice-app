@@ -25,6 +25,10 @@ require 'devise'
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
 end
+
+RSpec.configure do |config|
+  config.include Warden::Test::Helpers
+end
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
