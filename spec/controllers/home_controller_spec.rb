@@ -21,10 +21,6 @@ describe HomeController do
       it 'returns 302' do
         expect(response.status).to eq(302)
       end
-
-      it 'renders correct template' do
-        expect(response).to render_template(:index)
-      end
     end
   end
 end
