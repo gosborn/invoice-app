@@ -16,10 +16,15 @@ module Api
         end
       end
 
+      def destroy
+        Job.find(params[:id]).destroy
+        head :no_content
+      end
+
       private
 
       def job_params
-        params.require(:job).permit(:title, :hourly_rate, :tax_rate)
+        params.require(:job).permit(:id, :title, :hourly_rate, :tax_rate)
       end
     end
   end

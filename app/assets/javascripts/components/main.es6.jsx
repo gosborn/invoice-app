@@ -5,6 +5,7 @@ class Main extends React.Component {
       jobs: []
     }
     this.handleNewRecord = this.handleNewRecord.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   render () {
@@ -15,7 +16,7 @@ class Main extends React.Component {
           <h3>{this.props.user_email}</h3>
         </div>
         <div>
-          <Jobs jobs={this.state.jobs}/>
+          <Jobs jobs={this.state.jobs} handleDelete={this.handleDelete.bind(this)}/>
           <h4>Add a new job</h4>
           <JobForm handleNewRecord={this.handleNewRecord.bind(this)}/>
         </div>
@@ -32,6 +33,24 @@ class Main extends React.Component {
     this.setState({ jobs: newState })
   }
 
+  handleDelete(id) {
+    $.ajax({
+      url: `api/v1/jobs/${id}`,
+      method: 'DELETE',
+      dataType: 'JSON',
+      success: () => {
+        this.removeItemClient(id)
+      }
+    })
+  }
+
+  removeItemClient(id) {
+    var newJobs = this.state.jobs.filter((job) => {
+      return job.id != id;
+    })
+
+    this.setState({ jobs: newJobs })
+  }
 }
 
 Main.propTypes = {
