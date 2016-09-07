@@ -7,7 +7,8 @@ class Main extends React.Component {
           <h3>{this.props.user_email}</h3>
         </div>
         <div>
-          <Job />
+          <Jobs />
+    
           <br />
           <TimeEntry />
         </div>
