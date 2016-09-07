@@ -44,4 +44,4 @@ This project uses [Rubocop](https://github.com/bbatsov/rubocop) to check the sty
 
 This project uses rspec for test cases. Run by typing `rspec` to recursively run all test suites.
 
-To examine test coverage, run `COVERAGE=true rspec` to utilize [simplecov](https://github.com/colszowka/simplecov), which generates a coverage report.
+To examine test coverage, run `COVERAGE=true rspec` to utilize [simplecov](https://github.com/colszowka/simplecov), which generates a coverage report. This is located at coverage/index.html and can be viewed in a web browser.
