@@ -1,17 +1,7 @@
 class Jobs extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      jobs: []
-    }
-  }
-
-  componentDidMount() {
-    $.getJSON('/api/v1/jobs.json', (response) => { this.setState({ jobs: response }) });
-  }
 
   render() {
-    var jobs = this.state.jobs.map((job) => { 
+    var jobs = this.props.jobs.map((job) => { 
       console.log(job)
         return (
           <div key={job.id}>
