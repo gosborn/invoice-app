@@ -17,7 +17,7 @@ module Api
       end
 
       def destroy
-        Job.find(params[:id]).destroy
+        current_user.jobs.where(id: params[:id]).take!.destroy
         head :no_content
       end
 
