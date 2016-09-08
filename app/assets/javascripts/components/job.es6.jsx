@@ -16,7 +16,7 @@ class Job extends React.Component {
       console.log(te)
         return (
           <div key={te.id}>
-            <TimeEntry time_spent={te.time_spent} date={te.date} summary={te.summary}/>
+            <TimeEntry id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
           </div>
         )})
 
@@ -30,7 +30,7 @@ class Job extends React.Component {
         <button onClick={this.props.handleDelete}>Delete</button>
         <button onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
         <h4>Add a new time entry</h4>
-        <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)} />
+        <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)}  />
         <h4>History</h4>
         {display_entries}
       </div>
@@ -58,6 +58,53 @@ class Job extends React.Component {
       this.props.handleUpdate(job);
     }
     this.setState({ editable: !this.state.editable })
+  }
+
+  handleUpdate(time_entry) {
+    $.ajax({
+      url: `api/v1/jobs/${this.props.job.id}/time_entries/${time_entry.id}`,
+      method: 'PUT',
+      data: { time_entry: time_entry },
+      success: () => {
+        this.updateItems(time_entry)
+      }
+    })
+  }
+
+  handleDelete(id) {
+    $.ajax({
+      url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
+      method: 'DELETE',
+      dataType: 'JSON',
+      success: () => {
+        this.removeItemClient(id)
+      }
+    })
+  }
+
+  removeItemClient(id) {
+    var newTimeEntries = this.state.time_entries.filter((te) => {
+      return te.id != id;
+    })
+
+    this.setState({ time_entries: newTimeEntries, editable: false })
+  }
+
+  updateItems(time_entry) {
+    var time_entries = this.state.time_entries.filter((i) => { return i.id != time_entry.id})
+    time_entries.push(time_entry)
+
+    var sorted_entries = time_entries.sort(function(a,b){
+      if (a.time_spent > b.time_spent){
+        return 1
+      }
+      if (b.time_spent > a.time_spent){
+        return -1
+      }
+      return 0
+    })
+
+    this.setState({time_entries: sorted_entries, editable: false})
   }
 }
 
