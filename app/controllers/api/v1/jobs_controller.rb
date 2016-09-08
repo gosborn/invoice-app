@@ -16,6 +16,12 @@ module Api
         end
       end
 
+      def update
+        @job = current_user.jobs.where(id: job_params[:id]).take!
+        @job.update(job_params)
+        render json: @job
+      end
+
       def destroy
         current_user.jobs.where(id: params[:id]).take!.destroy
         head :no_content

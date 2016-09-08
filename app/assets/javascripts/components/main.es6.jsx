@@ -6,6 +6,7 @@ class Main extends React.Component {
     }
     this.handleNewRecord = this.handleNewRecord.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
   }
 
   render () {
@@ -16,7 +17,7 @@ class Main extends React.Component {
           <h3>{this.props.user_email}</h3>
         </div>
         <div>
-          <Jobs jobs={this.state.jobs} handleDelete={this.handleDelete.bind(this)}/>
+          <Jobs jobs={this.state.jobs} handleDelete={this.handleDelete.bind(this)} handleUpdate={this.handleUpdate.bind(this)}/>
           <h4>Add a new job</h4>
           <JobForm handleNewRecord={this.handleNewRecord.bind(this)}/>
         </div>
@@ -50,6 +51,25 @@ class Main extends React.Component {
     })
 
     this.setState({ jobs: newJobs })
+  }
+
+  handleUpdate(job) {
+    console.log("IN MAIN" + job.title)
+    $.ajax({
+      url: `api/v1/jobs/${job.id}`,
+      method: 'PUT',
+      data: { job: job },
+      success: () => {
+        this.updateItems(job)
+      }
+    })
+  }
+
+  updateItems(job) {
+    var jobs = this.state.jobs.filter((i) => { return i.id != job.id})
+    jobs.push(job)
+
+    this.setState({jobs: jobs})
   }
 }
 
