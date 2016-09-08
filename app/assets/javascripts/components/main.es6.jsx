@@ -39,7 +39,7 @@ class Main extends React.Component {
 
   jobsToDisplay() {
     if (this.state.jobToDisplay) {
-      return <Job job={this.state.jobToDisplay} handleDelete={this.handleDelete.bind(this, this.state.jobToDisplay.id)} handleUpdate={this.handleUpdate.bind(this)}/>
+      return <Job key={this.state.jobToDisplay.id} job={this.state.jobToDisplay} handleDelete={this.handleDelete.bind(this, this.state.jobToDisplay.id)} handleUpdate={this.handleUpdate.bind(this)}/>
     }
 
     return (
@@ -57,13 +57,14 @@ class Main extends React.Component {
     console.log(this.state)
   }
 
+
   componentDidMount() {
     $.getJSON('/api/v1/jobs.json', (response) => { this.setState({ jobs: response }) });
   }
 
   handleNewRecord(job) {
     var newState = this.state.jobs.concat(job);
-    this.setState({ jobs: newState })
+    this.setState({ jobs: newState, jobToDisplay: job })
     console.log(this.state)
   }
 
