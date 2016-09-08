@@ -5,9 +5,7 @@ class Jobs extends React.Component {
       console.log(job)
         return (
           <div key={job.id}>
-            <h3>{job.title}</h3>
-            <Job job={job}/>
-            <button onClick={this.handleDelete.bind(this, job.id)}>Delete</button>
+            <Job job={job} handleDelete={this.handleDelete.bind(this, job.id)} handleUpdate={this.handleUpdate.bind(this)}/>
           </div>
         ) 
     });
@@ -22,5 +20,10 @@ class Jobs extends React.Component {
 
   handleDelete(id) {
     this.props.handleDelete(id);
+  }
+
+  handleUpdate(job2) {
+    console.log("in JOBS " + job2.title)
+    this.props.handleUpdate(job2)
   }
 }

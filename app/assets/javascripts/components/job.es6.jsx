@@ -1,12 +1,42 @@
 class Job extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      editable: false
+    }
+  }
   render () {
+    var title = this.state.editable ? <input type='text' ref='title' defaultValue={this.props.job.title} />: <h3>Title: {this.props.job.title}</h3>
+    var hourly_rate = this.state.editable ? <input type='text' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} /> : <p> Hourly rate: {this.props.job.hourly_rate}</p>; 
+    var tax_rate = this.state.editable ? <input type='text' ref='tax_rate' defaultValue={this.props.job.tax_rate} /> : <p>Tax Rate: {this.props.job.tax_rate}</p>; 
+
     return (
       <div>
-        <div>Title: {this.props.job.title}</div>
-        <div>Hourly Rate: {this.props.job.hourly_rate}</div>
-        <div>Tax Rate: {this.props.job.tax_rate}</div>
+        {title}
+        {hourly_rate}
+        {tax_rate}
+        <button onClick={this.props.handleDelete}>Delete</button>
+        <button onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
       </div>
     );
+  }
+
+  handleEdit() {
+    if(this.state.editable) {
+      var title = this.refs.title.value;
+      console.log(title)
+      var hourly_rate = this.refs.hourly_rate.value;
+      var tax_rate = this.refs.tax_rate.value;
+      var id = this.props.job.id;
+      var job2 = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
+      console.log(title)
+      console.log(job2)
+
+
+
+      this.props.handleUpdate(job2);
+    }
+    this.setState({ editable: !this.state.editable })
   }
 }
 
