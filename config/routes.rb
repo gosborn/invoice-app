@@ -15,8 +15,9 @@ Rails.application.routes.draw do
 
   namespace :api, api_options do
     namespace :v1 do
-      resources :jobs
-      resources :time_entries
+      resources :jobs do
+        resources :time_entries
+      end
     end
   end
 end
