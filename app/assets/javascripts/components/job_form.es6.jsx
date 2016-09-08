@@ -66,6 +66,4 @@ class JobForm extends React.Component {
       hourly_rate: '',
     }
   }
-
-
 }

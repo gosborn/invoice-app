@@ -5,6 +5,7 @@ class Job extends React.Component {
       editable: false
     }
   }
+
   render () {
     var title = this.state.editable ? <input type='text' ref='title' defaultValue={this.props.job.title} />: <h3>Title: {this.props.job.title}</h3>
     var hourly_rate = this.state.editable ? <input type='text' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} /> : <p> Hourly rate: {this.props.job.hourly_rate}</p>; 
@@ -24,17 +25,11 @@ class Job extends React.Component {
   handleEdit() {
     if(this.state.editable) {
       var title = this.refs.title.value;
-      console.log(title)
       var hourly_rate = this.refs.hourly_rate.value;
       var tax_rate = this.refs.tax_rate.value;
       var id = this.props.job.id;
-      var job2 = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
-      console.log(title)
-      console.log(job2)
-
-
-
-      this.props.handleUpdate(job2);
+      var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
+      this.props.handleUpdate(job);
     }
     this.setState({ editable: !this.state.editable })
   }
