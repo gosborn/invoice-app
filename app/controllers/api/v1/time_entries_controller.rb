@@ -17,7 +17,7 @@ module Api
       end
 
       def update
-        @time_entry = current_user.time_entries.where(id: time_entry_params[:id]).take!
+        @time_entry = current_job.time_entries.where(id: time_entry_params[:id]).take!
         @time_entry.update(time_entry_params)
         render json: @time_entry
       end
