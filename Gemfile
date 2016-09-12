@@ -14,6 +14,9 @@ gem 'react-rails'
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.6'
 
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+
 group :development, :test do
   gem 'rubocop'
   gem 'byebug'
