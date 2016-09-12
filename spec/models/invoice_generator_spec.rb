@@ -43,7 +43,7 @@ RSpec.describe InvoiceGenerator, type: :model do
   let(:end_date) { '16/10/2016' }
 
   let(:invoice_generator) do
-    InvoiceGenerator.new(params, user)
+    InvoiceGenerator.new(params)
   end
 
   describe 'invoice' do
