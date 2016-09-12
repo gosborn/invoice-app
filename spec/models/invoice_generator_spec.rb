@@ -17,7 +17,7 @@ RSpec.describe InvoiceGenerator, type: :model do
       date: '11/10/2016',
       job: job,
       summary: 'a job',
-      time_spent: 100
+      time_spent: 100.0
     )
   end
 
@@ -27,7 +27,7 @@ RSpec.describe InvoiceGenerator, type: :model do
       date: '15/10/2016',
       job: job,
       summary: 'a different job',
-      time_spent: 200
+      time_spent: 200.0
     )
   end
 
@@ -51,18 +51,18 @@ RSpec.describe InvoiceGenerator, type: :model do
       expect(invoice_generator.invoice).to eql(
         {
           job: job.title,
-          date_range: '01/10/2016 - 01/16/2016',
-          sub_total: 500,
-          tax: 100,
-          total: 600,
+          date_range: 'October 01, 2016 - October 16, 2016',
+          sub_total: '$500.00',
+          tax: '$100.00',
+          total: '$600.00',
           time_entries: [
             {
-              date: '01/11/2016',
+              date: 'October 11, 2016',
               summary: 'a job',
               time_spent: 100
             },
             {
-              date: '01/15/2016',
+              date: 'October 15, 2016',
               summary: 'a different job',
               time_spent: 200
             }
