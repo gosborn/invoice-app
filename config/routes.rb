@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   namespace :api, api_options do
     namespace :v1 do
+      resources :invoices, only: [:create, :index]
       resources :jobs do
         resources :time_entries
       end

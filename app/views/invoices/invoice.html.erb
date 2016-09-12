@@ -1,0 +1,9 @@
+<h1><%= @invoice.invoice[:job] %></h1>
+
+<h2><%=@invoice.invoice[:date_range] %></h2>
+
+<% @invoice.time_entries.each do |te|%>
+  <p>Date: <%= te.date %> </p>
+  <p>Summary: <%= te.summary %></p>
+  <p>Time Spent: <%= te.time_spent %></p>
+<% end %>
