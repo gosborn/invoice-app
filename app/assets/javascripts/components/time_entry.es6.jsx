@@ -9,18 +9,22 @@ class TimeEntry extends React.Component {
 
   render () {
 
-    var time_spent = this.state.editable ? <input type='text' ref='time_spent' defaultValue={this.props.time_spent} />: <h3>time_spent: {this.props.time_spent}</h3>
-    var date = this.state.editable ? <input type='text' ref='date' defaultValue={this.props.date} /> : <p> Date: {this.props.date}</p>; 
-    var summary = this.state.editable ? <input type='text' ref='summary' defaultValue={this.props.summary} /> : <p>Summary: {this.props.summary}</p>; 
+    var time_spent = this.state.editable ? <input type='number' ref='time_spent' defaultValue={this.props.time_spent} />: <p>{this.props.time_spent}</p>
+    var date = this.state.editable ? <input type='date' ref='date' defaultValue={this.props.date} /> : <p>{this.props.date}</p>; 
+    var summary = this.state.editable ? <input type='text' ref='summary' defaultValue={this.props.summary} /> : <p>{this.props.summary}</p>; 
     
     return (
-      <div>
-        <div>{time_spent}</div>
-        <div>{date}</div>
-        <div>{summary}</div>
-        <button onClick={this.props.handleDelete}>Delete</button>
-        <button onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
-      </div>
+      <tr>
+          <td>{date}</td>
+          <td>{time_spent}</td>
+          <td>{summary}</td>
+          <td>
+          <div className="btn-group btn-group-sm" role="group" aria-label="...">
+            <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
+            <button className="btn btn-danger" onClick={this.props.handleDelete}>Delete</button>
+            </div>
+          </td>
+      </tr>
     );
   }
 

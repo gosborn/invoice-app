@@ -16,7 +16,7 @@ class TimeEntryForm extends React.Component {
           </input>
         </div>
         <div className='form-group'>
-          <input type='text' className='form-control'
+          <input type='date' className='form-control'
                  placeholder='date' name='date'
                  value={this.state.date} onChange={this.handleChange}>
           </input>

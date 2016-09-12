@@ -8,31 +8,63 @@ class Job extends React.Component {
   }
 
   render () {
-    var title = this.state.editable ? <input type='text' ref='title' defaultValue={this.props.job.title} />: <h3>Title: {this.props.job.title}</h3>
-    var hourly_rate = this.state.editable ? <input type='text' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} /> : <p> Hourly rate: {this.props.job.hourly_rate}</p>; 
-    var tax_rate = this.state.editable ? <input type='text' ref='tax_rate' defaultValue={this.props.job.tax_rate} /> : <p>Tax Rate: {this.props.job.tax_rate}</p>; 
+    var title = this.state.editable ? <div><strong>Title: </strong><input type='text' ref='title' defaultValue={this.props.job.title} /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
+    var hourly_rate = this.state.editable ? <input type='text' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} /> : <span> {this.props.job.hourly_rate}</span>; 
+    var tax_rate = this.state.editable ? <input type='text' ref='tax_rate' defaultValue={this.props.job.tax_rate} /> : <span> {this.props.job.tax_rate}</span>; 
 
     var time_entries = this.state.time_entries.map((te) => { 
-      console.log(te)
         return (
-          <div key={te.id}>
-            <TimeEntry id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
-          </div>
+          <TimeEntry key={te.id} id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
         )})
 
     var display_entries = time_entries.length > 0 ? time_entries : "No entries yet!"
 
     return (
       <div>
-        {title}
-        {hourly_rate}
-        {tax_rate}
-        <button onClick={this.props.handleDelete}>Delete</button>
-        <button onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
-        <h4>Add a new time entry</h4>
+        <table>
+          <tr>
+            <td>
+              {title}
+            </td>
+            <td>
+              <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> } </button>
+                <button className="btn btn-danger" onClick={this.props.handleDelete}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td>
+              <strong>Hourly Rate: </strong>{hourly_rate}
+            </td>
+            </tr>
+            <tr>
+            <td>
+              <strong>Tax Rate: </strong>{tax_rate}
+            </td>
+          </tr>
+        </table>  
+
+        <h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a new time entry</h4>
         <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)}  />
-        <h4>History</h4>
-        {display_entries}
+        <h3 className="sub-header">Time Entries</h3>
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time Spent (min)</th>
+                <th>Summary</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {display_entries}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
