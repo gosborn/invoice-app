@@ -65,9 +65,6 @@ class Job extends React.Component {
           </div>
         </form>
 
-
-
-
         <h3 className="sub-header">Time Entries</h3>
         <div className="table-responsive">
           <table className="table table-striped">
