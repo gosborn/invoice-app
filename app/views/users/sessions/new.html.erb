@@ -1,0 +1,13 @@
+<div class='container'>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-signin'}) do |f| %>
+    <h3 class="form-signin-heading">Welcome to Invoice App!</h2>
+      <%= f.label :email, class: "sr-only" %>
+      <%= f.email_field :email, autofocus: true, placeholder: 'Email', class: "form-control" %>
+      <%= f.label :password, class: "col-sm-2 sr-only" %>
+      <%= f.password_field :password, autocomplete: "off", placeholder: 'Password', class: "form-control" %>
+      <%= f.submit "Sign in", class: 'btn btn-lg btn-primary btn-block' %>
+    <div class="form-group">
+      <%= render "users/shared/links" %>
+    </div>
+  <% end %>
+</div>

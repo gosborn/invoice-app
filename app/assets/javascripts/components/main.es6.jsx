@@ -44,7 +44,6 @@ class Main extends React.Component {
 
     return (
       <div>
-        <h2>Welcome to Invoice App!</h2>
         <h4>Select a job from the sidebar at left or add a new job below.</h4>
         <JobForm handleNewRecord={this.handleNewRecord.bind(this)}/> 
       </div>
