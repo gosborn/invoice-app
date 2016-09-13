@@ -39,7 +39,7 @@ class Main extends React.Component {
 
   jobsToDisplay() {
     if (this.state.jobToDisplay) {
-      return <Job key={this.state.jobToDisplay.id} job={this.state.jobToDisplay} handleDelete={this.handleDelete.bind(this, this.state.jobToDisplay.id)} handleUpdate={this.handleUpdate.bind(this)}/>
+      return <Job key={this.state.jobToDisplay.id} id={this.state.jobToDisplay.id} job={this.state.jobToDisplay} handleDelete={this.handleDelete.bind(this, this.state.jobToDisplay.id)} handleUpdate={this.handleUpdate.bind(this)}/>
     }
 
     return (
