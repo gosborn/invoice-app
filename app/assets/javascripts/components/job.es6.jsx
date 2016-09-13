@@ -49,6 +49,25 @@ class Job extends React.Component {
 
         <h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a new time entry</h4>
         <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)}  />
+
+        <form className='form-inline' action="/api/v1/invoices" method="GET">
+          <div className="input-daterange" data-behaviour="datepicker" id="datepicker" data-date-format="dd/mm/yyyy">
+             <input type='text' name='invoice[start_date]' placeholder='Start Date' className='form-control'></input>
+             <input type='text' name='invoice[end_date]' placeholder='End Date' className='form-control'></input>
+          </div>
+          <div className='form-group'>
+            <input type="hidden" name="invoice[job_id]" value={this.props.job.id}>
+            </input>
+          </div>
+          <div className='form-group'>
+            <input type='submit' className='btn btn-primary'>
+            </input>
+          </div>
+        </form>
+
+
+
+
         <h3 className="sub-header">Time Entries</h3>
         <div className="table-responsive">
           <table className="table table-striped">
@@ -69,12 +88,28 @@ class Job extends React.Component {
     );
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    debugger
+    $.post('/api/v1/invoices',
+      { invoice: {start_date: this.refs.start_date.value, end_date: this.refs.end_date.value, job_id: this.props.id } },
+      function(data) {
+        debugger
+        this.props.handleNewRecord(data)
+        this.setState(this.blankState());
+      }.bind(this),
+      'JSON'
+    );
+  }
+
+
   handleNewRecord(time_entry){
     var newState = this.state.time_entries.concat(time_entry);
     this.setState({ time_entries: newState, editable: false })
   }
 
   componentDidMount(){
+    $('[data-behaviour~=datepicker]').datepicker();
     $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
         this.setState({editable: false, time_entries: response})
       })

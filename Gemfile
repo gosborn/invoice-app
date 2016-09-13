@@ -16,6 +16,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'rubocop'
