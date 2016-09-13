@@ -8,28 +8,30 @@ class JobForm extends React.Component {
 
   render() {
     return(
-      <form className='form-inline' onSubmit={this.handleSubmit}>
-        <div className='form-group'>
+      <form className='form' onSubmit={this.handleSubmit}>
+        <div className='form-group' id='title_form'>
           <input type='text' className='form-control'
                  placeholder='Title' name='title'
                  value={this.state.title} onChange={this.handleChange}>
           </input>
         </div>
-        <div className='form-group'>
+        <div className='input-group' id='hourly_rate_group'>
+          <span className="input-group-addon" id="basic-addon1">$</span>
           <input type='number' className='form-control'
-                 placeholder='hourly rate' name='hourly_rate'
-                 value={this.state.hourly_rate} onChange={this.handleChange}>
+                 placeholder='Hourly rate' name='hourly_rate'
+                 value={this.state.hourly_rate} min="0" onChange={this.handleChange}>
           </input>
         </div>
-        <div className='form-group'>
+        <div className='input-group' id='tax_rate_group'>
           <input type='number' className='form-control'
                  placeholder='Tax rate' name='tax_rate'
-                 value={this.state.tax_rate} onChange={this.handleChange}>
+                 value={this.state.tax_rate} min="0" onChange={this.handleChange}>
           </input>
+          <span className="input-group-addon" id="basic-addon2">%</span>
         </div>
         <div className='form-group'>
-          <input type='submit' className='btn btn-primary'
-                 disabled={!this.valid()}>
+          <input type='submit' className='btn btn-primary' id='new_job_button'
+                 disabled={!this.valid()} value='Add a new job'>
           </input>
         </div>
       </form>

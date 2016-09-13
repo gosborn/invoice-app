@@ -12,7 +12,7 @@ class Main extends React.Component {
   render () {
     var jobs = this.state.jobs.map((job) => { 
         return (
-          <li key={job.id}><a href="#" onClick={(e) => this.handleClick(e, job)}>{job.title}</a></li>
+          <li key={job.id}><a href="#" onClick={(e) => this.handleClick(e, job)}><strong>{job.title}</strong></a></li>
         ) 
     });
 
@@ -22,8 +22,9 @@ class Main extends React.Component {
           <div className="row">
             <div className="col-sm-3 col-md-2 sidebar">
               <ul className="nav nav-sidebar">
-                <li className="active"><a href="#" onClick={(e) => this.handleClick(e, null)}>Jobs</a></li>
+                <li><a href="#" onClick={(e) => this.handleClick(e, null)}><h4>Your Jobs</h4></a></li>
                 {jobs}
+                <li><a href="#" onClick={(e) => this.handleClick(e, null)}><span className="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new job</a></li>
               </ul> 
             </div>
           </div>
@@ -44,7 +45,7 @@ class Main extends React.Component {
 
     return (
       <div>
-        <h4>Select a job from the sidebar at left or add a new job below.</h4>
+        <h3>Add a new job.</h3>
         <JobForm handleNewRecord={this.handleNewRecord.bind(this)}/> 
       </div>
     ) 
