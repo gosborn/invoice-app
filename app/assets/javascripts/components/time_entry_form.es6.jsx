@@ -11,7 +11,7 @@ class TimeEntryForm extends React.Component {
       <form className='form-inline' onSubmit={this.handleSubmit}>
         <div className='form-group'>
           <input type='number' className='form-control'
-                 placeholder='Time Spent' name='time_spent' min="0"
+                 placeholder='Time Spent (min)' name='time_spent' min="0"
                  value={this.state.time_spent} onChange={this.handleChange}>
           </input>
         </div>
