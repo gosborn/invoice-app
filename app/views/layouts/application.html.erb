@@ -7,28 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" ariexpanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Invoice App</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <% if current_user %>
-            <li><a href="#"><%= current_user.email %></a></li>
-          <% end %>
-
-          <li><%= link_to "Sign out?", destroy_user_session_path, method: :delete %></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
   <%= yield %> 
 </body>
 </html>

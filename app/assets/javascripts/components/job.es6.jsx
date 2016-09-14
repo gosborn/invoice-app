@@ -4,6 +4,7 @@ class Job extends React.Component {
     this.state = {
       editable: false,
       hideInvoice: true,
+      hideTimeEntryForm: true,
       time_entries: []
     }
   }
@@ -48,12 +49,9 @@ class Job extends React.Component {
           </tr>
         </table>  
 
-        <h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a new time entry</h4>
         
-        <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)}  />
-
-        
-        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e).bind(this)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job={this.props.job} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
+        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
+        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
         
         <h3 className="sub-header">Time Entries</h3>
         <div className="table-responsive">
@@ -75,13 +73,22 @@ class Job extends React.Component {
     );
   }
 
+  showTimeEntryForm(e){
+    e.preventDefault();
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: false })
+  }
+
+  onTimeEntryCreation(){
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
+  }
+
   showInvoice(e){
     e.preventDefault();
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: false })
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: false, hideTimeEntryForm: true })
   }
 
   onInvoiceCreation() {
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true })
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
   }
 
   handleSubmit(e) {

@@ -11,7 +11,7 @@ class TimeEntryForm extends React.Component {
       <form className='form-inline' onSubmit={this.handleSubmit}>
         <div className='form-group'>
           <input type='number' className='form-control'
-                 placeholder='Time Spent' name='time_spent'
+                 placeholder='Time Spent' name='time_spent' min="0"
                  value={this.state.time_spent} onChange={this.handleChange}>
           </input>
         </div>
@@ -28,9 +28,10 @@ class TimeEntryForm extends React.Component {
           </input>
         </div>
         <div className='form-group'>
-          <input type='submit' className='btn btn-primary'
-                 disabled={!this.valid()}>
-          </input>
+          <button type='submit' className='btn btn-primary'
+                 disabled={!this.valid()}>Add Entry
+          </button>
+          <button type="button" className="btn btn-default" onClick={this.props.onTimeEntryCreation}>Cancel</button>
         </div>
       </form>
     );
@@ -43,6 +44,7 @@ class TimeEntryForm extends React.Component {
       function(data) {
         this.props.handleNewRecord(data)
         this.setState(this.blankState());
+        this.props.onTimeEntryCreation();
       }.bind(this),
       'JSON'
     );
