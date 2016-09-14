@@ -10,7 +10,7 @@ module Api
           job_id: @job.id
         })
 
-        render pdf: 'invoice',
+        render pdf: "#{@job.title}_invoice_#{invoice_params[:start_date]}-#{invoice_params[:end_date]}",
                template: 'invoices/invoice.html.erb',
                disposition: 'attachment',
                layout: 'pdf',
