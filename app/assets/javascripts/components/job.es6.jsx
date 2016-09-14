@@ -19,7 +19,7 @@ class Job extends React.Component {
           <TimeEntry key={te.id} id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
         )})
 
-    var display_entries = time_entries.length > 0 ? time_entries : "No entries yet!"
+    var display_entries = time_entries.length > 0 ? time_entries : <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
 
     return (
       <div>

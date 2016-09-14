@@ -98,7 +98,7 @@ class Main extends React.Component {
 
     return (
       <div>
-        <h3>Add a new job.</h3>
+        <h3>Add a new job</h3>
         <JobForm handleNewRecord={this.handleNewRecord.bind(this)}/> 
       </div>
     ) 
