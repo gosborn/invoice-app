@@ -185,6 +185,26 @@ body {
   width: 200px;
 }
 
+.job_edit {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  text-align: right;
+}
+
+#job_edit_title {
+  width: 150px;
+  font-size: 28px;
+}
+
+#job_edit_hourly {
+  width: 93px;
+}
+
+#job_edit_tax{
+  width: 122px;
+
+}
+
 /*pdf specific styling*/
 
 body.pdf {

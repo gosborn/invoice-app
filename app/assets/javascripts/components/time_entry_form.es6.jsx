@@ -28,10 +28,10 @@ class TimeEntryForm extends React.Component {
           </input>
         </div>
         <div className='form-group'>
-          <button type='submit' className='btn btn-primary'
-                 disabled={!this.valid()}>Add Entry
-          </button>
-          <button type="button" className="btn btn-default" onClick={this.props.onTimeEntryCreation}>Cancel</button>
+          <div className="btn-group" role="group" aria-label="...">
+            <button type='submit' className='btn btn-primary'disabled={!this.valid()}>Add Entry</button>
+            <button type="button" className="btn btn-default" onClick={this.props.onTimeEntryCreation}>Cancel</button>
+          </div>
         </div>
       </form>
     );
