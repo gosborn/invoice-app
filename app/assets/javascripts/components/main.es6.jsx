@@ -133,14 +133,17 @@ class Main extends React.Component {
   }
 
   handleDelete(id) {
-    $.ajax({
-      url: `api/v1/jobs/${id}`,
-      method: 'DELETE',
-      dataType: 'JSON',
-      success: () => {
-        this.removeItemClient(id)
-      }
-    })
+    var result = confirm("Are you sure? This will delete the job and all associated entries.")
+    if(result){
+      $.ajax({
+        url: `api/v1/jobs/${id}`,
+        method: 'DELETE',
+        dataType: 'JSON',
+        success: () => {
+          this.removeItemClient(id)
+        }
+      })
+    }
   }
 
   removeItemClient(id) {

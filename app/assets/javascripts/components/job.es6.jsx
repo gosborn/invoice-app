@@ -53,13 +53,15 @@ class Job extends React.Component {
         {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
         {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
         
+
         <h3 className="sub-header">Time Entries</h3>
+
         <div className="table-responsive">
           <table className="table table-striped">
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Time Spent (min)</th>
+                <th>Time Spent<br/>(min)</th>
                 <th>Summary</th>
                 <th></th>
               </tr>
@@ -69,6 +71,7 @@ class Job extends React.Component {
             </tbody>
           </table>
         </div>
+        
       </div>
     );
   }
@@ -93,7 +96,6 @@ class Job extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger
     $.post('/api/v1/invoices',
       { invoice: {start_date: this.refs.start_date.value, end_date: this.refs.end_date.value, job_id: this.props.id } },
       function(data) {
@@ -140,14 +142,14 @@ class Job extends React.Component {
   }
 
   handleDelete(id) {
-    $.ajax({
-      url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
-      method: 'DELETE',
-      dataType: 'JSON',
-      success: () => {
-        this.removeItemClient(id)
-      }
-    })
+      $.ajax({
+        url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
+        method: 'DELETE',
+        dataType: 'JSON',
+        success: () => {
+          this.removeItemClient(id)
+        }
+      })
   }
 
   removeItemClient(id) {
