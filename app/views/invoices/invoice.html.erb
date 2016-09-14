@@ -11,11 +11,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @invoice.time_entries.each do |te|%>
+      <% @invoice.invoice[:time_entries].each do |te|%>
         <tr>
-          <td><%= te.date %> </td>
-          <td><%= te.time_spent %></td>
-          <td><%= te.summary %></td>
+          <td><%= te[:date] %> </td>
+          <td><%= te[:time_spent] %></td>
+          <td><%= te[:summary] %></td>
         </tr>
         <% end %>
     </tbody>

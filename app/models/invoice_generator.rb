@@ -34,7 +34,7 @@ class InvoiceGenerator
   end
 
   def formatted_time_entries
-    time_entries.collect do |time_entry|
+    time_entries.sort_by(&:date).reverse.collect do |time_entry|
       {
         date: time_entry.date.strftime("%B %d, %Y"),
         summary: time_entry.summary,
