@@ -172,7 +172,11 @@ class Job extends React.Component {
       return te.id != id;
     })
 
-    this.setState({ time_entries: newTimeEntries, editable: false })
+    var sorted_entries = newTimeEntries.sort(function(a,b){
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    this.setState({ time_entries: sorted_entries, editable: false })
   }
 
   updateItems(time_entry) {
