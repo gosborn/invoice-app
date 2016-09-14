@@ -3,6 +3,8 @@ class Job extends React.Component {
     super()
     this.state = {
       editable: false,
+      hideInvoice: true,
+      hideTimeEntryForm: true,
       time_entries: []
     }
   }
@@ -37,41 +39,29 @@ class Job extends React.Component {
         <table>
           <tr>
             <td>
-              <strong>Hourly Rate: </strong>{hourly_rate}
+              <strong>Hourly Rate: </strong>${hourly_rate}
             </td>
             </tr>
             <tr>
             <td>
-              <strong>Tax Rate: </strong>{tax_rate}
+              <strong>Tax Rate: </strong>{tax_rate}%
             </td>
           </tr>
         </table>  
 
-        <h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a new time entry</h4>
-        <TimeEntryForm job_id={this.props.job.id} handleNewRecord={this.handleNewRecord.bind(this)}  />
-
-        <form className='form-inline' action="/api/v1/invoices" method="GET">
-          <div className="input-daterange" data-behaviour="datepicker" id="datepicker" data-date-format="dd/mm/yyyy">
-             <input type='text' name='invoice[start_date]' placeholder='Start Date' className='form-control'></input>
-             <input type='text' name='invoice[end_date]' placeholder='End Date' className='form-control'></input>
-          </div>
-          <div className='form-group'>
-            <input type="hidden" name="invoice[job_id]" value={this.props.job.id}>
-            </input>
-          </div>
-          <div className='form-group'>
-            <input type='submit' className='btn btn-primary'>
-            </input>
-          </div>
-        </form>
+        
+        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
+        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
+        
 
         <h3 className="sub-header">Time Entries</h3>
+
         <div className="table-responsive">
           <table className="table table-striped">
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Time Spent (min)</th>
+                <th>Time Spent<br/>(min)</th>
                 <th>Summary</th>
                 <th></th>
               </tr>
@@ -81,17 +71,34 @@ class Job extends React.Component {
             </tbody>
           </table>
         </div>
+        
       </div>
     );
   }
 
+  showTimeEntryForm(e){
+    e.preventDefault();
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: false })
+  }
+
+  onTimeEntryCreation(){
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
+  }
+
+  showInvoice(e){
+    e.preventDefault();
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: false, hideTimeEntryForm: true })
+  }
+
+  onInvoiceCreation() {
+    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    debugger
     $.post('/api/v1/invoices',
       { invoice: {start_date: this.refs.start_date.value, end_date: this.refs.end_date.value, job_id: this.props.id } },
       function(data) {
-        debugger
         this.props.handleNewRecord(data)
         this.setState(this.blankState());
       }.bind(this),
@@ -106,7 +113,6 @@ class Job extends React.Component {
   }
 
   componentDidMount(){
-    $('[data-behaviour~=datepicker]').datepicker();
     $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
         this.setState({editable: false, time_entries: response})
       })
@@ -136,14 +142,14 @@ class Job extends React.Component {
   }
 
   handleDelete(id) {
-    $.ajax({
-      url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
-      method: 'DELETE',
-      dataType: 'JSON',
-      success: () => {
-        this.removeItemClient(id)
-      }
-    })
+      $.ajax({
+        url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
+        method: 'DELETE',
+        dataType: 'JSON',
+        success: () => {
+          this.removeItemClient(id)
+        }
+      })
   }
 
   removeItemClient(id) {
