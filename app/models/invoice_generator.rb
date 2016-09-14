@@ -12,6 +12,9 @@ class InvoiceGenerator
   def invoice
     {
       job: @job.title,
+      total_minutes: total_minutes,
+      hourly_rate: "$#{number_with_precision(@job.hourly_rate, precision: 2)}",
+      tax_rate: @job.tax_rate,
       date_range: date_range,
       sub_total: money_format(sub_total),
       tax: money_format(tax),
@@ -29,8 +32,6 @@ class InvoiceGenerator
   def date_range
     "#{Date.parse(@start_date).strftime("%B %d, %Y")} - #{Date.parse(@end_date).strftime("%B %d, %Y")}"
   end
-
-
 
   def formatted_time_entries
     time_entries.collect do |time_entry|
@@ -53,7 +54,7 @@ class InvoiceGenerator
 
   def tax_rate
     # percentage
-    @job.tax_rate
+    @job.tax_rate / 100
   end
 
   def sub_total

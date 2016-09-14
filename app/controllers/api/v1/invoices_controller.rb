@@ -15,7 +15,11 @@ module Api
                disposition: 'attachment',
                layout: 'pdf',
                show_as_html: params.key?('debug'),
-               locals: { invoice: @invoice }
+               locals: { invoice: @invoice },
+               margin:  {   top:               3,                
+                            bottom:            3,
+                            left:              3,
+                            right:             3}
       end
 
       private
