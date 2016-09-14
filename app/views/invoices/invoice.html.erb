@@ -1,9 +1,32 @@
-<h1><%= @invoice.invoice[:job] %></h1>
+<body class='pdf'>
+  <h1><%= @invoice.invoice[:job] %></h1>
+  <h4><%=@invoice.invoice[:date_range] %></h4>
 
-<h2><%=@invoice.invoice[:date_range] %></h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time Spent<br/>(min)</th>
+        <th>Summary</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @invoice.time_entries.each do |te|%>
+        <tr>
+          <td><%= te.date %> </td>
+          <td><%= te.time_spent %></td>
+          <td><%= te.summary %></td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+</body>
 
-<% @invoice.time_entries.each do |te|%>
-  <p>Date: <%= te.date %> </p>
-  <p>Summary: <%= te.summary %></p>
-  <p>Time Spent: <%= te.time_spent %></p>
-<% end %>
+<div id='pdf_totals'> 
+  <h4><strong><%=(@invoice.invoice[:total_minutes]) %> minutes at <%=@invoice.invoice[:hourly_rate] %>/hour</strong></h4>
+
+  <h4><strong>Sub-total: <%=@invoice.invoice[:sub_total] %></strong></h4>
+  <h4><strong>Tax: <%=@invoice.invoice[:tax] %></strong> <em>(Tax Rate: <%= @invoice.invoice[:tax_rate] %>%)</em></h4>
+  <h4><strong>Total: <%=@invoice.invoice[:total] %></strong></h4>
+</div>
+

@@ -11,7 +11,6 @@ body {
   padding-top: 50px;
 }
 
-
 /*
  * Global add-ons
  */
@@ -184,4 +183,16 @@ body {
 
 #new_job_button {
   width: 200px;
+}
+
+/*pdf specific styling*/
+
+body.pdf {
+  margin-top: 0;
+  padding-top: 10px;
+  background-color: white;
+}
+
+#pdf_totals {
+  padding-left: 450px;
 }
