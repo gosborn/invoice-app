@@ -18,7 +18,7 @@ class InvoiceForm extends React.Component {
         </div>
         <div className='form-group'>
           <div className="btn-group" role="group" aria-label="...">
-            <button type='submit' id='invoice_submit' className='btn btn-primary' disabled='true'>Create Invoice</button>
+            <button type='submit' id='invoice_submit' className='btn btn-primary' disabled='true'>Download PDF Invoice</button>
             <button type="button" className="btn btn-default" onClick={this.props.onInvoiceCreation}>Cancel</button>
           </div>
         </div>

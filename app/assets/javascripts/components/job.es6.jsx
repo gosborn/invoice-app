@@ -111,10 +111,15 @@ class Job extends React.Component {
     );
   }
 
-
   handleNewRecord(time_entry){
     var newState = this.state.time_entries.concat(time_entry);
-    this.setState({ time_entries: newState, editable: false })
+
+
+    var sorted_entries = newState.sort(function(a,b){
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    this.setState({ time_entries: sorted_entries, editable: false })
   }
 
   componentDidMount(){
@@ -170,14 +175,8 @@ class Job extends React.Component {
     time_entries.push(time_entry)
 
     var sorted_entries = time_entries.sort(function(a,b){
-      if (a.time_spent > b.time_spent){
-        return 1
-      }
-      if (b.time_spent > a.time_spent){
-        return -1
-      }
-      return 0
-    })
+      return new Date(b.date) - new Date(a.date);
+    });
 
     this.setState({time_entries: sorted_entries, editable: false})
   }
