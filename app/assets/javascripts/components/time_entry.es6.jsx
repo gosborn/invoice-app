@@ -30,9 +30,9 @@ class TimeEntry extends React.Component {
 
   handleEdit() {
     if(this.state.editable) {
-      var time_spent = this.refs.time_spent.value;
-      var date = this.refs.date.value;
-      var summary = this.refs.summary.value;
+      var time_spent = this.refs.time_spent.value || 0;
+      var date = this.refs.date.value || '2000-01-01';
+      var summary = this.refs.summary.value || 'N/A';
       var id = this.props.id;
       var time_entry = { id: id, time_spent: time_spent, date: date, summary: summary }
       this.props.handleUpdate(time_entry);
