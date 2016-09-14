@@ -21,11 +21,16 @@ class TimeEntry extends React.Component {
           <td>
           <div className="btn-group btn-group-sm" role="group" aria-label="...">
             <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
+            {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
             <button className="btn btn-danger" onClick={this.props.handleDelete}>Delete</button>
             </div>
           </td>
       </tr>
     );
+  }
+
+  cancel(){
+    this.setState({ editable: false })
   }
 
   handleEdit() {

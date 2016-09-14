@@ -31,6 +31,7 @@ class Job extends React.Component {
             <td>
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> } </button>
+                {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
                 <button className="btn btn-danger" onClick={this.props.handleDelete}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
               </div>
             </td>
@@ -74,6 +75,10 @@ class Job extends React.Component {
         
       </div>
     );
+  }
+
+  cancel() {
+    this.setState({ editable: false })
   }
 
   showTimeEntryForm(e){
