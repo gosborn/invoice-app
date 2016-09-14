@@ -9,9 +9,9 @@ class TimeEntry extends React.Component {
 
   render () {
 
-    var time_spent = this.state.editable ? <input type='number' ref='time_spent' defaultValue={this.props.time_spent} />: <p>{this.props.time_spent}</p>
-    var date = this.state.editable ? <input type='date' ref='date' defaultValue={this.props.date} /> : <p>{this.props.date}</p>; 
-    var summary = this.state.editable ? <input type='text' ref='summary' defaultValue={this.props.summary} /> : <p>{this.props.summary}</p>; 
+    var time_spent = this.state.editable ? <input className="form-control" type='number' ref='time_spent' defaultValue={this.props.time_spent} />: <p>{this.props.time_spent}</p>
+    var date = this.state.editable ? <input className="form-control" type='date' ref='date' defaultValue={this.props.date} /> : <p>{this.props.date}</p>; 
+    var summary = this.state.editable ? <input className="form-control" type='text' ref='summary' defaultValue={this.props.summary} /> : <p>{this.props.summary}</p>; 
     
     return (
       <tr>
