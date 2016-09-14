@@ -10,9 +10,9 @@ class Job extends React.Component {
   }
 
   render () {
-    var title = this.state.editable ? <div><strong>Title: </strong><input type='text' ref='title' defaultValue={this.props.job.title} /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
-    var hourly_rate = this.state.editable ? <input type='text' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} /> : <span> {this.props.job.hourly_rate}</span>; 
-    var tax_rate = this.state.editable ? <input type='text' ref='tax_rate' defaultValue={this.props.job.tax_rate} /> : <span> {this.props.job.tax_rate}</span>; 
+    var title = this.state.editable ? <div><strong>Title: </strong><input type='text' ref='title' defaultValue={this.props.job.title} required pattern=".*\S+.*" /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
+    var hourly_rate = this.state.editable ? <input type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.hourly_rate}</span>; 
+    var tax_rate = this.state.editable ? <input type='number' ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.tax_rate}</span>; 
 
     var time_entries = this.state.time_entries.map((te) => { 
         return (
@@ -31,6 +31,7 @@ class Job extends React.Component {
             <td>
               <div className="btn-group btn-group-xs" role="group" aria-label="...">
                 <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> } </button>
+                {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
                 <button className="btn btn-danger" onClick={this.props.handleDelete}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
               </div>
             </td>
@@ -74,6 +75,10 @@ class Job extends React.Component {
         
       </div>
     );
+  }
+
+  cancel() {
+    this.setState({ editable: false })
   }
 
   showTimeEntryForm(e){
@@ -120,9 +125,9 @@ class Job extends React.Component {
 
   handleEdit() {
     if(this.state.editable) {
-      var title = this.refs.title.value;
-      var hourly_rate = this.refs.hourly_rate.value;
-      var tax_rate = this.refs.tax_rate.value;
+      var title = this.refs.title.value || 'N/A';
+      var hourly_rate = this.refs.hourly_rate.value || 0;
+      var tax_rate = this.refs.tax_rate.value || 0;
       var id = this.props.job.id;
       var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
       this.props.handleUpdate(job);

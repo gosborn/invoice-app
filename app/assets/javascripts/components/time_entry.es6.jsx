@@ -21,6 +21,7 @@ class TimeEntry extends React.Component {
           <td>
           <div className="btn-group btn-group-sm" role="group" aria-label="...">
             <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
+            {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
             <button className="btn btn-danger" onClick={this.props.handleDelete}>Delete</button>
             </div>
           </td>
@@ -28,11 +29,15 @@ class TimeEntry extends React.Component {
     );
   }
 
+  cancel(){
+    this.setState({ editable: false })
+  }
+
   handleEdit() {
     if(this.state.editable) {
-      var time_spent = this.refs.time_spent.value;
-      var date = this.refs.date.value;
-      var summary = this.refs.summary.value;
+      var time_spent = this.refs.time_spent.value || 0;
+      var date = this.refs.date.value || '2000-01-01';
+      var summary = this.refs.summary.value || 'N/A';
       var id = this.props.id;
       var time_entry = { id: id, time_spent: time_spent, date: date, summary: summary }
       this.props.handleUpdate(time_entry);
