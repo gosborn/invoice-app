@@ -124,7 +124,12 @@ class Job extends React.Component {
 
   componentDidMount(){
     $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
-        this.setState({editable: false, time_entries: response})
+
+      var sorted_entries = response.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
+
+        this.setState({editable: false, time_entries: sorted_entries})
       })
   }
 
