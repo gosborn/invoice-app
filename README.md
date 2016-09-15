@@ -1,6 +1,6 @@
 #Invoice App
 
-##Domain Details
+##Implementation Details
 
 This app utilizes Rails and React (specifically the [react-rails gem](https://github.com/reactjs/react-rails)) to store work history and create invoices for users.  
 
