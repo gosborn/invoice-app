@@ -7,7 +7,7 @@ RSpec.describe InvoiceGenerator, type: :model do
       :job,
       user: user,
       hourly_rate: 100,
-      tax_rate: 0.2
+      tax_rate: 2
     )
   end
 
@@ -33,7 +33,7 @@ RSpec.describe InvoiceGenerator, type: :model do
 
   let(:params) do
     {
-      job_id: job.id,
+      job: job,
       end_date: end_date,
       start_date: start_date
     }
@@ -52,19 +52,22 @@ RSpec.describe InvoiceGenerator, type: :model do
         {
           job: job.title,
           date_range: 'October 01, 2016 - October 16, 2016',
+          hourly_rate: '$100.00',
           sub_total: '$500.00',
-          tax: '$100.00',
-          total: '$600.00',
+          tax_rate: 2.0,
+          tax: '$10.00',
+          total: '$510.00',
+          total_minutes: 300,
           time_entries: [
             {
-              date: 'October 11, 2016',
-              summary: 'a job',
-              time_spent: 100
-            },
-            {
-              date: 'October 15, 2016',
+              date: '2016-10-15',
               summary: 'a different job',
               time_spent: 200
+            },
+            {
+              date: '2016-10-11',
+              summary: 'a job',
+              time_spent: 100
             }
           ]
         }
