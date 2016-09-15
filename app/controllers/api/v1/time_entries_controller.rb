@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TimeEntriesController < ApplicationController
+    class TimeEntriesController < Api::BaseController
       def index
         render json: current_job.time_entries
       end
@@ -18,7 +18,7 @@ module Api
       end
 
       def update
-        @time_entry = current_job.time_entries.where(id: time_entry_params[:id]).take!
+        @time_entry = current_job.time_entries.where(id: params[:id]).take!
         @time_entry.update(time_entry_params)
         render json: @time_entry
       end
@@ -31,7 +31,7 @@ module Api
       private
 
       def time_entry_params
-        params.require(:time_entry).permit(:id, :time_spent, :date, :summary)
+        params.require(:time_entry).permit(:time_spent, :date, :summary)
       end
 
       def current_job
