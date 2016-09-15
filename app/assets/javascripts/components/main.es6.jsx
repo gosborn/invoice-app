@@ -7,12 +7,14 @@ class Main extends React.Component {
     this.handleNewJob = this.handleNewJob.bind(this)
     this.handleJobDelete = this.handleJobDelete.bind(this)
     this.handleJobUpdate = this.handleJobUpdate.bind(this)
+    this.handleResize = this.handleResize.bind(this)
+    this.handleJobClick = this.handleJobClick.bind(this)
   }
 
   componentDidMount() {
-    $.getJSON('/api/v1/jobs.json', (response) => { this.setState({ jobs: response }) })
-    window.addEventListener('resize', this.handleResize.bind(this))
-    window.addEventListener('load', this.handleResize.bind(this))
+    $.getJSON('/api/v1/jobs.json', response => { this.setState({ jobs: response }) })
+    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('load', this.handleResize)
   }
 
   handleResize() {
@@ -23,11 +25,11 @@ class Main extends React.Component {
     return (
       <div>
         <Nav small={this.state.small} user_email={this.props.user_email}
-             jobs={this.state.jobs} handleJobClick={this.handleJobClick.bind(this)}/>
+             jobs={this.state.jobs} handleJobClick={this.handleJobClick} />
         <div>
           <div className='container-fluid'>
             <div className='row'>
-              <Sidebar jobs={this.state.jobs} handleJobClick={this.handleJobClick.bind(this)}/>
+              <Sidebar jobs={this.state.jobs} handleJobClick={this.handleJobClick} />
               <div className='col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main'>
                 <div>
                   {this.jobsToDisplay()}
@@ -48,12 +50,12 @@ class Main extends React.Component {
   jobsToDisplay() {
     if (this.state.jobToDisplay) {
       return <Job key={this.state.jobToDisplay.id} id={this.state.jobToDisplay.id} job={this.state.jobToDisplay}
-                  handleUpdate={this.handleJobUpdate.bind(this)} handleDelete={this.handleJobDelete.bind(this, this.state.jobToDisplay.id)} />
+                  handleUpdate={this.handleJobUpdate} handleDelete={this.handleJobDelete.bind(this, this.state.jobToDisplay.id)} />
     }
     return (
       <div>
         <h3>Add a new job</h3>
-        <JobForm handleNewJob={this.handleNewJob.bind(this)} /> 
+        <JobForm handleNewJob={this.handleNewJob} /> 
       </div>
     ) 
   }
