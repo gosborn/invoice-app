@@ -1,5 +1,14 @@
 class InvoiceForm extends React.Component {
 
+  componentDidMount() {
+    $('#invoice_datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      orientation: 'bottom'
+    }).on('changeDate', () => {
+        $('#invoice_submit').removeAttr('disabled')
+    })
+  }
+
   render() {
     return (
       <form className='form-inline' action='/api/v1/invoices' method='GET' onSubmit={this.props.onInvoiceCreation}>
@@ -20,14 +29,5 @@ class InvoiceForm extends React.Component {
         </div>
       </form>
     )
-  }
-
-  componentDidMount() {
-    $('#invoice_datepicker').datepicker({
-      format: 'yyyy-mm-dd',
-      orientation: 'bottom'
-    }).on('changeDate', () => {
-        $('#invoice_submit').removeAttr('disabled')
-    })
   }
 }
