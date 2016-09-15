@@ -11,8 +11,8 @@ class Job extends React.Component {
 
   render () {
     var title = this.state.editable ? <div><strong>Title: </strong><input className='job_edit' id='job_edit_title' type='text' ref='title' defaultValue={this.props.job.title} required pattern=".*\S+.*" /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
-    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.hourly_rate.toFixed(2)}</span>; 
-    var tax_rate = this.state.editable ? <input className='job_edit' id='job_edit_tax' type='number' ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.tax_rate}</span>; 
+    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" step="any" /> : <span> {this.props.job.hourly_rate.toFixed(2)}</span>; 
+    var tax_rate = this.state.editable ? <input className='job_edit' id='job_edit_tax' type='number' step="any" ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.tax_rate.toFixed(2)}</span>; 
 
     var time_entries = this.state.time_entries.map((te) => { 
         return (

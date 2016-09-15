@@ -24,7 +24,7 @@ class JobForm extends React.Component {
         </div>
         <div className='input-group' id='tax_rate_group'>
           <input type='number' className='form-control'
-                 placeholder='Tax rate' name='tax_rate'
+                 placeholder='Tax rate' name='tax_rate' step="any"
                  value={this.state.tax_rate} min="0" onChange={this.handleChange}>
           </input>
           <span className="input-group-addon" id="basic-addon2">%</span>
