@@ -46,7 +46,7 @@ class JobForm extends React.Component {
     $.post('/api/v1/jobs',
       { job: this.state },
       data => {
-        this.props.handleNewRecord(data)
+        this.props.handleNewJob(data)
         this.setState(this.blankState())
       },
       'JSON'
