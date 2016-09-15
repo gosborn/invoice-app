@@ -18,13 +18,13 @@ class JobForm extends React.Component {
         <div className='input-group' id='hourly_rate_group'>
           <span className="input-group-addon" id="basic-addon1">$</span>
           <input type='number' className='form-control'
-                 placeholder='Hourly rate' name='hourly_rate'
+                 placeholder='Hourly rate' name='hourly_rate' step="any"
                  value={this.state.hourly_rate} min="0" onChange={this.handleChange}>
           </input>
         </div>
         <div className='input-group' id='tax_rate_group'>
           <input type='number' className='form-control'
-                 placeholder='Tax rate' name='tax_rate'
+                 placeholder='Tax rate' name='tax_rate' step="any"
                  value={this.state.tax_rate} min="0" onChange={this.handleChange}>
           </input>
           <span className="input-group-addon" id="basic-addon2">%</span>
