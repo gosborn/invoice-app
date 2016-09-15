@@ -7,7 +7,7 @@ module Api
 
       def create
         @job = Job.new(
-          job_params.merge({ user: current_user })
+          job_params.merge(user: current_user)
         )
 
         if @job.save

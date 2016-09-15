@@ -7,7 +7,7 @@ module Api
 
       def create
         @time_entry = TimeEntry.new(
-          time_entry_params.merge({job: current_job})
+          time_entry_params.merge(job: current_job)
         )
 
         if @time_entry.save
