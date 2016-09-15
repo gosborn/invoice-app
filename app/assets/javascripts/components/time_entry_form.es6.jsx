@@ -50,7 +50,7 @@ class TimeEntryForm extends React.Component {
     $.post(`/api/v1/jobs/${this.props.job_id}/time_entries`,
       { time_entry: this.state },
       data => {
-        this.props.handleNewRecord(data)
+        this.props.handleNewTimeEntry(data)
         this.setState(this.blankState())
         this.props.onTimeEntryCreation()
       },

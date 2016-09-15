@@ -11,23 +11,25 @@ class InvoiceForm extends React.Component {
 
   render() {
     return (
-      <form className='form-inline' action='/api/v1/invoices' method='GET' onSubmit={this.props.onInvoiceCreation}>
-        <div className='form-group'>
-          <div className='input-daterange' id='invoice_datepicker'>
-            <input className='form-control' type='text' name='invoice[start_date]' placeholder='Start Date' />
-            <input className='form-control' type='text' name='invoice[end_date]' placeholder='End Date' />
+      <div id='invoice_form'>
+        <form className='form-inline' action='/api/v1/invoices' method='GET' onSubmit={() => this.props.onInvoiceCreation(true)}>
+          <div className='form-group'>
+            <div className='input-daterange' id='invoice_datepicker'>
+              <input className='form-control' type='text' name='invoice[start_date]' placeholder='Start Date' />
+              <input className='form-control' type='text' name='invoice[end_date]' placeholder='End Date' />
+            </div>
           </div>
-        </div>
-        <div className='form-group'>
-          <input type='hidden' name='invoice[job_id]' value={this.props.job_id} />
-        </div>
-        <div className='form-group'>
-          <div className='btn-group' role='group'>
-            <button className='btn btn-primary' id='invoice_submit' type='submit' disabled='true'>Download PDF Invoice</button>
-            <button className='btn btn-default' type='button' onClick={this.props.onInvoiceCreation}>Cancel</button>
+          <div className='form-group'>
+            <input type='hidden' name='invoice[job_id]' value={this.props.job_id} />
           </div>
-        </div>
-      </form>
+          <div className='form-group'>
+            <div className='btn-group' role='group'>
+              <button className='btn btn-primary' id='invoice_submit' type='submit' disabled='true'>Download PDF Invoice</button>
+              <button className='btn btn-default' type='button' onClick={() => this.props.onInvoiceCreation()}>Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
     )
   }
 }

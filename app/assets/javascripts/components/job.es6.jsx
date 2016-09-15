@@ -9,56 +9,26 @@ class Job extends React.Component {
     }
   }
 
+  componentDidMount() {
+    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, response => {
+      this.sortByDateAndSetState(response)
+    })
+  }
+
+  sortByDateAndSetState(timeEntries) {
+    var sortedByDate = timeEntries.sort((timeEntry1,timeEntry2) => new Date(timeEntry2.date) - new Date(timeEntry1.date))
+    this.setState({time_entries: sortedByDate})
+  }
+
   render () {
-    var title = this.state.editable ? <div><strong>Title: </strong><input className='job_edit' id='job_edit_title' type='text' ref='title' defaultValue={this.props.job.title} required pattern=".*\S+.*" /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
-    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" step="any" /> : <span> {this.showAtLeastTwoDecimals(this.props.job.hourly_rate)}</span>; 
-    var tax_rate = this.state.editable ? <input className='job_edit' id='job_edit_tax' type='number' step="any" ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.showAtLeastTwoDecimals(this.props.job.tax_rate)}</span>; 
-
-    var time_entries = this.state.time_entries.map((te) => { 
-        return (
-          <TimeEntry key={te.id} id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
-        )})
-
-    var display_entries = time_entries.length > 0 ? time_entries : <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
-
     return (
       <div>
-        <table>
-          <tr>
-            <td>
-              {title}
-            </td>
-            <td>
-              <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> } </button>
-                {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
-                <button className="btn btn-danger" onClick={this.props.handleDelete}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-              </div>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td>
-              <strong>Hourly Rate: </strong>${hourly_rate}
-            </td>
-            </tr>
-            <tr>
-            <td>
-              <strong>Tax Rate: </strong>{tax_rate}%
-            </td>
-          </tr>
-        </table>  
-
-        
-        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
-        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
-        
-
-        <h3 className="sub-header">Time Entries</h3>
-
-        <div className="table-responsive">
-          <table className="table table-striped">
+        {this.header()}
+        {this.timeEntryForm()}
+        {this.invoice()}
+        <h3 className='sub-header'>Time Entries</h3>
+        <div className='table-responsive'>
+          <table className='table table-striped'>
             <thead>
               <tr>
                 <th>Date</th>
@@ -68,129 +38,139 @@ class Job extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {display_entries}
+              {this.displayTimeEntries()}
             </tbody>
           </table>
-        </div>
-        
+        </div> 
       </div>
-    );
+    )
   }
 
-  showAtLeastTwoDecimals(num) {
-    return num.toFixed(Math.max(2, (num.toString().split('.')[1] || []).length));
+  header() {
+    if (this.state.editable) {
+      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+    }
+    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                 cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+  }
+
+  handleEdit(refs) {
+    if(this.state.editable) {
+      var title = refs.title.value || 'N/A',
+          hourly_rate = parseFloat(refs.hourly_rate.value) || 0,
+          tax_rate = parseFloat(refs.tax_rate.value) || 0,
+          id = this.props.job.id
+
+      var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
+      this.props.handleUpdate(job)
+    }
+    this.setState({ editable: !this.state.editable })
   }
 
   cancel() {
     this.setState({ editable: false })
   }
 
-  showTimeEntryForm(e){
-    e.preventDefault();
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: false })
+  timeEntryForm() {
+    if (this.state.hideTimeEntryForm) {
+      return ( 
+        <a href='#' onClick={(e) => this.showTimeEntryForm(e)}>
+          <h4><span className='glyphicon glyphicon-plus' />Add A Time Entry</h4>
+        </a>
+      )
+    }
+    return <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.showTimeEntryForm.bind(this)}
+                          handleNewTimeEntry={this.handleNewTimeEntry.bind(this)} />
   }
 
-  onTimeEntryCreation(){
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
+  showTimeEntryForm(e){
+    if (e) { e.preventDefault() }
+    this.setState({ hideTimeEntryForm: !this.state.hideTimeEntryForm })
+  }
+
+  handleNewTimeEntry(timeEntry) {
+    var timeEntriesWithNewEntry = this.state.time_entries.concat(timeEntry);
+    this.sortByDateAndSetState(timeEntriesWithNewEntry)
+  }
+
+  invoice() {
+    if (this.state.hideInvoice) {
+      return (
+        <a href='#' onClick={(e) => this.showInvoice(e)}>
+          <h4><span className='glyphicon glyphicon-save' />Create An Invoice</h4>
+        </a>
+      )
+    }
+    return <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)} />
   }
 
   showInvoice(e){
-    e.preventDefault();
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: false, hideTimeEntryForm: true })
+    e.preventDefault()
+    this.setState({ hideInvoice: false })
   }
 
-  onInvoiceCreation() {
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    $.post('/api/v1/invoices',
-      { invoice: {start_date: this.refs.start_date.value, end_date: this.refs.end_date.value, job_id: this.props.id } },
-      function(data) {
-        this.props.handleNewRecord(data)
-        this.setState(this.blankState());
-      }.bind(this),
-      'JSON'
-    );
-  }
-
-  handleNewRecord(time_entry){
-    var newState = this.state.time_entries.concat(time_entry);
-
-    var sorted_entries = newState.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({ time_entries: sorted_entries, editable: false })
-  }
-
-  componentDidMount(){
-    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
-
-      var sorted_entries = response.sort(function(a,b){
-        return new Date(b.date) - new Date(a.date);
-      });
-
-        this.setState({editable: false, time_entries: sorted_entries})
+  onInvoiceCreation(create) {
+    if (create) {
+      $('#invoice_form').html('<a href="#"><h4>Rendering report, please wait...</h4></a>')
+      this.sleep(7000).then(() => {
+        this.setState({ hideInvoice: true })
       })
-  }
-
-  handleEdit() {
-    if(this.state.editable) {
-      var title = this.refs.title.value || 'N/A';
-      var hourly_rate = parseFloat(this.refs.hourly_rate.value) || 0;
-      var tax_rate = parseFloat(this.refs.tax_rate.value) || 0;
-      var id = this.props.job.id;
-      var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
-      this.props.handleUpdate(job);
+    } else {
+      this.setState({ hideInvoice: true })
     }
-    this.setState({ editable: !this.state.editable })
   }
 
-  handleUpdate(time_entry) {
+  sleep (time) {
+    return new Promise(resolve => setTimeout(resolve, time))
+  }
+
+  displayTimeEntries() {
+    if (this.timeEntries().length > 0) {
+      return this.timeEntries()
+    }
+    return <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
+  }
+
+  timeEntries() {
+    return this.state.time_entries.map(timeEntry =>
+      <TimeEntry key={timeEntry.id} id={timeEntry.id} time_spent={timeEntry.time_spent}
+                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleTimeEntryUpdate.bind(this)}
+                 handleDelete={this.handleTimeEntryDelete.bind(this, timeEntry.id)} />
+    )
+  }
+
+  handleTimeEntryUpdate(timeEntry) {
     $.ajax({
-      url: `api/v1/jobs/${this.props.job.id}/time_entries/${time_entry.id}`,
+      url: `api/v1/jobs/${this.props.job.id}/time_entries/${timeEntry.id}`,
       method: 'PUT',
-      data: { time_entry: time_entry },
+      data: { time_entry: timeEntry },
       success: () => {
-        this.updateItems(time_entry)
+        this.updateTimeEntriesWithNew(timeEntry)
       }
     })
   }
 
-  handleDelete(id) {
-      $.ajax({
-        url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
-        method: 'DELETE',
-        dataType: 'JSON',
-        success: () => {
-          this.removeItemClient(id)
-        }
-      })
+  updateTimeEntriesWithNew(timeEntry) {
+    var timeEntries = this.state.time_entries.filter(oldTimeEntry =>  oldTimeEntry.id != timeEntry.id )
+    timeEntries.push(timeEntry)
+    this.sortByDateAndSetState(timeEntries)
   }
 
-  removeItemClient(id) {
-    var newTimeEntries = this.state.time_entries.filter((te) => {
-      return te.id != id;
+  handleTimeEntryDelete(id) {
+    $.ajax({
+      url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
+      method: 'DELETE',
+      dataType: 'JSON',
+      success: () => {
+        this.removeDeletedTimeEntry(id)
+      }
     })
-
-    var sorted_entries = newTimeEntries.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({ time_entries: sorted_entries, editable: false })
   }
 
-  updateItems(time_entry) {
-    var time_entries = this.state.time_entries.filter((i) => { return i.id != time_entry.id})
-    time_entries.push(time_entry)
-
-    var sorted_entries = time_entries.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({time_entries: sorted_entries, editable: false})
+  removeDeletedTimeEntry(id) {
+    var timeEntriesWithoutOldTimeEntry = this.state.time_entries.filter(timeEntry => timeEntry.id != id)
+    this.sortByDateAndSetState(timeEntriesWithoutOldTimeEntry)
   }
 }
 
@@ -198,4 +178,4 @@ Job.propTypes = {
   title: React.PropTypes.string,
   hourlyRate: React.PropTypes.number,
   taxRate: React.PropTypes.number
-};
+}
