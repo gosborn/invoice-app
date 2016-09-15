@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe InvoiceGenerator, type: :model do
   let(:user) { FactoryGirl.create(:user) }
-  let(:job) do 
+  let(:job) do
     FactoryGirl.create(
       :job,
       user: user,
@@ -47,30 +47,28 @@ RSpec.describe InvoiceGenerator, type: :model do
   end
 
   describe 'invoice' do
-    example do 
+    example do
       expect(invoice_generator.invoice).to eql(
-        {
-          job: job.title,
-          date_range: 'October 01, 2016 - October 16, 2016',
-          hourly_rate: '$100.00',
-          sub_total: '$500.00',
-          tax_rate: 2.0,
-          tax: '$10.00',
-          total: '$510.00',
-          total_minutes: 300,
-          time_entries: [
-            {
-              date: '2016-10-15',
-              summary: 'a different job',
-              time_spent: 200
-            },
-            {
-              date: '2016-10-11',
-              summary: 'a job',
-              time_spent: 100
-            }
-          ]
-        }
+        job: job.title,
+        date_range: 'October 01, 2016 - October 16, 2016',
+        hourly_rate: '$100.00',
+        sub_total: '$500.00',
+        tax_rate: 2.0,
+        tax: '$10.00',
+        total: '$510.00',
+        total_minutes: 300,
+        time_entries: [
+          {
+            date: '2016-10-15',
+            summary: 'a different job',
+            time_spent: 200
+          },
+          {
+            date: '2016-10-11',
+            summary: 'a job',
+            time_spent: 100
+          }
+        ]
       )
     end
   end

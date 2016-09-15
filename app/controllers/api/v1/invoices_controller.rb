@@ -21,11 +21,11 @@ module Api
       end
 
       def invoice
-        InvoiceGenerator.new({
+        InvoiceGenerator.new(
           start_date: invoice_params[:start_date],
           end_date: invoice_params[:end_date],
           job: current_job
-        }).invoice
+        ).invoice
       end
     end
   end
