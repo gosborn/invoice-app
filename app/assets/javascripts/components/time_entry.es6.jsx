@@ -1,43 +1,37 @@
 class TimeEntry extends React.Component {
   constructor() {
     super()
+    this.handleEdit = this.handleEdit.bind(this)
+    this.cancel = this.cancel.bind(this)
     this.state = {
-      editable: false,
-      time_entries: []
+      editable: false
     }
   }
 
   render () {
-    var time_spent = this.state.editable ? <input className="form-control" type='number' ref='time_spent' defaultValue={this.props.time_spent} />: <p>{this.props.time_spent}</p>
-    var date = this.state.editable ? <input className="form-control" type='date' ref='date' defaultValue={this.props.date} /> : <p>{this.props.date}</p>; 
-    var summary = this.state.editable ? <input className="form-control" type='text' ref='summary' defaultValue={this.props.summary} /> : <p>{this.props.summary}</p>; 
-    
-    return (
-      <tr>
-          <td>{date}</td>
-          <td>{time_spent}</td>
-          <td>{summary}</td>
-          <td>
-            <button className="btn btn-sm btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : 'Edit' } </button>
-            {this.state.editable ? <button className="btn btn-sm btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
-            <button className="btn btn-sm btn-danger" onClick={this.props.handleDelete}>Delete</button>
-          </td>
-      </tr>
-    );
+    if (this.state.editable) {
+      return <TimeEntryEditable date={this.props.date} time_spent={this.props.time_spent}
+                                summary={this.props.summary} handleEdit={this.handleEdit}
+                                cancel={this.cancel} handleDelete={this.props.handleDelete} />
+    }
+    return <TimeEntryNonEditable date={this.props.date} time_spent={this.props.time_spent}
+                                 summary={this.props.summary} handleEdit={this.handleEdit.bind(this)}
+                                 handleDelete={this.props.handleDelete} />
   }
 
   cancel(){
     this.setState({ editable: false })
   }
 
-  handleEdit() {
+  handleEdit(refs) {
     if(this.state.editable) {
-      var time_spent = this.refs.time_spent.value || 0;
-      var date = this.refs.date.value || '2000-01-01';
-      var summary = this.refs.summary.value || 'N/A';
-      var id = this.props.id;
+      var time_spent = parseInt(refs.time_spent.value) || 0,
+          date = refs.date.value || '2000-01-01',
+          summary = refs.summary.value || 'N/A',
+          id = this.props.id
+
       var time_entry = { id: id, time_spent: time_spent, date: date, summary: summary }
-      this.props.handleUpdate(time_entry);
+      this.props.handleUpdate(time_entry)
     }
     this.setState({ editable: !this.state.editable })
   }
@@ -47,4 +41,4 @@ TimeEntry.propTypes = {
   time_spent: React.PropTypes.number,
   date: React.PropTypes.string,
   summary: React.PropTypes.string
-};
+}

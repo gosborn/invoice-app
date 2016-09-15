@@ -10,7 +10,7 @@ class TimeEntryForm extends React.Component {
     $('#datepicker').datepicker({
       format: 'yyyy-mm-dd',
       orientation: 'bottom'}).on('changeDate', e => {
-        $('#datepicker').val(e.target.value);
+        $('#datepicker').val(e.target.value)
         this.handleChange(e)
     })
   }
