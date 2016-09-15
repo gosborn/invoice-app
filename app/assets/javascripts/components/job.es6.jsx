@@ -118,7 +118,7 @@ class Job extends React.Component {
 
   onInvoiceCreation(create) {
     if (create) {
-      $('#invoice_form').html('<a href="#"><h4>Rendering report, please wait...</h4></a>')
+      $('#invoice_form').html('<a href="#"><h4>Rendering invoice, please wait...</h4></a>')
       this.sleep(7000).then(() => {
         this.setState({ hideInvoice: true })
       })
