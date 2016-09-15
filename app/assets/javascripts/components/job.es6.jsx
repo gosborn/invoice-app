@@ -7,6 +7,12 @@ class Job extends React.Component {
       hideTimeEntryForm: true,
       time_entries: []
     }
+    this.handleEdit = this.handleEdit.bind(this)
+    this.cancel = this.cancel.bind(this)
+    this.showTimeEntryForm = this.showTimeEntryForm.bind(this)
+    this.handleNewTimeEntry = this.handleNewTimeEntry.bind(this)
+    this.onInvoiceCreation = this.onInvoiceCreation.bind(this)
+    this.handleTimeEntryUpdate = this.handleTimeEntryUpdate.bind(this)
   }
 
   componentDidMount() {
@@ -48,11 +54,11 @@ class Job extends React.Component {
 
   header() {
     if (this.state.editable) {
-      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
-                                cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit}
+                                cancel={this.cancel} handleDelete={this.props.handleDelete} />
     }
-    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
-                                 cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit}
+                                 cancel={this.cancel} handleDelete={this.props.handleDelete} />
   }
 
   handleEdit(refs) {
@@ -80,8 +86,8 @@ class Job extends React.Component {
         </a>
       )
     }
-    return <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.showTimeEntryForm.bind(this)}
-                          handleNewTimeEntry={this.handleNewTimeEntry.bind(this)} />
+    return <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.showTimeEntryForm}
+                          handleNewTimeEntry={this.handleNewTimeEntry} />
   }
 
   showTimeEntryForm(e){
@@ -102,7 +108,7 @@ class Job extends React.Component {
         </a>
       )
     }
-    return <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)} />
+    return <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation} />
   }
 
   showInvoice(e){
@@ -135,7 +141,7 @@ class Job extends React.Component {
   timeEntries() {
     return this.state.time_entries.map(timeEntry =>
       <TimeEntry key={timeEntry.id} id={timeEntry.id} time_spent={timeEntry.time_spent}
-                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleTimeEntryUpdate.bind(this)}
+                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleTimeEntryUpdate}
                  handleDelete={this.handleTimeEntryDelete.bind(this, timeEntry.id)} />
     )
   }
