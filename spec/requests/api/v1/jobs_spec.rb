@@ -172,7 +172,6 @@ describe 'jobs requests', type: :request do
         example { expect { subject }.to change { Job.all.size }.by(-1) }
       end
 
-
       describe 'without valid a valid id' do
         let(:id) { 1000 }
 
