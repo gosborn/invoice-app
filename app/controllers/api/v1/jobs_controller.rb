@@ -1,6 +1,6 @@
 module Api
   module V1
-    class JobsController < ApplicationController
+    class JobsController < Api::BaseController
       def index
         render json: current_user.jobs
       end

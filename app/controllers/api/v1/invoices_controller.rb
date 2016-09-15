@@ -1,7 +1,6 @@
 module Api
   module V1
-    class InvoicesController < ApplicationController
-
+    class InvoicesController < Api::BaseController
       def index
         render pdf: "#{current_job.title}_invoice_#{invoice_params[:start_date]}-#{invoice_params[:end_date]}",
                template: 'invoices/invoice.html.erb',

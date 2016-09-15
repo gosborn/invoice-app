@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TimeEntriesController < ApplicationController
+    class TimeEntriesController < Api::BaseController
       def index
         render json: current_job.time_entries
       end

@@ -1,6 +1,8 @@
 module Api
   class BaseController < ApplicationController
 
+    before_action :authenticate_user!
+
     rescue_from ActionController::ParameterMissing, with: :missing_param
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
