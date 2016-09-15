@@ -28,6 +28,7 @@ class InvoiceForm extends React.Component {
 
   componentDidMount(){
     $('[data-behaviour~=datepicker]').datepicker({
+      format: "yyyy-mm-dd",
       orientation: 'bottom'}).on('changeDate', function(e) {
         $("#invoice_submit").removeAttr("disabled")
     });
