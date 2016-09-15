@@ -18,7 +18,7 @@ module Api
       end
 
       def update
-        @job = current_user.jobs.where(id: job_params[:id]).take!
+        @job = current_user.jobs.where(id: params[:id]).take!
         @job.update(job_params)
         render json: @job
       end
@@ -31,7 +31,7 @@ module Api
       private
 
       def job_params
-        params.require(:job).permit(:id, :title, :hourly_rate, :tax_rate)
+        params.require(:job).permit(:title, :hourly_rate, :tax_rate)
       end
     end
   end
