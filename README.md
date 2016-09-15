@@ -1,6 +1,12 @@
 #Invoice App
 
-This app utilizes Rails and React (specifically the [react-rails gem](https://github.com/reactjs/react-rails)) to store work history and create invoices for users.
+##Domain Details
+
+This app utilizes Rails and React (specifically the [react-rails gem](https://github.com/reactjs/react-rails)) to store work history and create invoices for users.  
+
+The invoices are created with the [wicked_pdf gem](https://github.com/mileszs/wicked_pdf), which interfaces with [wkhtmltopdf](http://wkhtmltopdf.org/) to generate PDFs from html templates.
+
+The app is mainly styled with [Bootstrap V3](http://getbootstrap.com/) for layouts and responsiveness. [Bootstrap Datepicker](https://github.com/eternicode/bootstrap-datepicker) is used for all date selections.
 
 ##Domain Details
 
@@ -26,11 +32,17 @@ The app produces invoices for each user, which contain the data of one or more T
 
 ##Running the app
 
-Navigate to the directory this project has been downloaded to.
+This project requires ruby to be installed. If not, follow directions at https://www.ruby-lang.org/en/documentation/installation/ to install for your machine.
 
-Run pending migrations and seed the database by running `rake db:setup` in the command line.
+Bundler is also required. Directions for installation are located at: http://bundler.io/.
 
-Via the command line run `rails c -p 3000` and visit `localhost:3000` in a web browser.
+Navigate to the directory of the project.
+
+Run `$ bundle install` in the command line to install the dependencies for the project.
+
+Run pending migrations and seed the database by running `$ rake db:setup` in the command line.
+
+Via the command line run `$ rails c -p 3000` and visit `localhost:3000` in a web browser.
 
 ###Authentication
 
