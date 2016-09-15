@@ -129,7 +129,6 @@ class Main extends React.Component {
   handleNewRecord(job) {
     var newState = this.state.jobs.concat(job);
     this.setState({ jobs: newState, jobToDisplay: job })
-    console.log(this.state)
   }
 
   handleDelete(id) {

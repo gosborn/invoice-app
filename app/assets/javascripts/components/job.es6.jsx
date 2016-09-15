@@ -11,7 +11,7 @@ class Job extends React.Component {
 
   render () {
     var title = this.state.editable ? <div><strong>Title: </strong><input className='job_edit' id='job_edit_title' type='text' ref='title' defaultValue={this.props.job.title} required pattern=".*\S+.*" /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
-    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.hourly_rate}</span>; 
+    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.hourly_rate.toFixed(2)}</span>; 
     var tax_rate = this.state.editable ? <input className='job_edit' id='job_edit_tax' type='number' ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.props.job.tax_rate}</span>; 
 
     var time_entries = this.state.time_entries.map((te) => { 
@@ -113,7 +113,6 @@ class Job extends React.Component {
 
   handleNewRecord(time_entry){
     var newState = this.state.time_entries.concat(time_entry);
-
 
     var sorted_entries = newState.sort(function(a,b){
       return new Date(b.date) - new Date(a.date);
