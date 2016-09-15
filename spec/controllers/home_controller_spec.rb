@@ -12,14 +12,14 @@ describe HomeController do
 
     context 'when logged in' do
       let(:user) { create(:user) }
+      login_as { user }
 
       before do
-        login_as user
         get :index
       end
 
-      it 'returns 302' do
-        expect(response.status).to eq(302)
+      it 'returns 200' do
+        expect(response.status).to eq(200)
       end
     end
   end
