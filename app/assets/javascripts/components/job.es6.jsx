@@ -9,42 +9,29 @@ class Job extends React.Component {
     }
   }
 
-  render () {
-    var time_entries = this.state.time_entries.map((te) => { 
-        return (
-          <TimeEntry key={te.id} id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
-        )})
+  componentDidMount() {
+    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
+      var sorted_entries = response.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      })
 
-    var display_entries = time_entries.length > 0 ? time_entries : <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
+        this.setState({time_entries: sorted_entries})
+      })
+  }
 
-    return (
-      <div>
-        {this.showHeader()}
-        
-        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
-        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
-        
+  timeEntries() {
+    return this.state.time_entries.map(timeEntry =>
+      <TimeEntry key={timeEntry.id} id={timeEntry.id} time_spent={timeEntry.time_spent}
+                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleUpdate.bind(this)}
+                 handleDelete={this.handleDelete.bind(this, timeEntry.id)} />
+    )
+  }
 
-        <h3 className="sub-header">Time Entries</h3>
-
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time Spent<br/>(min)</th>
-                <th>Summary</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {display_entries}
-            </tbody>
-          </table>
-        </div>
-        
-      </div>
-    );
+  displayTimeEntries() {
+    if (this.timeEntries().length > 0) {
+      return this.timeEntries()
+    }
+    return <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
   }
 
   showHeader() {
@@ -55,6 +42,36 @@ class Job extends React.Component {
     return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
                                  cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
   }
+
+  render () {
+    return (
+      <div>
+        {this.showHeader()}
+
+        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
+        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
+        
+        <h3 className='sub-header'>Time Entries</h3>
+        <div className='table-responsive'>
+          <table className='table table-striped'>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time Spent<br/>(min)</th>
+                <th>Summary</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.displayTimeEntries()}
+            </tbody>
+          </table>
+        </div> 
+      </div>
+    )
+  }
+
+
 
   cancel() {
     this.setState({ editable: false })
@@ -100,16 +117,7 @@ class Job extends React.Component {
     this.setState({ time_entries: sorted_entries, editable: false })
   }
 
-  componentDidMount(){
-    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
 
-      var sorted_entries = response.sort(function(a,b){
-        return new Date(b.date) - new Date(a.date);
-      });
-
-        this.setState({editable: false, time_entries: sorted_entries})
-      })
-  }
 
   handleEdit(refs) {
     if(this.state.editable) {
@@ -136,7 +144,6 @@ class Job extends React.Component {
   }
 
   handleDelete(id) {
-    debugger
       $.ajax({
         url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
         method: 'DELETE',
