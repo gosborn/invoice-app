@@ -16,7 +16,7 @@ class TimeEntryForm extends React.Component {
           </input>
         </div>
         <div className='form-group'>
-          <input type='date' className='form-control'
+          <input type='text' id="datepicker" className='form-control'
                  placeholder='date' name='date'
                  value={this.state.date} onChange={this.handleChange}>
           </input>
@@ -55,6 +55,15 @@ class TimeEntryForm extends React.Component {
     var obj = {};
     obj[name] = e.target.value;
     this.setState(obj);
+  }
+
+  componentDidMount(){
+    $('#datepicker').datepicker({
+      format: "yyyy-mm-dd",
+      orientation: 'bottom'}).on('changeDate', e => {
+        $('#datepicker').val(e.target.value);
+        this.handleChange(e);
+    });
   }
 
   valid() {
