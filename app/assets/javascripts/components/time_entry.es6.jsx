@@ -15,7 +15,7 @@ class TimeEntry extends React.Component {
                                 cancel={this.cancel} handleDelete={this.props.handleDelete} />
     }
     return <TimeEntryNonEditable date={this.props.date} time_spent={this.props.time_spent}
-                                 summary={this.props.summary} handleEdit={this.handleEdit.bind(this)}
+                                 summary={this.props.summary} handleEdit={this.handleEdit}
                                  handleDelete={this.props.handleDelete} />
   }
 

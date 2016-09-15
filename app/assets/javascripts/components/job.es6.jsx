@@ -10,10 +10,6 @@ class Job extends React.Component {
   }
 
   render () {
-    var title = this.state.editable ? <div><strong>Title: </strong><input className='job_edit' id='job_edit_title' type='text' ref='title' defaultValue={this.props.job.title} required pattern=".*\S+.*" /></div>: <h2 style={{marginTop: '5px', marginRight: '10px'}}>{this.props.job.title}</h2>
-    var hourly_rate = this.state.editable ? <input className='job_edit' id='job_edit_hourly' type='number' ref='hourly_rate' defaultValue={this.props.job.hourly_rate} min="0" required pattern=".*\S+.*" step="any" /> : <span> {this.showAtLeastTwoDecimals(this.props.job.hourly_rate)}</span>; 
-    var tax_rate = this.state.editable ? <input className='job_edit' id='job_edit_tax' type='number' step="any" ref='tax_rate' defaultValue={this.props.job.tax_rate} min="0" required pattern=".*\S+.*" /> : <span> {this.showAtLeastTwoDecimals(this.props.job.tax_rate)}</span>; 
-
     var time_entries = this.state.time_entries.map((te) => { 
         return (
           <TimeEntry key={te.id} id={te.id} time_spent={te.time_spent} date={te.date} summary={te.summary} handleUpdate={this.handleUpdate.bind(this)} handleDelete={this.handleDelete.bind(this, te.id)}/>
@@ -23,33 +19,7 @@ class Job extends React.Component {
 
     return (
       <div>
-        <table>
-          <tr>
-            <td>
-              {title}
-            </td>
-            <td>
-              <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                <button className="btn btn-default" onClick={this.handleEdit.bind(this)}> {this.state.editable ? 'Submit' : <span className="glyphicon glyphicon-pencil" aria-hidden="true"></span> } </button>
-                {this.state.editable ? <button className="btn btn-default" onClick={this.cancel.bind(this)}>Cancel</button> : null }
-                <button className="btn btn-danger" onClick={this.props.handleDelete}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-              </div>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td>
-              <strong>Hourly Rate: </strong>${hourly_rate}
-            </td>
-            </tr>
-            <tr>
-            <td>
-              <strong>Tax Rate: </strong>{tax_rate}%
-            </td>
-          </tr>
-        </table>  
-
+        {this.showHeader()}
         
         {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
         {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
@@ -77,8 +47,13 @@ class Job extends React.Component {
     );
   }
 
-  showAtLeastTwoDecimals(num) {
-    return num.toFixed(Math.max(2, (num.toString().split('.')[1] || []).length));
+  showHeader() {
+    if (this.state.editable) {
+      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+    }
+    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                 cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
   }
 
   cancel() {
@@ -136,14 +111,15 @@ class Job extends React.Component {
       })
   }
 
-  handleEdit() {
+  handleEdit(refs) {
     if(this.state.editable) {
-      var title = this.refs.title.value || 'N/A';
-      var hourly_rate = parseFloat(this.refs.hourly_rate.value) || 0;
-      var tax_rate = parseFloat(this.refs.tax_rate.value) || 0;
-      var id = this.props.job.id;
+      var title = refs.title.value || 'N/A',
+          hourly_rate = parseFloat(refs.hourly_rate.value) || 0,
+          tax_rate = parseFloat(refs.tax_rate.value) || 0,
+          id = this.props.job.id
+
       var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate }
-      this.props.handleUpdate(job);
+      this.props.handleUpdate(job)
     }
     this.setState({ editable: !this.state.editable })
   }
@@ -160,6 +136,7 @@ class Job extends React.Component {
   }
 
   handleDelete(id) {
+    debugger
       $.ajax({
         url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
         method: 'DELETE',
