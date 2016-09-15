@@ -10,47 +10,22 @@ class Job extends React.Component {
   }
 
   componentDidMount() {
-    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, (response) => {
-      var sorted_entries = response.sort(function(a,b){
-        return new Date(b.date) - new Date(a.date);
-      })
-
-        this.setState({time_entries: sorted_entries})
-      })
+    $.getJSON(`/api/v1/jobs/${this.props.job.id}/time_entries.json`, response => {
+      this.sortByDateAndSetState(response)
+    })
   }
 
-  timeEntries() {
-    return this.state.time_entries.map(timeEntry =>
-      <TimeEntry key={timeEntry.id} id={timeEntry.id} time_spent={timeEntry.time_spent}
-                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleUpdate.bind(this)}
-                 handleDelete={this.handleDelete.bind(this, timeEntry.id)} />
-    )
-  }
-
-  displayTimeEntries() {
-    if (this.timeEntries().length > 0) {
-      return this.timeEntries()
-    }
-    return <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
-  }
-
-  showHeader() {
-    if (this.state.editable) {
-      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
-                                cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
-    }
-    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
-                                 cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+  sortByDateAndSetState(timeEntries) {
+    var sortedByDate = timeEntries.sort((timeEntry1,timeEntry2) => new Date(timeEntry2.date) - new Date(timeEntry1.date))
+    this.setState({time_entries: sortedByDate})
   }
 
   render () {
     return (
       <div>
-        {this.showHeader()}
-
-        {this.state.hideTimeEntryForm ? <a href="#" onClick={(e) => this.showTimeEntryForm(e)}><h4><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>Add A Time Entry</h4></a> : <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.onInvoiceCreation.bind(this)} handleNewRecord={this.handleNewRecord.bind(this)}/>}
-        {this.state.hideInvoice ? <a href="#" onClick={(e) => this.showInvoice(e)}><h4><span className="glyphicon glyphicon-save" aria-hidden="true"></span>Create An Invoice</h4></a> : <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)}/> }
-        
+        {this.header()}
+        {this.timeEntryForm()}
+        {this.invoice()}
         <h3 className='sub-header'>Time Entries</h3>
         <div className='table-responsive'>
           <table className='table table-striped'>
@@ -71,53 +46,14 @@ class Job extends React.Component {
     )
   }
 
-
-
-  cancel() {
-    this.setState({ editable: false })
+  header() {
+    if (this.state.editable) {
+      return <JobHeaderEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
+    }
+    return <JobHeaderNonEditable job={this.props.job} handleEdit={this.handleEdit.bind(this)}
+                                 cancel={this.cancel.bind(this)} handleDelete={this.props.handleDelete} />
   }
-
-  showTimeEntryForm(e){
-    e.preventDefault();
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: false })
-  }
-
-  onTimeEntryCreation(){
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
-  }
-
-  showInvoice(e){
-    e.preventDefault();
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: false, hideTimeEntryForm: true })
-  }
-
-  onInvoiceCreation() {
-    this.setState({ time_entries: this.state.time_entries, editable: false, hideInvoice: true, hideTimeEntryForm: true })
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    $.post('/api/v1/invoices',
-      { invoice: {start_date: this.refs.start_date.value, end_date: this.refs.end_date.value, job_id: this.props.id } },
-      function(data) {
-        this.props.handleNewRecord(data)
-        this.setState(this.blankState());
-      }.bind(this),
-      'JSON'
-    );
-  }
-
-  handleNewRecord(time_entry){
-    var newState = this.state.time_entries.concat(time_entry);
-
-    var sorted_entries = newState.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({ time_entries: sorted_entries, editable: false })
-  }
-
-
 
   handleEdit(refs) {
     if(this.state.editable) {
@@ -132,49 +68,109 @@ class Job extends React.Component {
     this.setState({ editable: !this.state.editable })
   }
 
-  handleUpdate(time_entry) {
+  cancel() {
+    this.setState({ editable: false })
+  }
+
+  timeEntryForm() {
+    if (this.state.hideTimeEntryForm) {
+      return ( 
+        <a href='#' onClick={(e) => this.showTimeEntryForm(e)}>
+          <h4><span className='glyphicon glyphicon-plus' />Add A Time Entry</h4>
+        </a>
+      )
+    }
+    return <TimeEntryForm job_id={this.props.job.id} onTimeEntryCreation={this.showTimeEntryForm.bind(this)}
+                          handleNewTimeEntry={this.handleNewTimeEntry.bind(this)} />
+  }
+
+  showTimeEntryForm(e){
+    if (e) { e.preventDefault() }
+    this.setState({ hideTimeEntryForm: !this.state.hideTimeEntryForm })
+  }
+
+  handleNewTimeEntry(timeEntry) {
+    var timeEntriesWithNewEntry = this.state.time_entries.concat(timeEntry);
+    this.sortByDateAndSetState(timeEntriesWithNewEntry)
+  }
+
+  invoice() {
+    if (this.state.hideInvoice) {
+      return (
+        <a href='#' onClick={(e) => this.showInvoice(e)}>
+          <h4><span className='glyphicon glyphicon-save' />Create An Invoice</h4>
+        </a>
+      )
+    }
+    return <InvoiceForm job_id={this.props.job.id} onInvoiceCreation={this.onInvoiceCreation.bind(this)} />
+  }
+
+  showInvoice(e){
+    e.preventDefault()
+    this.setState({ hideInvoice: false })
+  }
+
+  onInvoiceCreation(create) {
+    if (create) {
+      $('#invoice_form').html('<a href="#"><h4>Rendering report, please wait...</h4></a>')
+      this.sleep(7000).then(() => {
+        this.setState({ hideInvoice: true })
+      })
+    } else {
+      this.setState({ hideInvoice: true })
+    }
+  }
+
+  sleep (time) {
+    return new Promise(resolve => setTimeout(resolve, time))
+  }
+
+  displayTimeEntries() {
+    if (this.timeEntries().length > 0) {
+      return this.timeEntries()
+    }
+    return <tr><td><h4><strong>No entries yet!</strong></h4></td><td></td><td></td><td></td></tr>
+  }
+
+  timeEntries() {
+    return this.state.time_entries.map(timeEntry =>
+      <TimeEntry key={timeEntry.id} id={timeEntry.id} time_spent={timeEntry.time_spent}
+                 date={timeEntry.date} summary={timeEntry.summary} handleUpdate={this.handleTimeEntryUpdate.bind(this)}
+                 handleDelete={this.handleTimeEntryDelete.bind(this, timeEntry.id)} />
+    )
+  }
+
+  handleTimeEntryUpdate(timeEntry) {
     $.ajax({
-      url: `api/v1/jobs/${this.props.job.id}/time_entries/${time_entry.id}`,
+      url: `api/v1/jobs/${this.props.job.id}/time_entries/${timeEntry.id}`,
       method: 'PUT',
-      data: { time_entry: time_entry },
+      data: { time_entry: timeEntry },
       success: () => {
-        this.updateItems(time_entry)
+        this.updateTimeEntriesWithNew(timeEntry)
       }
     })
   }
 
-  handleDelete(id) {
-      $.ajax({
-        url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
-        method: 'DELETE',
-        dataType: 'JSON',
-        success: () => {
-          this.removeItemClient(id)
-        }
-      })
+  updateTimeEntriesWithNew(timeEntry) {
+    var timeEntries = this.state.time_entries.filter(oldTimeEntry =>  oldTimeEntry.id != timeEntry.id )
+    timeEntries.push(timeEntry)
+    this.sortByDateAndSetState(timeEntries)
   }
 
-  removeItemClient(id) {
-    var newTimeEntries = this.state.time_entries.filter((te) => {
-      return te.id != id;
+  handleTimeEntryDelete(id) {
+    $.ajax({
+      url:  `api/v1/jobs/${this.props.job.id}/time_entries/${id}`,
+      method: 'DELETE',
+      dataType: 'JSON',
+      success: () => {
+        this.removeDeletedTimeEntry(id)
+      }
     })
-
-    var sorted_entries = newTimeEntries.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({ time_entries: sorted_entries, editable: false })
   }
 
-  updateItems(time_entry) {
-    var time_entries = this.state.time_entries.filter((i) => { return i.id != time_entry.id})
-    time_entries.push(time_entry)
-
-    var sorted_entries = time_entries.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
-    });
-
-    this.setState({time_entries: sorted_entries, editable: false})
+  removeDeletedTimeEntry(id) {
+    var timeEntriesWithoutOldTimeEntry = this.state.time_entries.filter(timeEntry => timeEntry.id != id)
+    this.sortByDateAndSetState(timeEntriesWithoutOldTimeEntry)
   }
 }
 
@@ -182,4 +178,4 @@ Job.propTypes = {
   title: React.PropTypes.string,
   hourlyRate: React.PropTypes.number,
   taxRate: React.PropTypes.number
-};
+}

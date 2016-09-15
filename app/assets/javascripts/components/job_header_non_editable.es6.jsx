@@ -48,9 +48,3 @@ class JobHeaderNonEditable extends React.Component {
     return num.toFixed(Math.max(2, (num.toString().split('.')[1] || []).length));
   }
 }
-
-JobHeaderNonEditable.propTypes = {
-  title: React.PropTypes.string,
-  hourlyRate: React.PropTypes.number,
-  taxRate: React.PropTypes.number
-}

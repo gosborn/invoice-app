@@ -47,9 +47,3 @@ class JobHeaderEditable extends React.Component {
     )
   }
 }
-
-JobHeaderEditable.propTypes = {
-  title: React.PropTypes.string,
-  hourlyRate: React.PropTypes.number,
-  taxRate: React.PropTypes.number
-}
