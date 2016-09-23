@@ -1,4 +1,4 @@
-class JobHeaderNonEditable extends React.Component {
+export default class JobHeaderNonEditable extends React.Component {
 
   render () {
     return (

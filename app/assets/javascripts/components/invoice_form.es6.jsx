@@ -1,4 +1,4 @@
-class InvoiceForm extends React.Component {
+export default class InvoiceForm extends React.Component {
 
   componentDidMount() {
     $('#invoice_datepicker').datepicker({

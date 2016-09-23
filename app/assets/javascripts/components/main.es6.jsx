@@ -1,4 +1,9 @@
-class Main extends React.Component {
+import Nav from './nav.es6'
+import Sidebar from './sidebar.es6'
+import JobForm from './job_form.es6'
+import Job from './job.es6'
+
+export default class Main extends React.Component {
   constructor() {
     super()
     this.state = {

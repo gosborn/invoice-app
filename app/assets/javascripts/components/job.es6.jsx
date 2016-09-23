@@ -1,4 +1,10 @@
-class Job extends React.Component {
+import JobHeaderEditable from './job_header_editable.es6'
+import JobHeaderNonEditable from './job_header_non_editable.es6'
+import TimeEntryForm from './time_entry_form.es6'
+import TimeEntry from './time_entry.es6'
+import InvoiceForm from './invoice_form.es6'
+
+export default class Job extends React.Component {
   constructor() {
     super()
     this.state = {

@@ -1,4 +1,4 @@
-class TimeEntryForm extends React.Component {
+export default class TimeEntryForm extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)

@@ -1,4 +1,4 @@
-class JobForm extends React.Component {
+export default class JobForm extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)

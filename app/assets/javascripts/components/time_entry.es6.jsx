@@ -1,4 +1,7 @@
-class TimeEntry extends React.Component {
+import TimeEntryEditable from './time_entry_editable.es6'
+import TimeEntryNonEditable from './time_entry_non_editable.es6'
+
+export default class TimeEntry extends React.Component {
   constructor() {
     super()
     this.handleEdit = this.handleEdit.bind(this)

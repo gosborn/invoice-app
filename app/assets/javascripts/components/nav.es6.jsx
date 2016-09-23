@@ -1,4 +1,4 @@
-class Nav extends React.Component {
+export default class Nav extends React.Component {
 
   render() {
     return (

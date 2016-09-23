@@ -1,4 +1,4 @@
-class TimeEntryEditable extends React.Component {
+export default class TimeEntryEditable extends React.Component {
 
   componentDidMount(){
     $('#datepicker_edit').datepicker({

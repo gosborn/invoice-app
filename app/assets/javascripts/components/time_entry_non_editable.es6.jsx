@@ -1,4 +1,4 @@
-class TimeEntryNonEditable extends React.Component {
+export default class TimeEntryNonEditable extends React.Component {
 
   render () {
     return (
