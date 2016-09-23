@@ -15,4 +15,3 @@
 //= require jquery_ujs
 //= require bootstrap-datepicker
 //= require turbolinks
-//= require bundle
