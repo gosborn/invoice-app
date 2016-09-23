@@ -1,3 +1,5 @@
+import React from './../../../../node_modules/react'
+
 import TimeEntryEditable from './time_entry_editable.es6'
 import TimeEntryNonEditable from './time_entry_non_editable.es6'
 

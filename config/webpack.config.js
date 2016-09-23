@@ -29,13 +29,7 @@ var config = {
         loader: "babel?presets[]=react,presets[]=es2015"
       }
     ]
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      'React': './../node_modules/react',
-      'ReactDOM': './../node_modules/react-dom'
-    })
-  ],
+  }
 };
 
 module.exports = config;

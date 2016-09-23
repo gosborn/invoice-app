@@ -1,3 +1,5 @@
+import React from './../../../../node_modules/react'
+
 import Nav from './nav.es6'
 import Sidebar from './sidebar.es6'
 import JobForm from './job_form.es6'

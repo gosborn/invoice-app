@@ -1,3 +1,5 @@
+import React from './../../../../node_modules/react'
+
 export default class Sidebar extends React.Component {
 
   render() {

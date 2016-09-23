@@ -44,22 +44,25 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
+	'use strict';
 
-	var _main = __webpack_require__(34);
+	var _react = __webpack_require__(1);
 
-	var _main2 = _interopRequireDefault(_main);
+	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(47);
+	var _reactDom = __webpack_require__(34);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _main = __webpack_require__(172);
+
+	var _main2 = _interopRequireDefault(_main);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	console.log('hello world!');
+	console.log('hello world1');
 
-	_reactDom2.default.render(React.createElement(_main2.default, { user_email: 'greg' }), document.getElementById('container'));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+	_reactDom2.default.render(_react2.default.createElement(_main2.default, { user_email: 'greg' }), document.getElementById('container'));
 
 /***/ },
 /* 1 */
@@ -4241,1738 +4244,13 @@
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	module.exports = __webpack_require__(35);
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _nav = __webpack_require__(36);
-
-	var _nav2 = _interopRequireDefault(_nav);
-
-	var _sidebar = __webpack_require__(37);
-
-	var _sidebar2 = _interopRequireDefault(_sidebar);
-
-	var _job_form = __webpack_require__(38);
-
-	var _job_form2 = _interopRequireDefault(_job_form);
-
-	var _job = __webpack_require__(39);
-
-	var _job2 = _interopRequireDefault(_job);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Main = function (_React$Component) {
-	  _inherits(Main, _React$Component);
-
-	  function Main() {
-	    _classCallCheck(this, Main);
-
-	    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
-
-	    _this.state = {
-	      jobs: []
-	    };
-	    _this.handleNewJob = _this.handleNewJob.bind(_this);
-	    _this.handleJobDelete = _this.handleJobDelete.bind(_this);
-	    _this.handleJobUpdate = _this.handleJobUpdate.bind(_this);
-	    _this.handleResize = _this.handleResize.bind(_this);
-	    _this.handleJobClick = _this.handleJobClick.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(Main, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      $.getJSON('/api/v1/jobs.json', function (response) {
-	        _this2.setState({ jobs: response });
-	      });
-	      window.addEventListener('resize', this.handleResize);
-	      window.addEventListener('load', this.handleResize);
-	    }
-	  }, {
-	    key: 'handleResize',
-	    value: function handleResize() {
-	      window.innerWidth < 768 ? this.setState({ small: true }) : this.setState({ small: false });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(_nav2.default, { small: this.state.small, user_email: this.props.user_email,
-	          jobs: this.state.jobs, handleJobClick: this.handleJobClick }),
-	        React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'div',
-	            { className: 'container-fluid' },
-	            React.createElement(
-	              'div',
-	              { className: 'row' },
-	              React.createElement(_sidebar2.default, { jobs: this.state.jobs, handleJobClick: this.handleJobClick }),
-	              React.createElement(
-	                'div',
-	                { className: 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main' },
-	                React.createElement(
-	                  'div',
-	                  null,
-	                  this.jobsToDisplay()
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'handleJobClick',
-	    value: function handleJobClick(e, job) {
-	      e.preventDefault();
-	      this.setState({ jobToDisplay: job });
-	    }
-	  }, {
-	    key: 'jobsToDisplay',
-	    value: function jobsToDisplay() {
-	      if (this.state.jobToDisplay) {
-	        return React.createElement(_job2.default, { key: this.state.jobToDisplay.id, id: this.state.jobToDisplay.id, job: this.state.jobToDisplay,
-	          handleUpdate: this.handleJobUpdate, handleDelete: this.handleJobDelete.bind(this, this.state.jobToDisplay.id) });
-	      }
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'h3',
-	          null,
-	          'Add a new job'
-	        ),
-	        React.createElement(_job_form2.default, { handleNewJob: this.handleNewJob })
-	      );
-	    }
-	  }, {
-	    key: 'handleJobUpdate',
-	    value: function handleJobUpdate(job) {
-	      var _this3 = this;
-
-	      $.ajax({
-	        url: 'api/v1/jobs/' + job.id,
-	        method: 'PUT',
-	        data: { job: job },
-	        success: function success() {
-	          _this3.updateJobs(job);
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'updateJobs',
-	    value: function updateJobs(job) {
-	      var jobs = this.state.jobs.filter(function (oldJob) {
-	        return oldJob.id != job.id;
-	      });
-	      jobs.push(job);
-	      this.setState({ jobs: jobs, jobToDisplay: job });
-	    }
-	  }, {
-	    key: 'handleJobDelete',
-	    value: function handleJobDelete(id) {
-	      var _this4 = this;
-
-	      var result = confirm('Are you sure? This will delete the job and all associated entries.');
-	      if (result) {
-	        $.ajax({
-	          url: 'api/v1/jobs/' + id,
-	          method: 'DELETE',
-	          dataType: 'JSON',
-	          success: function success() {
-	            _this4.removeDeletedJob(id);
-	          }
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'removeDeletedJob',
-	    value: function removeDeletedJob(id) {
-	      var newJobs = this.state.jobs.filter(function (job) {
-	        return job.id != id;
-	      });
-	      this.setState({ jobs: newJobs, jobToDisplay: null });
-	    }
-	  }, {
-	    key: 'handleNewJob',
-	    value: function handleNewJob(job) {
-	      var newState = this.state.jobs.concat(job);
-	      this.setState({ jobs: newState, jobToDisplay: job });
-	    }
-	  }]);
-
-	  return Main;
-	}(React.Component);
-
-	exports.default = Main;
-
-
-	Main.propTypes = {
-	  user_email: React.PropTypes.string
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
 
 /***/ },
 /* 35 */
-/***/ function(module, exports) {
-
-	module.exports = jQuery;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Nav = function (_React$Component) {
-	  _inherits(Nav, _React$Component);
-
-	  function Nav() {
-	    _classCallCheck(this, Nav);
-
-	    return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).apply(this, arguments));
-	  }
-
-	  _createClass(Nav, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'nav',
-	        { className: 'navbar navbar-inverse navbar-fixed-top' },
-	        React.createElement(
-	          'div',
-	          { className: 'container-fluid' },
-	          React.createElement(
-	            'div',
-	            { className: 'navbar-header' },
-	            React.createElement(
-	              'button',
-	              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-controls': 'navbar' },
-	              React.createElement(
-	                'span',
-	                { className: 'sr-only' },
-	                'Toggle navigation'
-	              ),
-	              React.createElement('span', { className: 'icon-bar' }),
-	              React.createElement('span', { className: 'icon-bar' }),
-	              React.createElement('span', { className: 'icon-bar' })
-	            ),
-	            React.createElement(
-	              'a',
-	              { className: 'navbar-brand', href: '#' },
-	              'Invoice App'
-	            )
-	          ),
-	          this.props.small ? this.addJobsToHamburgerMenu() : this.doNotIncludeJobsInHamburgerMenu()
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'addJobsToHamburgerMenu',
-	    value: function addJobsToHamburgerMenu() {
-	      var _this2 = this;
-
-	      return React.createElement(
-	        'div',
-	        { id: 'navbar', className: 'navbar-collapse collapse' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav navbar-nav navbar-right' },
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              this.props.user_email
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { 'data-method': 'delete', href: '/users/sign_out', rel: 'nofollow' },
-	              'Sign out?'
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#', onClick: function onClick(e) {
-	                  return _this2.props.handleJobClick(e, null);
-	                } },
-	              React.createElement(
-	                'h4',
-	                null,
-	                'Your Jobs'
-	              )
-	            )
-	          ),
-	          this.listJobs(),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#', 'data-toggle': 'collapse', 'data-target': '.navbar-collapse', onClick: function onClick(e) {
-	                  return _this2.props.handleJobClick(e, null);
-	                } },
-	              React.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
-	              ' Add a new job'
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'doNotIncludeJobsInHamburgerMenu',
-	    value: function doNotIncludeJobsInHamburgerMenu() {
-	      return React.createElement(
-	        'div',
-	        { id: 'navbar', className: 'navbar-collapse collapse' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav navbar-nav navbar-right' },
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              this.props.user_email
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { 'data-method': 'delete', href: '/users/sign_out', rel: 'nofollow' },
-	              'Sign out?'
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'listJobs',
-	    value: function listJobs() {
-	      var _this3 = this;
-
-	      return this.props.jobs.map(function (job) {
-	        return React.createElement(
-	          'li',
-	          { key: job.id },
-	          React.createElement(
-	            'a',
-	            { href: '#', 'data-toggle': 'collapse', 'data-target': '.navbar-collapse', onClick: function onClick(e) {
-	                return _this3.props.handleJobClick(e, job);
-	              } },
-	            React.createElement(
-	              'strong',
-	              null,
-	              job.title
-	            )
-	          )
-	        );
-	      });
-	    }
-	  }]);
-
-	  return Nav;
-	}(React.Component);
-
-	exports.default = Nav;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Sidebar = function (_React$Component) {
-	  _inherits(Sidebar, _React$Component);
-
-	  function Sidebar() {
-	    _classCallCheck(this, Sidebar);
-
-	    return _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).apply(this, arguments));
-	  }
-
-	  _createClass(Sidebar, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return React.createElement(
-	        'div',
-	        { className: 'col-sm-3 col-md-2 sidebar' },
-	        React.createElement(
-	          'ul',
-	          { className: 'nav nav-sidebar' },
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#', onClick: function onClick(e) {
-	                  return _this2.props.handleJobClick(e, null);
-	                } },
-	              React.createElement(
-	                'h4',
-	                null,
-	                'Your Jobs'
-	              )
-	            )
-	          ),
-	          this.listJobs(),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '#', onClick: function onClick(e) {
-	                  return _this2.props.handleJobClick(e, null);
-	                } },
-	              React.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
-	              ' Add a new job'
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'listJobs',
-	    value: function listJobs() {
-	      var _this3 = this;
-
-	      return this.props.jobs.map(function (job) {
-	        return React.createElement(
-	          'li',
-	          { key: job.id },
-	          React.createElement(
-	            'a',
-	            { href: '#', onClick: function onClick(e) {
-	                return _this3.props.handleJobClick(e, job);
-	              } },
-	            React.createElement(
-	              'strong',
-	              null,
-	              job.title
-	            )
-	          )
-	        );
-	      });
-	    }
-	  }]);
-
-	  return Sidebar;
-	}(React.Component);
-
-	exports.default = Sidebar;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var JobForm = function (_React$Component) {
-	  _inherits(JobForm, _React$Component);
-
-	  function JobForm() {
-	    _classCallCheck(this, JobForm);
-
-	    var _this = _possibleConstructorReturn(this, (JobForm.__proto__ || Object.getPrototypeOf(JobForm)).call(this));
-
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleChange = _this.handleChange.bind(_this);
-	    _this.state = _this.blankState();
-	    return _this;
-	  }
-
-	  _createClass(JobForm, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'form',
-	        { className: 'form', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'div',
-	          { className: 'form-group', id: 'title_form' },
-	          React.createElement('input', { className: 'form-control', type: 'text', name: 'title',
-	            placeholder: 'Title', value: this.state.title, onChange: this.handleChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'input-group', id: 'hourly_rate_group' },
-	          React.createElement(
-	            'span',
-	            { className: 'input-group-addon', id: 'basic-addon1' },
-	            '$'
-	          ),
-	          React.createElement('input', { className: 'form-control', type: 'number', min: '0',
-	            step: 'any', name: 'hourly_rate', placeholder: 'Hourly rate',
-	            value: this.state.hourly_rate, onChange: this.handleChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'input-group', id: 'tax_rate_group' },
-	          React.createElement('input', { className: 'form-control', type: 'number', min: '0',
-	            step: 'any', name: 'tax_rate', placeholder: 'Tax rate',
-	            value: this.state.tax_rate, onChange: this.handleChange }),
-	          React.createElement(
-	            'span',
-	            { className: 'input-group-addon', id: 'basic-addon2' },
-	            '%'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          React.createElement('input', { className: 'btn btn-primary', id: 'new_job_button', type: 'submit',
-	            disabled: !this.valid(), value: 'Add a new job' })
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'blankState',
-	    value: function blankState() {
-	      return {
-	        title: '',
-	        tax_rate: '',
-	        hourly_rate: ''
-	      };
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      var _this2 = this;
-
-	      e.preventDefault();
-	      $.post('/api/v1/jobs', { job: this.state }, function (data) {
-	        _this2.props.handleNewJob(data);
-	        _this2.setState(_this2.blankState());
-	      }, 'JSON');
-	    }
-	  }, {
-	    key: 'handleChange',
-	    value: function handleChange(e) {
-	      var name = e.target.name,
-	          obj = {};
-
-	      obj[name] = e.target.value;
-	      this.setState(obj);
-	    }
-	  }, {
-	    key: 'valid',
-	    value: function valid() {
-	      return this.state.title && this.state.tax_rate && this.state.hourly_rate;
-	    }
-	  }]);
-
-	  return JobForm;
-	}(React.Component);
-
-	exports.default = JobForm;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
-
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _job_header_editable = __webpack_require__(40);
-
-	var _job_header_editable2 = _interopRequireDefault(_job_header_editable);
-
-	var _job_header_non_editable = __webpack_require__(41);
-
-	var _job_header_non_editable2 = _interopRequireDefault(_job_header_non_editable);
-
-	var _time_entry_form = __webpack_require__(42);
-
-	var _time_entry_form2 = _interopRequireDefault(_time_entry_form);
-
-	var _time_entry = __webpack_require__(43);
-
-	var _time_entry2 = _interopRequireDefault(_time_entry);
-
-	var _invoice_form = __webpack_require__(46);
-
-	var _invoice_form2 = _interopRequireDefault(_invoice_form);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Job = function (_React$Component) {
-	  _inherits(Job, _React$Component);
-
-	  function Job() {
-	    _classCallCheck(this, Job);
-
-	    var _this = _possibleConstructorReturn(this, (Job.__proto__ || Object.getPrototypeOf(Job)).call(this));
-
-	    _this.state = {
-	      editable: false,
-	      hideInvoice: true,
-	      hideTimeEntryForm: true,
-	      time_entries: []
-	    };
-	    _this.handleEdit = _this.handleEdit.bind(_this);
-	    _this.cancel = _this.cancel.bind(_this);
-	    _this.showTimeEntryForm = _this.showTimeEntryForm.bind(_this);
-	    _this.handleNewTimeEntry = _this.handleNewTimeEntry.bind(_this);
-	    _this.onInvoiceCreation = _this.onInvoiceCreation.bind(_this);
-	    _this.handleTimeEntryUpdate = _this.handleTimeEntryUpdate.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(Job, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      $.getJSON('/api/v1/jobs/' + this.props.job.id + '/time_entries.json', function (response) {
-	        _this2.sortByDateAndSetState(response);
-	      });
-	    }
-	  }, {
-	    key: 'sortByDateAndSetState',
-	    value: function sortByDateAndSetState(timeEntries) {
-	      var sortedByDate = timeEntries.sort(function (timeEntry1, timeEntry2) {
-	        return new Date(timeEntry2.date) - new Date(timeEntry1.date);
-	      });
-	      this.setState({ time_entries: sortedByDate });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'div',
-	        null,
-	        this.header(),
-	        this.timeEntryForm(),
-	        this.invoice(),
-	        React.createElement(
-	          'h3',
-	          { className: 'sub-header' },
-	          'Time Entries'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'table-responsive' },
-	          React.createElement(
-	            'table',
-	            { className: 'table table-striped' },
-	            React.createElement(
-	              'thead',
-	              null,
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'th',
-	                  null,
-	                  'Date'
-	                ),
-	                React.createElement(
-	                  'th',
-	                  null,
-	                  'Time Spent',
-	                  React.createElement('br', null),
-	                  '(min)'
-	                ),
-	                React.createElement(
-	                  'th',
-	                  null,
-	                  'Summary'
-	                ),
-	                React.createElement('th', null)
-	              )
-	            ),
-	            React.createElement(
-	              'tbody',
-	              null,
-	              this.displayTimeEntries()
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'header',
-	    value: function header() {
-	      if (this.state.editable) {
-	        return React.createElement(_job_header_editable2.default, { job: this.props.job, handleEdit: this.handleEdit,
-	          cancel: this.cancel, handleDelete: this.props.handleDelete });
-	      }
-	      return React.createElement(_job_header_non_editable2.default, { job: this.props.job, handleEdit: this.handleEdit,
-	        cancel: this.cancel, handleDelete: this.props.handleDelete });
-	    }
-	  }, {
-	    key: 'handleEdit',
-	    value: function handleEdit(refs) {
-	      if (this.state.editable) {
-	        var title = refs.title.value || 'N/A',
-	            hourly_rate = parseFloat(refs.hourly_rate.value) || 0,
-	            tax_rate = parseFloat(refs.tax_rate.value) || 0,
-	            id = this.props.job.id;
-
-	        var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate };
-	        this.props.handleUpdate(job);
-	      }
-	      this.setState({ editable: !this.state.editable });
-	    }
-	  }, {
-	    key: 'cancel',
-	    value: function cancel() {
-	      this.setState({ editable: false });
-	    }
-	  }, {
-	    key: 'timeEntryForm',
-	    value: function timeEntryForm() {
-	      var _this3 = this;
-
-	      if (this.state.hideTimeEntryForm) {
-	        return React.createElement(
-	          'a',
-	          { href: '#', onClick: function onClick(e) {
-	              return _this3.showTimeEntryForm(e);
-	            } },
-	          React.createElement(
-	            'h4',
-	            null,
-	            React.createElement('span', { className: 'glyphicon glyphicon-plus' }),
-	            'Add A Time Entry'
-	          )
-	        );
-	      }
-	      return React.createElement(_time_entry_form2.default, { job_id: this.props.job.id, onTimeEntryCreation: this.showTimeEntryForm,
-	        handleNewTimeEntry: this.handleNewTimeEntry });
-	    }
-	  }, {
-	    key: 'showTimeEntryForm',
-	    value: function showTimeEntryForm(e) {
-	      if (e) {
-	        e.preventDefault();
-	      }
-	      this.setState({ hideTimeEntryForm: !this.state.hideTimeEntryForm });
-	    }
-	  }, {
-	    key: 'handleNewTimeEntry',
-	    value: function handleNewTimeEntry(timeEntry) {
-	      var timeEntriesWithNewEntry = this.state.time_entries.concat(timeEntry);
-	      this.sortByDateAndSetState(timeEntriesWithNewEntry);
-	    }
-	  }, {
-	    key: 'invoice',
-	    value: function invoice() {
-	      var _this4 = this;
-
-	      if (this.state.hideInvoice) {
-	        return React.createElement(
-	          'a',
-	          { href: '#', onClick: function onClick(e) {
-	              return _this4.showInvoice(e);
-	            } },
-	          React.createElement(
-	            'h4',
-	            null,
-	            React.createElement('span', { className: 'glyphicon glyphicon-save' }),
-	            'Create An Invoice'
-	          )
-	        );
-	      }
-	      return React.createElement(_invoice_form2.default, { job_id: this.props.job.id, onInvoiceCreation: this.onInvoiceCreation });
-	    }
-	  }, {
-	    key: 'showInvoice',
-	    value: function showInvoice(e) {
-	      e.preventDefault();
-	      this.setState({ hideInvoice: false });
-	    }
-	  }, {
-	    key: 'onInvoiceCreation',
-	    value: function onInvoiceCreation(create) {
-	      var _this5 = this;
-
-	      if (create) {
-	        $('#invoice_form').html('<a href="#"><h4>Rendering invoice, please wait...</h4></a>');
-	        this.sleep(7000).then(function () {
-	          _this5.setState({ hideInvoice: true });
-	        });
-	      } else {
-	        this.setState({ hideInvoice: true });
-	      }
-	    }
-	  }, {
-	    key: 'sleep',
-	    value: function sleep(time) {
-	      return new Promise(function (resolve) {
-	        return setTimeout(resolve, time);
-	      });
-	    }
-	  }, {
-	    key: 'displayTimeEntries',
-	    value: function displayTimeEntries() {
-	      if (this.timeEntries().length > 0) {
-	        return this.timeEntries();
-	      }
-	      return React.createElement(
-	        'tr',
-	        null,
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'h4',
-	            null,
-	            React.createElement(
-	              'strong',
-	              null,
-	              'No entries yet!'
-	            )
-	          )
-	        ),
-	        React.createElement('td', null),
-	        React.createElement('td', null),
-	        React.createElement('td', null)
-	      );
-	    }
-	  }, {
-	    key: 'timeEntries',
-	    value: function timeEntries() {
-	      var _this6 = this;
-
-	      return this.state.time_entries.map(function (timeEntry) {
-	        return React.createElement(_time_entry2.default, { key: timeEntry.id, id: timeEntry.id, time_spent: timeEntry.time_spent,
-	          date: timeEntry.date, summary: timeEntry.summary, handleUpdate: _this6.handleTimeEntryUpdate,
-	          handleDelete: _this6.handleTimeEntryDelete.bind(_this6, timeEntry.id) });
-	      });
-	    }
-	  }, {
-	    key: 'handleTimeEntryUpdate',
-	    value: function handleTimeEntryUpdate(timeEntry) {
-	      var _this7 = this;
-
-	      $.ajax({
-	        url: 'api/v1/jobs/' + this.props.job.id + '/time_entries/' + timeEntry.id,
-	        method: 'PUT',
-	        data: { time_entry: timeEntry },
-	        success: function success() {
-	          _this7.updateTimeEntriesWithNew(timeEntry);
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'updateTimeEntriesWithNew',
-	    value: function updateTimeEntriesWithNew(timeEntry) {
-	      var timeEntries = this.state.time_entries.filter(function (oldTimeEntry) {
-	        return oldTimeEntry.id != timeEntry.id;
-	      });
-	      timeEntries.push(timeEntry);
-	      this.sortByDateAndSetState(timeEntries);
-	    }
-	  }, {
-	    key: 'handleTimeEntryDelete',
-	    value: function handleTimeEntryDelete(id) {
-	      var _this8 = this;
-
-	      $.ajax({
-	        url: 'api/v1/jobs/' + this.props.job.id + '/time_entries/' + id,
-	        method: 'DELETE',
-	        dataType: 'JSON',
-	        success: function success() {
-	          _this8.removeDeletedTimeEntry(id);
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'removeDeletedTimeEntry',
-	    value: function removeDeletedTimeEntry(id) {
-	      var timeEntriesWithoutOldTimeEntry = this.state.time_entries.filter(function (timeEntry) {
-	        return timeEntry.id != id;
-	      });
-	      this.sortByDateAndSetState(timeEntriesWithoutOldTimeEntry);
-	    }
-	  }]);
-
-	  return Job;
-	}(React.Component);
-
-	exports.default = Job;
-
-
-	Job.propTypes = {
-	  title: React.PropTypes.string,
-	  hourlyRate: React.PropTypes.number,
-	  taxRate: React.PropTypes.number
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var JobHeaderEditable = function (_React$Component) {
-	  _inherits(JobHeaderEditable, _React$Component);
-
-	  function JobHeaderEditable() {
-	    _classCallCheck(this, JobHeaderEditable);
-
-	    return _possibleConstructorReturn(this, (JobHeaderEditable.__proto__ || Object.getPrototypeOf(JobHeaderEditable)).apply(this, arguments));
-	  }
-
-	  _createClass(JobHeaderEditable, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'table',
-	          null,
-	          React.createElement(
-	            'tbody',
-	            null,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'div',
-	                  null,
-	                  React.createElement(
-	                    'strong',
-	                    null,
-	                    'Title: '
-	                  ),
-	                  React.createElement('input', { className: 'job_edit', id: 'job_edit_title', ref: 'title',
-	                    type: 'text', defaultValue: this.props.job.title })
-	                )
-	              ),
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'div',
-	                  { className: 'btn-group btn-group-xs', role: 'group' },
-	                  React.createElement(
-	                    'button',
-	                    { className: 'btn btn-default', onClick: function onClick() {
-	                        return _this2.props.handleEdit(_this2.refs);
-	                      } },
-	                    'Submit'
-	                  ),
-	                  React.createElement(
-	                    'button',
-	                    { className: 'btn btn-default', onClick: this.props.cancel },
-	                    'Cancel'
-	                  ),
-	                  React.createElement(
-	                    'button',
-	                    { className: 'btn btn-danger', onClick: this.props.handleDelete.bind(this.props.job.id) },
-	                    React.createElement('span', { className: 'glyphicon glyphicon-remove' })
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'table',
-	          null,
-	          React.createElement(
-	            'tbody',
-	            null,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'strong',
-	                  null,
-	                  'Hourly Rate: '
-	                ),
-	                '$',
-	                React.createElement('input', { className: 'job_edit', id: 'job_edit_hourly', ref: 'hourly_rate', type: 'number',
-	                  min: '0', step: 'any', defaultValue: this.props.job.hourly_rate })
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'strong',
-	                  null,
-	                  'Tax Rate: '
-	                ),
-	                React.createElement('input', { className: 'job_edit', id: 'job_edit_tax', ref: 'tax_rate', type: 'number',
-	                  min: '0', step: 'any', defaultValue: this.props.job.tax_rate }),
-	                '%'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return JobHeaderEditable;
-	}(React.Component);
-
-	exports.default = JobHeaderEditable;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var JobHeaderNonEditable = function (_React$Component) {
-	  _inherits(JobHeaderNonEditable, _React$Component);
-
-	  function JobHeaderNonEditable() {
-	    _classCallCheck(this, JobHeaderNonEditable);
-
-	    return _possibleConstructorReturn(this, (JobHeaderNonEditable.__proto__ || Object.getPrototypeOf(JobHeaderNonEditable)).apply(this, arguments));
-	  }
-
-	  _createClass(JobHeaderNonEditable, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'table',
-	          null,
-	          React.createElement(
-	            'tbody',
-	            null,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'div',
-	                  null,
-	                  React.createElement(
-	                    'h2',
-	                    { id: 'job_title' },
-	                    this.props.job.title
-	                  )
-	                )
-	              ),
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'div',
-	                  { className: 'btn-group btn-group-xs', role: 'group' },
-	                  React.createElement(
-	                    'button',
-	                    { className: 'btn btn-default', onClick: this.props.handleEdit },
-	                    React.createElement('span', { className: 'glyphicon glyphicon-pencil' })
-	                  ),
-	                  React.createElement(
-	                    'button',
-	                    { className: 'btn btn-danger', onClick: this.props.handleDelete.bind(this.props.job.id) },
-	                    React.createElement('span', { className: 'glyphicon glyphicon-remove' })
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'table',
-	          null,
-	          React.createElement(
-	            'tbody',
-	            null,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'strong',
-	                  null,
-	                  'Hourly Rate: '
-	                ),
-	                '$',
-	                React.createElement(
-	                  'span',
-	                  null,
-	                  this.showAtLeastTwoDecimals(this.props.job.hourly_rate)
-	                )
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                  'strong',
-	                  null,
-	                  'Tax Rate: '
-	                ),
-	                React.createElement(
-	                  'span',
-	                  null,
-	                  this.showAtLeastTwoDecimals(this.props.job.tax_rate)
-	                ),
-	                '%'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'showAtLeastTwoDecimals',
-	    value: function showAtLeastTwoDecimals(num) {
-	      return num.toFixed(Math.max(2, (num.toString().split('.')[1] || []).length));
-	    }
-	  }]);
-
-	  return JobHeaderNonEditable;
-	}(React.Component);
-
-	exports.default = JobHeaderNonEditable;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TimeEntryForm = function (_React$Component) {
-	  _inherits(TimeEntryForm, _React$Component);
-
-	  function TimeEntryForm() {
-	    _classCallCheck(this, TimeEntryForm);
-
-	    var _this = _possibleConstructorReturn(this, (TimeEntryForm.__proto__ || Object.getPrototypeOf(TimeEntryForm)).call(this));
-
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleChange = _this.handleChange.bind(_this);
-	    _this.state = _this.blankState();
-	    return _this;
-	  }
-
-	  _createClass(TimeEntryForm, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      $('#datepicker').datepicker({
-	        format: 'yyyy-mm-dd',
-	        orientation: 'bottom' }).on('changeDate', function (e) {
-	        $('#datepicker').val(e.target.value);
-	        _this2.handleChange(e);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'form',
-	        { className: 'form-inline', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          React.createElement('input', { className: 'form-control', type: 'number', min: '0', name: 'time_spent', placeholder: 'Time Spent (min)', value: this.state.time_spent, onChange: this.handleChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          React.createElement('input', { className: 'form-control', id: 'datepicker', type: 'text', name: 'date', placeholder: 'Date', value: this.state.date })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          React.createElement('input', { className: 'form-control', type: 'text', name: 'summary', placeholder: 'Summary', value: this.state.summary, onChange: this.handleChange })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          React.createElement(
-	            'div',
-	            { className: 'btn-group', role: 'group' },
-	            React.createElement(
-	              'button',
-	              { type: 'submit', className: 'btn btn-primary', disabled: !this.valid() },
-	              'Add Entry'
-	            ),
-	            React.createElement(
-	              'button',
-	              { type: 'button', className: 'btn btn-default', onClick: this.props.onTimeEntryCreation },
-	              'Cancel'
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'blankState',
-	    value: function blankState() {
-	      return {
-	        time_spent: '',
-	        date: '',
-	        summary: ''
-	      };
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
-	      var _this3 = this;
-
-	      e.preventDefault();
-	      $.post('/api/v1/jobs/' + this.props.job_id + '/time_entries', { time_entry: this.state }, function (data) {
-	        _this3.props.handleNewTimeEntry(data);
-	        _this3.setState(_this3.blankState());
-	        _this3.props.onTimeEntryCreation();
-	      }, 'JSON');
-	    }
-	  }, {
-	    key: 'handleChange',
-	    value: function handleChange(e) {
-	      var name = e.target.name,
-	          obj = {};
-
-	      obj[name] = e.target.value;
-	      this.setState(obj);
-	    }
-	  }, {
-	    key: 'valid',
-	    value: function valid() {
-	      return this.state.time_spent && this.state.date && this.state.summary;
-	    }
-	  }]);
-
-	  return TimeEntryForm;
-	}(React.Component);
-
-	exports.default = TimeEntryForm;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _time_entry_editable = __webpack_require__(44);
-
-	var _time_entry_editable2 = _interopRequireDefault(_time_entry_editable);
-
-	var _time_entry_non_editable = __webpack_require__(45);
-
-	var _time_entry_non_editable2 = _interopRequireDefault(_time_entry_non_editable);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TimeEntry = function (_React$Component) {
-	  _inherits(TimeEntry, _React$Component);
-
-	  function TimeEntry() {
-	    _classCallCheck(this, TimeEntry);
-
-	    var _this = _possibleConstructorReturn(this, (TimeEntry.__proto__ || Object.getPrototypeOf(TimeEntry)).call(this));
-
-	    _this.handleEdit = _this.handleEdit.bind(_this);
-	    _this.cancel = _this.cancel.bind(_this);
-	    _this.state = {
-	      editable: false
-	    };
-	    return _this;
-	  }
-
-	  _createClass(TimeEntry, [{
-	    key: 'render',
-	    value: function render() {
-	      if (this.state.editable) {
-	        return React.createElement(_time_entry_editable2.default, { date: this.props.date, time_spent: this.props.time_spent,
-	          summary: this.props.summary, handleEdit: this.handleEdit,
-	          cancel: this.cancel, handleDelete: this.props.handleDelete });
-	      }
-	      return React.createElement(_time_entry_non_editable2.default, { date: this.props.date, time_spent: this.props.time_spent,
-	        summary: this.props.summary, handleEdit: this.handleEdit,
-	        handleDelete: this.props.handleDelete });
-	    }
-	  }, {
-	    key: 'cancel',
-	    value: function cancel() {
-	      this.setState({ editable: false });
-	    }
-	  }, {
-	    key: 'handleEdit',
-	    value: function handleEdit(refs) {
-	      if (this.state.editable) {
-	        var time_spent = parseInt(refs.time_spent.value) || 0,
-	            date = refs.date.value || '2000-01-01',
-	            summary = refs.summary.value || 'N/A',
-	            id = this.props.id;
-
-	        var time_entry = { id: id, time_spent: time_spent, date: date, summary: summary };
-	        this.props.handleUpdate(time_entry);
-	      }
-	      this.setState({ editable: !this.state.editable });
-	    }
-	  }]);
-
-	  return TimeEntry;
-	}(React.Component);
-
-	exports.default = TimeEntry;
-
-
-	TimeEntry.propTypes = {
-	  time_spent: React.PropTypes.number,
-	  date: React.PropTypes.string,
-	  summary: React.PropTypes.string
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TimeEntryEditable = function (_React$Component) {
-	  _inherits(TimeEntryEditable, _React$Component);
-
-	  function TimeEntryEditable() {
-	    _classCallCheck(this, TimeEntryEditable);
-
-	    return _possibleConstructorReturn(this, (TimeEntryEditable.__proto__ || Object.getPrototypeOf(TimeEntryEditable)).apply(this, arguments));
-	  }
-
-	  _createClass(TimeEntryEditable, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      $('#datepicker_edit').datepicker({
-	        format: 'yyyy-mm-dd',
-	        orientation: 'bottom' }).on('changeDate', function (e) {
-	        $('#datepicker').val(e.target.value);
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return React.createElement(
-	        'tr',
-	        null,
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement('input', { className: 'form-control', id: 'datepicker_edit', type: 'text',
-	            ref: 'date', defaultValue: this.props.date })
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement('input', { className: 'form-control', type: 'number', ref: 'time_spent',
-	            defaultValue: this.props.time_spent })
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement('input', { className: 'form-control', type: 'text', ref: 'summary',
-	            defaultValue: this.props.summary })
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'button',
-	            { className: 'btn btn-sm btn-default', onClick: function onClick() {
-	                return _this2.props.handleEdit(_this2.refs);
-	              } },
-	            'Submit'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'btn btn-sm btn-default', onClick: this.props.cancel },
-	            'Cancel'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'btn btn-sm btn-danger', onClick: this.props.handleDelete },
-	            'Delete'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TimeEntryEditable;
-	}(React.Component);
-
-	exports.default = TimeEntryEditable;
-
-
-	TimeEntryEditable.propTypes = {
-	  time_spent: React.PropTypes.number,
-	  date: React.PropTypes.string,
-	  summary: React.PropTypes.string
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TimeEntryNonEditable = function (_React$Component) {
-	  _inherits(TimeEntryNonEditable, _React$Component);
-
-	  function TimeEntryNonEditable() {
-	    _classCallCheck(this, TimeEntryNonEditable);
-
-	    return _possibleConstructorReturn(this, (TimeEntryNonEditable.__proto__ || Object.getPrototypeOf(TimeEntryNonEditable)).apply(this, arguments));
-	  }
-
-	  _createClass(TimeEntryNonEditable, [{
-	    key: 'render',
-	    value: function render() {
-	      return React.createElement(
-	        'tr',
-	        null,
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'p',
-	            null,
-	            this.props.date
-	          )
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'p',
-	            null,
-	            this.props.time_spent
-	          )
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'p',
-	            null,
-	            this.props.summary
-	          )
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'button',
-	            { className: 'btn btn-sm btn-default', onClick: this.props.handleEdit },
-	            'Edit'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'btn btn-sm btn-danger', onClick: this.props.handleDelete },
-	            'Delete'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return TimeEntryNonEditable;
-	}(React.Component);
-
-	exports.default = TimeEntryNonEditable;
-
-
-	TimeEntryNonEditable.propTypes = {
-	  time_spent: React.PropTypes.number,
-	  date: React.PropTypes.string,
-	  summary: React.PropTypes.string
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(React, $) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var InvoiceForm = function (_React$Component) {
-	  _inherits(InvoiceForm, _React$Component);
-
-	  function InvoiceForm() {
-	    _classCallCheck(this, InvoiceForm);
-
-	    return _possibleConstructorReturn(this, (InvoiceForm.__proto__ || Object.getPrototypeOf(InvoiceForm)).apply(this, arguments));
-	  }
-
-	  _createClass(InvoiceForm, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      $('#invoice_datepicker').datepicker({
-	        format: 'yyyy-mm-dd',
-	        orientation: 'bottom'
-	      }).on('changeDate', function () {
-	        $('#invoice_submit').removeAttr('disabled');
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return React.createElement(
-	        'div',
-	        { id: 'invoice_form' },
-	        React.createElement(
-	          'form',
-	          { className: 'form-inline', action: '/api/v1/invoices', method: 'GET', onSubmit: function onSubmit() {
-	              return _this2.props.onInvoiceCreation(true);
-	            } },
-	          React.createElement(
-	            'div',
-	            { className: 'form-group' },
-	            React.createElement(
-	              'div',
-	              { className: 'input-daterange', id: 'invoice_datepicker' },
-	              React.createElement('input', { className: 'form-control', type: 'text', name: 'invoice[start_date]', placeholder: 'Start Date' }),
-	              React.createElement('input', { className: 'form-control', type: 'text', name: 'invoice[end_date]', placeholder: 'End Date' })
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'form-group' },
-	            React.createElement('input', { type: 'hidden', name: 'invoice[job_id]', value: this.props.job_id })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'form-group' },
-	            React.createElement(
-	              'div',
-	              { className: 'btn-group', role: 'group' },
-	              React.createElement(
-	                'button',
-	                { className: 'btn btn-primary', id: 'invoice_submit', type: 'submit', disabled: 'true' },
-	                'Download PDF Invoice'
-	              ),
-	              React.createElement(
-	                'button',
-	                { className: 'btn btn-default', type: 'button', onClick: function onClick() {
-	                    return _this2.props.onInvoiceCreation();
-	                  } },
-	                'Cancel'
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return InvoiceForm;
-	}(React.Component);
-
-	exports.default = InvoiceForm;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35)))
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(48);
-
-
-/***/ },
-/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -5990,16 +4268,16 @@
 
 	'use strict';
 
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactDefaultInjection = __webpack_require__(52);
-	var ReactMount = __webpack_require__(175);
-	var ReactReconciler = __webpack_require__(72);
-	var ReactUpdates = __webpack_require__(69);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactDefaultInjection = __webpack_require__(39);
+	var ReactMount = __webpack_require__(162);
+	var ReactReconciler = __webpack_require__(59);
+	var ReactUpdates = __webpack_require__(56);
 	var ReactVersion = __webpack_require__(32);
 
-	var findDOMNode = __webpack_require__(180);
-	var getHostComponentFromComposite = __webpack_require__(181);
-	var renderSubtreeIntoContainer = __webpack_require__(182);
+	var findDOMNode = __webpack_require__(167);
+	var getHostComponentFromComposite = __webpack_require__(168);
+	var renderSubtreeIntoContainer = __webpack_require__(169);
 	var warning = __webpack_require__(11);
 
 	ReactDefaultInjection.inject();
@@ -6040,7 +4318,7 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ExecutionEnvironment = __webpack_require__(62);
+	  var ExecutionEnvironment = __webpack_require__(49);
 	  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
 
 	    // First check if devtools is not installed
@@ -6076,9 +4354,9 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ReactInstrumentation = __webpack_require__(75);
-	  var ReactDOMUnknownPropertyHook = __webpack_require__(183);
-	  var ReactDOMNullInputValuePropHook = __webpack_require__(184);
+	  var ReactInstrumentation = __webpack_require__(62);
+	  var ReactDOMUnknownPropertyHook = __webpack_require__(170);
+	  var ReactDOMNullInputValuePropHook = __webpack_require__(171);
 
 	  ReactInstrumentation.debugTool.addHook(ReactDOMUnknownPropertyHook);
 	  ReactInstrumentation.debugTool.addHook(ReactDOMNullInputValuePropHook);
@@ -6088,7 +4366,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 49 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -6106,8 +4384,8 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var DOMProperty = __webpack_require__(50);
-	var ReactDOMComponentFlags = __webpack_require__(51);
+	var DOMProperty = __webpack_require__(37);
+	var ReactDOMComponentFlags = __webpack_require__(38);
 
 	var invariant = __webpack_require__(8);
 
@@ -6282,7 +4560,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 50 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -6494,7 +4772,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 51 */
+/* 38 */
 /***/ function(module, exports) {
 
 	/**
@@ -6517,7 +4795,7 @@
 	module.exports = ReactDOMComponentFlags;
 
 /***/ },
-/* 52 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6533,24 +4811,24 @@
 
 	'use strict';
 
-	var BeforeInputEventPlugin = __webpack_require__(53);
-	var ChangeEventPlugin = __webpack_require__(68);
-	var DefaultEventPluginOrder = __webpack_require__(86);
-	var EnterLeaveEventPlugin = __webpack_require__(87);
-	var HTMLDOMPropertyConfig = __webpack_require__(92);
-	var ReactComponentBrowserEnvironment = __webpack_require__(93);
-	var ReactDOMComponent = __webpack_require__(107);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactDOMEmptyComponent = __webpack_require__(146);
-	var ReactDOMTreeTraversal = __webpack_require__(147);
-	var ReactDOMTextComponent = __webpack_require__(148);
-	var ReactDefaultBatchingStrategy = __webpack_require__(149);
-	var ReactEventListener = __webpack_require__(150);
-	var ReactInjection = __webpack_require__(153);
-	var ReactReconcileTransaction = __webpack_require__(154);
-	var SVGDOMPropertyConfig = __webpack_require__(162);
-	var SelectEventPlugin = __webpack_require__(163);
-	var SimpleEventPlugin = __webpack_require__(164);
+	var BeforeInputEventPlugin = __webpack_require__(40);
+	var ChangeEventPlugin = __webpack_require__(55);
+	var DefaultEventPluginOrder = __webpack_require__(73);
+	var EnterLeaveEventPlugin = __webpack_require__(74);
+	var HTMLDOMPropertyConfig = __webpack_require__(79);
+	var ReactComponentBrowserEnvironment = __webpack_require__(80);
+	var ReactDOMComponent = __webpack_require__(94);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactDOMEmptyComponent = __webpack_require__(133);
+	var ReactDOMTreeTraversal = __webpack_require__(134);
+	var ReactDOMTextComponent = __webpack_require__(135);
+	var ReactDefaultBatchingStrategy = __webpack_require__(136);
+	var ReactEventListener = __webpack_require__(137);
+	var ReactInjection = __webpack_require__(140);
+	var ReactReconcileTransaction = __webpack_require__(141);
+	var SVGDOMPropertyConfig = __webpack_require__(149);
+	var SelectEventPlugin = __webpack_require__(150);
+	var SimpleEventPlugin = __webpack_require__(151);
 
 	var alreadyInjected = false;
 
@@ -6606,7 +4884,7 @@
 	};
 
 /***/ },
-/* 53 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6622,12 +4900,12 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(54);
-	var EventPropagators = __webpack_require__(55);
-	var ExecutionEnvironment = __webpack_require__(62);
-	var FallbackCompositionState = __webpack_require__(63);
-	var SyntheticCompositionEvent = __webpack_require__(65);
-	var SyntheticInputEvent = __webpack_require__(67);
+	var EventConstants = __webpack_require__(41);
+	var EventPropagators = __webpack_require__(42);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var FallbackCompositionState = __webpack_require__(50);
+	var SyntheticCompositionEvent = __webpack_require__(52);
+	var SyntheticInputEvent = __webpack_require__(54);
 
 	var keyOf = __webpack_require__(25);
 
@@ -7001,7 +5279,7 @@
 	module.exports = BeforeInputEventPlugin;
 
 /***/ },
-/* 54 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7103,7 +5381,7 @@
 	module.exports = EventConstants;
 
 /***/ },
-/* 55 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -7119,12 +5397,12 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(54);
-	var EventPluginHub = __webpack_require__(56);
-	var EventPluginUtils = __webpack_require__(58);
+	var EventConstants = __webpack_require__(41);
+	var EventPluginHub = __webpack_require__(43);
+	var EventPluginUtils = __webpack_require__(45);
 
-	var accumulateInto = __webpack_require__(60);
-	var forEachAccumulated = __webpack_require__(61);
+	var accumulateInto = __webpack_require__(47);
+	var forEachAccumulated = __webpack_require__(48);
 	var warning = __webpack_require__(11);
 
 	var PropagationPhases = EventConstants.PropagationPhases;
@@ -7246,7 +5524,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 56 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -7264,12 +5542,12 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var EventPluginRegistry = __webpack_require__(57);
-	var EventPluginUtils = __webpack_require__(58);
-	var ReactErrorUtils = __webpack_require__(59);
+	var EventPluginRegistry = __webpack_require__(44);
+	var EventPluginUtils = __webpack_require__(45);
+	var ReactErrorUtils = __webpack_require__(46);
 
-	var accumulateInto = __webpack_require__(60);
-	var forEachAccumulated = __webpack_require__(61);
+	var accumulateInto = __webpack_require__(47);
+	var forEachAccumulated = __webpack_require__(48);
 	var invariant = __webpack_require__(8);
 
 	/**
@@ -7503,7 +5781,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 57 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -7756,7 +6034,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 58 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -7774,8 +6052,8 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var EventConstants = __webpack_require__(54);
-	var ReactErrorUtils = __webpack_require__(59);
+	var EventConstants = __webpack_require__(41);
+	var ReactErrorUtils = __webpack_require__(46);
 
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
@@ -7991,7 +6269,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 59 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -8073,7 +6351,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 60 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -8137,7 +6415,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 61 */
+/* 48 */
 /***/ function(module, exports) {
 
 	/**
@@ -8173,7 +6451,7 @@
 	module.exports = forEachAccumulated;
 
 /***/ },
-/* 62 */
+/* 49 */
 /***/ function(module, exports) {
 
 	/**
@@ -8213,7 +6491,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 63 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8233,7 +6511,7 @@
 
 	var PooledClass = __webpack_require__(6);
 
-	var getTextContentAccessor = __webpack_require__(64);
+	var getTextContentAccessor = __webpack_require__(51);
 
 	/**
 	 * This helper class stores information about text content of a target node,
@@ -8313,7 +6591,7 @@
 	module.exports = FallbackCompositionState;
 
 /***/ },
-/* 64 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8329,7 +6607,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
 	var contentKey = null;
 
@@ -8351,7 +6629,7 @@
 	module.exports = getTextContentAccessor;
 
 /***/ },
-/* 65 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8367,7 +6645,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
 	/**
 	 * @interface Event
@@ -8392,7 +6670,7 @@
 	module.exports = SyntheticCompositionEvent;
 
 /***/ },
-/* 66 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -8666,7 +6944,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 67 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8682,7 +6960,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
 	/**
 	 * @interface Event
@@ -8708,7 +6986,7 @@
 	module.exports = SyntheticInputEvent;
 
 /***/ },
-/* 68 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8724,17 +7002,17 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(54);
-	var EventPluginHub = __webpack_require__(56);
-	var EventPropagators = __webpack_require__(55);
-	var ExecutionEnvironment = __webpack_require__(62);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactUpdates = __webpack_require__(69);
-	var SyntheticEvent = __webpack_require__(66);
+	var EventConstants = __webpack_require__(41);
+	var EventPluginHub = __webpack_require__(43);
+	var EventPropagators = __webpack_require__(42);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactUpdates = __webpack_require__(56);
+	var SyntheticEvent = __webpack_require__(53);
 
-	var getEventTarget = __webpack_require__(83);
-	var isEventSupported = __webpack_require__(84);
-	var isTextInputElement = __webpack_require__(85);
+	var getEventTarget = __webpack_require__(70);
+	var isEventSupported = __webpack_require__(71);
+	var isTextInputElement = __webpack_require__(72);
 	var keyOf = __webpack_require__(25);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
@@ -9038,7 +7316,7 @@
 	module.exports = ChangeEventPlugin;
 
 /***/ },
-/* 69 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9057,11 +7335,11 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var CallbackQueue = __webpack_require__(70);
+	var CallbackQueue = __webpack_require__(57);
 	var PooledClass = __webpack_require__(6);
-	var ReactFeatureFlags = __webpack_require__(71);
-	var ReactReconciler = __webpack_require__(72);
-	var Transaction = __webpack_require__(82);
+	var ReactFeatureFlags = __webpack_require__(58);
+	var ReactReconciler = __webpack_require__(59);
+	var Transaction = __webpack_require__(69);
 
 	var invariant = __webpack_require__(8);
 
@@ -9295,7 +7573,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 70 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9407,7 +7685,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 71 */
+/* 58 */
 /***/ function(module, exports) {
 
 	/**
@@ -9434,7 +7712,7 @@
 	module.exports = ReactFeatureFlags;
 
 /***/ },
-/* 72 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9450,8 +7728,8 @@
 
 	'use strict';
 
-	var ReactRef = __webpack_require__(73);
-	var ReactInstrumentation = __webpack_require__(75);
+	var ReactRef = __webpack_require__(60);
+	var ReactInstrumentation = __webpack_require__(62);
 
 	var warning = __webpack_require__(11);
 
@@ -9608,7 +7886,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 73 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9624,7 +7902,7 @@
 
 	'use strict';
 
-	var ReactOwner = __webpack_require__(74);
+	var ReactOwner = __webpack_require__(61);
 
 	var ReactRef = {};
 
@@ -9693,7 +7971,7 @@
 	module.exports = ReactRef;
 
 /***/ },
-/* 74 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9793,7 +8071,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 75 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9812,7 +8090,7 @@
 	var debugTool = null;
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ReactDebugTool = __webpack_require__(76);
+	  var ReactDebugTool = __webpack_require__(63);
 	  debugTool = ReactDebugTool;
 	}
 
@@ -9820,7 +8098,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 76 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -9836,13 +8114,13 @@
 
 	'use strict';
 
-	var ReactInvalidSetStateWarningHook = __webpack_require__(77);
-	var ReactHostOperationHistoryHook = __webpack_require__(78);
+	var ReactInvalidSetStateWarningHook = __webpack_require__(64);
+	var ReactHostOperationHistoryHook = __webpack_require__(65);
 	var ReactComponentTreeHook = __webpack_require__(28);
-	var ReactChildrenMutationWarningHook = __webpack_require__(79);
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ReactChildrenMutationWarningHook = __webpack_require__(66);
+	var ExecutionEnvironment = __webpack_require__(49);
 
-	var performanceNow = __webpack_require__(80);
+	var performanceNow = __webpack_require__(67);
 	var warning = __webpack_require__(11);
 
 	var hooks = [];
@@ -10127,7 +8405,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 77 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -10169,7 +8447,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 78 */
+/* 65 */
 /***/ function(module, exports) {
 
 	/**
@@ -10211,7 +8489,7 @@
 	module.exports = ReactHostOperationHistoryHook;
 
 /***/ },
-/* 79 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -10271,7 +8549,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 80 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10287,7 +8565,7 @@
 	 * @typechecks
 	 */
 
-	var performance = __webpack_require__(81);
+	var performance = __webpack_require__(68);
 
 	var performanceNow;
 
@@ -10309,7 +8587,7 @@
 	module.exports = performanceNow;
 
 /***/ },
-/* 81 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10325,7 +8603,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
 	var performance;
 
@@ -10336,7 +8614,7 @@
 	module.exports = performance || {};
 
 /***/ },
-/* 82 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -10575,7 +8853,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 83 */
+/* 70 */
 /***/ function(module, exports) {
 
 	/**
@@ -10615,7 +8893,7 @@
 	module.exports = getEventTarget;
 
 /***/ },
-/* 84 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10631,7 +8909,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -10680,7 +8958,7 @@
 	module.exports = isEventSupported;
 
 /***/ },
-/* 85 */
+/* 72 */
 /***/ function(module, exports) {
 
 	/**
@@ -10736,7 +9014,7 @@
 	module.exports = isTextInputElement;
 
 /***/ },
-/* 86 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10768,7 +9046,7 @@
 	module.exports = DefaultEventPluginOrder;
 
 /***/ },
-/* 87 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10784,10 +9062,10 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(54);
-	var EventPropagators = __webpack_require__(55);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var SyntheticMouseEvent = __webpack_require__(88);
+	var EventConstants = __webpack_require__(41);
+	var EventPropagators = __webpack_require__(42);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var SyntheticMouseEvent = __webpack_require__(75);
 
 	var keyOf = __webpack_require__(25);
 
@@ -10878,7 +9156,7 @@
 	module.exports = EnterLeaveEventPlugin;
 
 /***/ },
-/* 88 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10894,10 +9172,10 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(89);
-	var ViewportMetrics = __webpack_require__(90);
+	var SyntheticUIEvent = __webpack_require__(76);
+	var ViewportMetrics = __webpack_require__(77);
 
-	var getEventModifierState = __webpack_require__(91);
+	var getEventModifierState = __webpack_require__(78);
 
 	/**
 	 * @interface MouseEvent
@@ -10955,7 +9233,7 @@
 	module.exports = SyntheticMouseEvent;
 
 /***/ },
-/* 89 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10971,9 +9249,9 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
-	var getEventTarget = __webpack_require__(83);
+	var getEventTarget = __webpack_require__(70);
 
 	/**
 	 * @interface UIEvent
@@ -11019,7 +9297,7 @@
 	module.exports = SyntheticUIEvent;
 
 /***/ },
-/* 90 */
+/* 77 */
 /***/ function(module, exports) {
 
 	/**
@@ -11051,7 +9329,7 @@
 	module.exports = ViewportMetrics;
 
 /***/ },
-/* 91 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -11099,7 +9377,7 @@
 	module.exports = getEventModifierState;
 
 /***/ },
-/* 92 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11115,7 +9393,7 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(50);
+	var DOMProperty = __webpack_require__(37);
 
 	var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
 	var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
@@ -11316,7 +9594,7 @@
 	module.exports = HTMLDOMPropertyConfig;
 
 /***/ },
-/* 93 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11332,8 +9610,8 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(94);
-	var ReactDOMIDOperations = __webpack_require__(106);
+	var DOMChildrenOperations = __webpack_require__(81);
+	var ReactDOMIDOperations = __webpack_require__(93);
 
 	/**
 	 * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -11351,7 +9629,7 @@
 	module.exports = ReactComponentBrowserEnvironment;
 
 /***/ },
-/* 94 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11367,15 +9645,15 @@
 
 	'use strict';
 
-	var DOMLazyTree = __webpack_require__(95);
-	var Danger = __webpack_require__(101);
-	var ReactMultiChildUpdateTypes = __webpack_require__(105);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactInstrumentation = __webpack_require__(75);
+	var DOMLazyTree = __webpack_require__(82);
+	var Danger = __webpack_require__(88);
+	var ReactMultiChildUpdateTypes = __webpack_require__(92);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactInstrumentation = __webpack_require__(62);
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(98);
-	var setInnerHTML = __webpack_require__(97);
-	var setTextContent = __webpack_require__(99);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(85);
+	var setInnerHTML = __webpack_require__(84);
+	var setTextContent = __webpack_require__(86);
 
 	function getNodeAfter(parentNode, node) {
 	  // Special case for text components, which return [open, close] comments
@@ -11551,7 +9829,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 95 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11567,11 +9845,11 @@
 
 	'use strict';
 
-	var DOMNamespaces = __webpack_require__(96);
-	var setInnerHTML = __webpack_require__(97);
+	var DOMNamespaces = __webpack_require__(83);
+	var setInnerHTML = __webpack_require__(84);
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(98);
-	var setTextContent = __webpack_require__(99);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(85);
+	var setTextContent = __webpack_require__(86);
 
 	var ELEMENT_NODE_TYPE = 1;
 	var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -11674,7 +9952,7 @@
 	module.exports = DOMLazyTree;
 
 /***/ },
-/* 96 */
+/* 83 */
 /***/ function(module, exports) {
 
 	/**
@@ -11699,7 +9977,7 @@
 	module.exports = DOMNamespaces;
 
 /***/ },
-/* 97 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11715,13 +9993,13 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
-	var DOMNamespaces = __webpack_require__(96);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var DOMNamespaces = __webpack_require__(83);
 
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 	var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(98);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(85);
 
 	// SVG temp container for IE lacking innerHTML
 	var reusableSVGContainer;
@@ -11802,7 +10080,7 @@
 	module.exports = setInnerHTML;
 
 /***/ },
-/* 98 */
+/* 85 */
 /***/ function(module, exports) {
 
 	/**
@@ -11839,7 +10117,7 @@
 	module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ },
-/* 99 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11855,9 +10133,9 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
-	var escapeTextContentForBrowser = __webpack_require__(100);
-	var setInnerHTML = __webpack_require__(97);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var escapeTextContentForBrowser = __webpack_require__(87);
+	var setInnerHTML = __webpack_require__(84);
 
 	/**
 	 * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -11892,7 +10170,7 @@
 	module.exports = setTextContent;
 
 /***/ },
-/* 100 */
+/* 87 */
 /***/ function(module, exports) {
 
 	/**
@@ -12020,7 +10298,7 @@
 	module.exports = escapeTextContentForBrowser;
 
 /***/ },
-/* 101 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12038,10 +10316,10 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var DOMLazyTree = __webpack_require__(95);
-	var ExecutionEnvironment = __webpack_require__(62);
+	var DOMLazyTree = __webpack_require__(82);
+	var ExecutionEnvironment = __webpack_require__(49);
 
-	var createNodesFromMarkup = __webpack_require__(102);
+	var createNodesFromMarkup = __webpack_require__(89);
 	var emptyFunction = __webpack_require__(12);
 	var invariant = __webpack_require__(8);
 
@@ -12074,7 +10352,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 102 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -12092,10 +10370,10 @@
 
 	/*eslint-disable fb-www/unsafe-html*/
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
-	var createArrayFromMixed = __webpack_require__(103);
-	var getMarkupWrap = __webpack_require__(104);
+	var createArrayFromMixed = __webpack_require__(90);
+	var getMarkupWrap = __webpack_require__(91);
 	var invariant = __webpack_require__(8);
 
 	/**
@@ -12163,7 +10441,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 103 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -12295,7 +10573,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 104 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -12312,7 +10590,7 @@
 
 	/*eslint-disable fb-www/unsafe-html */
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
 	var invariant = __webpack_require__(8);
 
@@ -12395,7 +10673,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 105 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12432,7 +10710,7 @@
 	module.exports = ReactMultiChildUpdateTypes;
 
 /***/ },
-/* 106 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12448,8 +10726,8 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(94);
-	var ReactDOMComponentTree = __webpack_require__(49);
+	var DOMChildrenOperations = __webpack_require__(81);
+	var ReactDOMComponentTree = __webpack_require__(36);
 
 	/**
 	 * Operations used to process updates to DOM nodes.
@@ -12471,7 +10749,7 @@
 	module.exports = ReactDOMIDOperations;
 
 /***/ },
-/* 107 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12492,34 +10770,34 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var AutoFocusUtils = __webpack_require__(108);
-	var CSSPropertyOperations = __webpack_require__(110);
-	var DOMLazyTree = __webpack_require__(95);
-	var DOMNamespaces = __webpack_require__(96);
-	var DOMProperty = __webpack_require__(50);
-	var DOMPropertyOperations = __webpack_require__(118);
-	var EventConstants = __webpack_require__(54);
-	var EventPluginHub = __webpack_require__(56);
-	var EventPluginRegistry = __webpack_require__(57);
-	var ReactBrowserEventEmitter = __webpack_require__(120);
-	var ReactDOMButton = __webpack_require__(123);
-	var ReactDOMComponentFlags = __webpack_require__(51);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactDOMInput = __webpack_require__(125);
-	var ReactDOMOption = __webpack_require__(127);
-	var ReactDOMSelect = __webpack_require__(128);
-	var ReactDOMTextarea = __webpack_require__(129);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactMultiChild = __webpack_require__(130);
-	var ReactServerRenderingTransaction = __webpack_require__(142);
+	var AutoFocusUtils = __webpack_require__(95);
+	var CSSPropertyOperations = __webpack_require__(97);
+	var DOMLazyTree = __webpack_require__(82);
+	var DOMNamespaces = __webpack_require__(83);
+	var DOMProperty = __webpack_require__(37);
+	var DOMPropertyOperations = __webpack_require__(105);
+	var EventConstants = __webpack_require__(41);
+	var EventPluginHub = __webpack_require__(43);
+	var EventPluginRegistry = __webpack_require__(44);
+	var ReactBrowserEventEmitter = __webpack_require__(107);
+	var ReactDOMButton = __webpack_require__(110);
+	var ReactDOMComponentFlags = __webpack_require__(38);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactDOMInput = __webpack_require__(112);
+	var ReactDOMOption = __webpack_require__(114);
+	var ReactDOMSelect = __webpack_require__(115);
+	var ReactDOMTextarea = __webpack_require__(116);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactMultiChild = __webpack_require__(117);
+	var ReactServerRenderingTransaction = __webpack_require__(129);
 
 	var emptyFunction = __webpack_require__(12);
-	var escapeTextContentForBrowser = __webpack_require__(100);
+	var escapeTextContentForBrowser = __webpack_require__(87);
 	var invariant = __webpack_require__(8);
-	var isEventSupported = __webpack_require__(84);
+	var isEventSupported = __webpack_require__(71);
 	var keyOf = __webpack_require__(25);
-	var shallowEqual = __webpack_require__(137);
-	var validateDOMNesting = __webpack_require__(145);
+	var shallowEqual = __webpack_require__(124);
+	var validateDOMNesting = __webpack_require__(132);
 	var warning = __webpack_require__(11);
 
 	var Flags = ReactDOMComponentFlags;
@@ -13483,7 +11761,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 108 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13499,9 +11777,9 @@
 
 	'use strict';
 
-	var ReactDOMComponentTree = __webpack_require__(49);
+	var ReactDOMComponentTree = __webpack_require__(36);
 
-	var focusNode = __webpack_require__(109);
+	var focusNode = __webpack_require__(96);
 
 	var AutoFocusUtils = {
 	  focusDOMComponent: function () {
@@ -13512,7 +11790,7 @@
 	module.exports = AutoFocusUtils;
 
 /***/ },
-/* 109 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/**
@@ -13543,7 +11821,7 @@
 	module.exports = focusNode;
 
 /***/ },
-/* 110 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -13559,14 +11837,14 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(111);
-	var ExecutionEnvironment = __webpack_require__(62);
-	var ReactInstrumentation = __webpack_require__(75);
+	var CSSProperty = __webpack_require__(98);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var ReactInstrumentation = __webpack_require__(62);
 
-	var camelizeStyleName = __webpack_require__(112);
-	var dangerousStyleValue = __webpack_require__(114);
-	var hyphenateStyleName = __webpack_require__(115);
-	var memoizeStringOnly = __webpack_require__(117);
+	var camelizeStyleName = __webpack_require__(99);
+	var dangerousStyleValue = __webpack_require__(101);
+	var hyphenateStyleName = __webpack_require__(102);
+	var memoizeStringOnly = __webpack_require__(104);
 	var warning = __webpack_require__(11);
 
 	var processStyleName = memoizeStringOnly(function (styleName) {
@@ -13754,7 +12032,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 111 */
+/* 98 */
 /***/ function(module, exports) {
 
 	/**
@@ -13907,7 +12185,7 @@
 	module.exports = CSSProperty;
 
 /***/ },
-/* 112 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13923,7 +12201,7 @@
 
 	'use strict';
 
-	var camelize = __webpack_require__(113);
+	var camelize = __webpack_require__(100);
 
 	var msPattern = /^-ms-/;
 
@@ -13951,7 +12229,7 @@
 	module.exports = camelizeStyleName;
 
 /***/ },
-/* 113 */
+/* 100 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -13987,7 +12265,7 @@
 	module.exports = camelize;
 
 /***/ },
-/* 114 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14003,7 +12281,7 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(111);
+	var CSSProperty = __webpack_require__(98);
 	var warning = __webpack_require__(11);
 
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
@@ -14072,7 +12350,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 115 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14088,7 +12366,7 @@
 
 	'use strict';
 
-	var hyphenate = __webpack_require__(116);
+	var hyphenate = __webpack_require__(103);
 
 	var msPattern = /^ms-/;
 
@@ -14115,7 +12393,7 @@
 	module.exports = hyphenateStyleName;
 
 /***/ },
-/* 116 */
+/* 103 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -14152,7 +12430,7 @@
 	module.exports = hyphenate;
 
 /***/ },
-/* 117 */
+/* 104 */
 /***/ function(module, exports) {
 
 	/**
@@ -14186,7 +12464,7 @@
 	module.exports = memoizeStringOnly;
 
 /***/ },
-/* 118 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14202,11 +12480,11 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(50);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactInstrumentation = __webpack_require__(75);
+	var DOMProperty = __webpack_require__(37);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactInstrumentation = __webpack_require__(62);
 
-	var quoteAttributeValueForBrowser = __webpack_require__(119);
+	var quoteAttributeValueForBrowser = __webpack_require__(106);
 	var warning = __webpack_require__(11);
 
 	var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -14413,7 +12691,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 119 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14429,7 +12707,7 @@
 
 	'use strict';
 
-	var escapeTextContentForBrowser = __webpack_require__(100);
+	var escapeTextContentForBrowser = __webpack_require__(87);
 
 	/**
 	 * Escapes attribute value to prevent scripting attacks.
@@ -14444,7 +12722,7 @@
 	module.exports = quoteAttributeValueForBrowser;
 
 /***/ },
-/* 120 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14462,13 +12740,13 @@
 
 	var _assign = __webpack_require__(4);
 
-	var EventConstants = __webpack_require__(54);
-	var EventPluginRegistry = __webpack_require__(57);
-	var ReactEventEmitterMixin = __webpack_require__(121);
-	var ViewportMetrics = __webpack_require__(90);
+	var EventConstants = __webpack_require__(41);
+	var EventPluginRegistry = __webpack_require__(44);
+	var ReactEventEmitterMixin = __webpack_require__(108);
+	var ViewportMetrics = __webpack_require__(77);
 
-	var getVendorPrefixedEventName = __webpack_require__(122);
-	var isEventSupported = __webpack_require__(84);
+	var getVendorPrefixedEventName = __webpack_require__(109);
+	var isEventSupported = __webpack_require__(71);
 
 	/**
 	 * Summary of `ReactBrowserEventEmitter` event handling:
@@ -14779,7 +13057,7 @@
 	module.exports = ReactBrowserEventEmitter;
 
 /***/ },
-/* 121 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14795,7 +13073,7 @@
 
 	'use strict';
 
-	var EventPluginHub = __webpack_require__(56);
+	var EventPluginHub = __webpack_require__(43);
 
 	function runEventQueueInBatch(events) {
 	  EventPluginHub.enqueueEvents(events);
@@ -14817,7 +13095,7 @@
 	module.exports = ReactEventEmitterMixin;
 
 /***/ },
-/* 122 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14833,7 +13111,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
 	/**
 	 * Generate a mapping of standard vendor prefixes using the defined style property and event name.
@@ -14923,7 +13201,7 @@
 	module.exports = getVendorPrefixedEventName;
 
 /***/ },
-/* 123 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14939,7 +13217,7 @@
 
 	'use strict';
 
-	var DisabledInputUtils = __webpack_require__(124);
+	var DisabledInputUtils = __webpack_require__(111);
 
 	/**
 	 * Implements a <button> host component that does not receive mouse events
@@ -14952,7 +13230,7 @@
 	module.exports = ReactDOMButton;
 
 /***/ },
-/* 124 */
+/* 111 */
 /***/ function(module, exports) {
 
 	/**
@@ -15007,7 +13285,7 @@
 	module.exports = DisabledInputUtils;
 
 /***/ },
-/* 125 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15026,11 +13304,11 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var DisabledInputUtils = __webpack_require__(124);
-	var DOMPropertyOperations = __webpack_require__(118);
-	var LinkedValueUtils = __webpack_require__(126);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactUpdates = __webpack_require__(69);
+	var DisabledInputUtils = __webpack_require__(111);
+	var DOMPropertyOperations = __webpack_require__(105);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactUpdates = __webpack_require__(56);
 
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
@@ -15282,7 +13560,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 126 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15424,7 +13702,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 127 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15443,8 +13721,8 @@
 	var _assign = __webpack_require__(4);
 
 	var ReactChildren = __webpack_require__(5);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactDOMSelect = __webpack_require__(128);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactDOMSelect = __webpack_require__(115);
 
 	var warning = __webpack_require__(11);
 	var didWarnInvalidOptionChildren = false;
@@ -15553,7 +13831,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 128 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15571,10 +13849,10 @@
 
 	var _assign = __webpack_require__(4);
 
-	var DisabledInputUtils = __webpack_require__(124);
-	var LinkedValueUtils = __webpack_require__(126);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactUpdates = __webpack_require__(69);
+	var DisabledInputUtils = __webpack_require__(111);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactUpdates = __webpack_require__(56);
 
 	var warning = __webpack_require__(11);
 
@@ -15760,7 +14038,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 129 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15779,10 +14057,10 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var DisabledInputUtils = __webpack_require__(124);
-	var LinkedValueUtils = __webpack_require__(126);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactUpdates = __webpack_require__(69);
+	var DisabledInputUtils = __webpack_require__(111);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactUpdates = __webpack_require__(56);
 
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
@@ -15921,7 +14199,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 130 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15939,17 +14217,17 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var ReactComponentEnvironment = __webpack_require__(131);
-	var ReactInstanceMap = __webpack_require__(132);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactMultiChildUpdateTypes = __webpack_require__(105);
+	var ReactComponentEnvironment = __webpack_require__(118);
+	var ReactInstanceMap = __webpack_require__(119);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactMultiChildUpdateTypes = __webpack_require__(92);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactReconciler = __webpack_require__(72);
-	var ReactChildReconciler = __webpack_require__(133);
+	var ReactReconciler = __webpack_require__(59);
+	var ReactChildReconciler = __webpack_require__(120);
 
 	var emptyFunction = __webpack_require__(12);
-	var flattenChildren = __webpack_require__(141);
+	var flattenChildren = __webpack_require__(128);
 	var invariant = __webpack_require__(8);
 
 	/**
@@ -16378,7 +14656,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 131 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16429,7 +14707,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 132 */
+/* 119 */
 /***/ function(module, exports) {
 
 	/**
@@ -16482,7 +14760,7 @@
 	module.exports = ReactInstanceMap;
 
 /***/ },
-/* 133 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16498,11 +14776,11 @@
 
 	'use strict';
 
-	var ReactReconciler = __webpack_require__(72);
+	var ReactReconciler = __webpack_require__(59);
 
-	var instantiateReactComponent = __webpack_require__(134);
+	var instantiateReactComponent = __webpack_require__(121);
 	var KeyEscapeUtils = __webpack_require__(16);
-	var shouldUpdateReactComponent = __webpack_require__(138);
+	var shouldUpdateReactComponent = __webpack_require__(125);
 	var traverseAllChildren = __webpack_require__(14);
 	var warning = __webpack_require__(11);
 
@@ -16642,7 +14920,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 134 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16661,9 +14939,9 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var ReactCompositeComponent = __webpack_require__(135);
-	var ReactEmptyComponent = __webpack_require__(139);
-	var ReactHostComponent = __webpack_require__(140);
+	var ReactCompositeComponent = __webpack_require__(122);
+	var ReactEmptyComponent = __webpack_require__(126);
+	var ReactHostComponent = __webpack_require__(127);
 
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
@@ -16767,7 +15045,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 135 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16786,21 +15064,21 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var ReactComponentEnvironment = __webpack_require__(131);
+	var ReactComponentEnvironment = __webpack_require__(118);
 	var ReactCurrentOwner = __webpack_require__(10);
 	var ReactElement = __webpack_require__(9);
-	var ReactErrorUtils = __webpack_require__(59);
-	var ReactInstanceMap = __webpack_require__(132);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactNodeTypes = __webpack_require__(136);
+	var ReactErrorUtils = __webpack_require__(46);
+	var ReactInstanceMap = __webpack_require__(119);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactNodeTypes = __webpack_require__(123);
 	var ReactPropTypeLocations = __webpack_require__(22);
-	var ReactReconciler = __webpack_require__(72);
+	var ReactReconciler = __webpack_require__(59);
 
 	var checkReactTypeSpec = __webpack_require__(29);
 	var emptyObject = __webpack_require__(19);
 	var invariant = __webpack_require__(8);
-	var shallowEqual = __webpack_require__(137);
-	var shouldUpdateReactComponent = __webpack_require__(138);
+	var shallowEqual = __webpack_require__(124);
+	var shouldUpdateReactComponent = __webpack_require__(125);
 	var warning = __webpack_require__(11);
 
 	var CompositeTypes = {
@@ -17677,7 +15955,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 136 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17723,7 +16001,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 137 */
+/* 124 */
 /***/ function(module, exports) {
 
 	/**
@@ -17794,7 +16072,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 138 */
+/* 125 */
 /***/ function(module, exports) {
 
 	/**
@@ -17841,7 +16119,7 @@
 	module.exports = shouldUpdateReactComponent;
 
 /***/ },
-/* 139 */
+/* 126 */
 /***/ function(module, exports) {
 
 	/**
@@ -17876,7 +16154,7 @@
 	module.exports = ReactEmptyComponent;
 
 /***/ },
-/* 140 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17958,7 +16236,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 141 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18040,7 +16318,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 142 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18059,9 +16337,9 @@
 	var _assign = __webpack_require__(4);
 
 	var PooledClass = __webpack_require__(6);
-	var Transaction = __webpack_require__(82);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactServerUpdateQueue = __webpack_require__(143);
+	var Transaction = __webpack_require__(69);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactServerUpdateQueue = __webpack_require__(130);
 
 	/**
 	 * Executed within the scope of the `Transaction` instance. Consider these as
@@ -18136,7 +16414,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 143 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18155,8 +16433,8 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var ReactUpdateQueue = __webpack_require__(144);
-	var Transaction = __webpack_require__(82);
+	var ReactUpdateQueue = __webpack_require__(131);
+	var Transaction = __webpack_require__(69);
 	var warning = __webpack_require__(11);
 
 	function warnNoop(publicInstance, callerName) {
@@ -18283,7 +16561,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 144 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18302,9 +16580,9 @@
 	var _prodInvariant = __webpack_require__(7);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactInstanceMap = __webpack_require__(132);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactUpdates = __webpack_require__(69);
+	var ReactInstanceMap = __webpack_require__(119);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactUpdates = __webpack_require__(56);
 
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
@@ -18515,7 +16793,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 145 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18903,7 +17181,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 146 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18921,8 +17199,8 @@
 
 	var _assign = __webpack_require__(4);
 
-	var DOMLazyTree = __webpack_require__(95);
-	var ReactDOMComponentTree = __webpack_require__(49);
+	var DOMLazyTree = __webpack_require__(82);
+	var ReactDOMComponentTree = __webpack_require__(36);
 
 	var ReactDOMEmptyComponent = function (instantiate) {
 	  // ReactCompositeComponent uses this:
@@ -18968,7 +17246,7 @@
 	module.exports = ReactDOMEmptyComponent;
 
 /***/ },
-/* 147 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19110,7 +17388,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 148 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19129,13 +17407,13 @@
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
 
-	var DOMChildrenOperations = __webpack_require__(94);
-	var DOMLazyTree = __webpack_require__(95);
-	var ReactDOMComponentTree = __webpack_require__(49);
+	var DOMChildrenOperations = __webpack_require__(81);
+	var DOMLazyTree = __webpack_require__(82);
+	var ReactDOMComponentTree = __webpack_require__(36);
 
-	var escapeTextContentForBrowser = __webpack_require__(100);
+	var escapeTextContentForBrowser = __webpack_require__(87);
 	var invariant = __webpack_require__(8);
-	var validateDOMNesting = __webpack_require__(145);
+	var validateDOMNesting = __webpack_require__(132);
 
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -19280,7 +17558,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 149 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19298,8 +17576,8 @@
 
 	var _assign = __webpack_require__(4);
 
-	var ReactUpdates = __webpack_require__(69);
-	var Transaction = __webpack_require__(82);
+	var ReactUpdates = __webpack_require__(56);
+	var Transaction = __webpack_require__(69);
 
 	var emptyFunction = __webpack_require__(12);
 
@@ -19353,7 +17631,7 @@
 	module.exports = ReactDefaultBatchingStrategy;
 
 /***/ },
-/* 150 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19371,14 +17649,14 @@
 
 	var _assign = __webpack_require__(4);
 
-	var EventListener = __webpack_require__(151);
-	var ExecutionEnvironment = __webpack_require__(62);
+	var EventListener = __webpack_require__(138);
+	var ExecutionEnvironment = __webpack_require__(49);
 	var PooledClass = __webpack_require__(6);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactUpdates = __webpack_require__(69);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactUpdates = __webpack_require__(56);
 
-	var getEventTarget = __webpack_require__(83);
-	var getUnboundedScrollPosition = __webpack_require__(152);
+	var getEventTarget = __webpack_require__(70);
+	var getUnboundedScrollPosition = __webpack_require__(139);
 
 	/**
 	 * Find the deepest React component completely containing the root of the
@@ -19515,7 +17793,7 @@
 	module.exports = ReactEventListener;
 
 /***/ },
-/* 151 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -19604,7 +17882,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 152 */
+/* 139 */
 /***/ function(module, exports) {
 
 	/**
@@ -19647,7 +17925,7 @@
 	module.exports = getUnboundedScrollPosition;
 
 /***/ },
-/* 153 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19663,15 +17941,15 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(50);
-	var EventPluginHub = __webpack_require__(56);
-	var EventPluginUtils = __webpack_require__(58);
-	var ReactComponentEnvironment = __webpack_require__(131);
+	var DOMProperty = __webpack_require__(37);
+	var EventPluginHub = __webpack_require__(43);
+	var EventPluginUtils = __webpack_require__(45);
+	var ReactComponentEnvironment = __webpack_require__(118);
 	var ReactClass = __webpack_require__(21);
-	var ReactEmptyComponent = __webpack_require__(139);
-	var ReactBrowserEventEmitter = __webpack_require__(120);
-	var ReactHostComponent = __webpack_require__(140);
-	var ReactUpdates = __webpack_require__(69);
+	var ReactEmptyComponent = __webpack_require__(126);
+	var ReactBrowserEventEmitter = __webpack_require__(107);
+	var ReactHostComponent = __webpack_require__(127);
+	var ReactUpdates = __webpack_require__(56);
 
 	var ReactInjection = {
 	  Component: ReactComponentEnvironment.injection,
@@ -19688,7 +17966,7 @@
 	module.exports = ReactInjection;
 
 /***/ },
-/* 154 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19706,13 +17984,13 @@
 
 	var _assign = __webpack_require__(4);
 
-	var CallbackQueue = __webpack_require__(70);
+	var CallbackQueue = __webpack_require__(57);
 	var PooledClass = __webpack_require__(6);
-	var ReactBrowserEventEmitter = __webpack_require__(120);
-	var ReactInputSelection = __webpack_require__(155);
-	var ReactInstrumentation = __webpack_require__(75);
-	var Transaction = __webpack_require__(82);
-	var ReactUpdateQueue = __webpack_require__(144);
+	var ReactBrowserEventEmitter = __webpack_require__(107);
+	var ReactInputSelection = __webpack_require__(142);
+	var ReactInstrumentation = __webpack_require__(62);
+	var Transaction = __webpack_require__(69);
+	var ReactUpdateQueue = __webpack_require__(131);
 
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -19872,7 +18150,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 155 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19888,11 +18166,11 @@
 
 	'use strict';
 
-	var ReactDOMSelection = __webpack_require__(156);
+	var ReactDOMSelection = __webpack_require__(143);
 
-	var containsNode = __webpack_require__(158);
-	var focusNode = __webpack_require__(109);
-	var getActiveElement = __webpack_require__(161);
+	var containsNode = __webpack_require__(145);
+	var focusNode = __webpack_require__(96);
+	var getActiveElement = __webpack_require__(148);
 
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -20001,7 +18279,7 @@
 	module.exports = ReactInputSelection;
 
 /***/ },
-/* 156 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20017,10 +18295,10 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(62);
+	var ExecutionEnvironment = __webpack_require__(49);
 
-	var getNodeForCharacterOffset = __webpack_require__(157);
-	var getTextContentAccessor = __webpack_require__(64);
+	var getNodeForCharacterOffset = __webpack_require__(144);
+	var getTextContentAccessor = __webpack_require__(51);
 
 	/**
 	 * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -20218,7 +18496,7 @@
 	module.exports = ReactDOMSelection;
 
 /***/ },
-/* 157 */
+/* 144 */
 /***/ function(module, exports) {
 
 	/**
@@ -20297,7 +18575,7 @@
 	module.exports = getNodeForCharacterOffset;
 
 /***/ },
-/* 158 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20313,7 +18591,7 @@
 	 * 
 	 */
 
-	var isTextNode = __webpack_require__(159);
+	var isTextNode = __webpack_require__(146);
 
 	/*eslint-disable no-bitwise */
 
@@ -20341,7 +18619,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 159 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20357,7 +18635,7 @@
 	 * @typechecks
 	 */
 
-	var isNode = __webpack_require__(160);
+	var isNode = __webpack_require__(147);
 
 	/**
 	 * @param {*} object The object to check.
@@ -20370,7 +18648,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 160 */
+/* 147 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20397,7 +18675,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 161 */
+/* 148 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20436,7 +18714,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 162 */
+/* 149 */
 /***/ function(module, exports) {
 
 	/**
@@ -20743,7 +19021,7 @@
 	module.exports = SVGDOMPropertyConfig;
 
 /***/ },
-/* 163 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20759,17 +19037,17 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(54);
-	var EventPropagators = __webpack_require__(55);
-	var ExecutionEnvironment = __webpack_require__(62);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactInputSelection = __webpack_require__(155);
-	var SyntheticEvent = __webpack_require__(66);
+	var EventConstants = __webpack_require__(41);
+	var EventPropagators = __webpack_require__(42);
+	var ExecutionEnvironment = __webpack_require__(49);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactInputSelection = __webpack_require__(142);
+	var SyntheticEvent = __webpack_require__(53);
 
-	var getActiveElement = __webpack_require__(161);
-	var isTextInputElement = __webpack_require__(85);
+	var getActiveElement = __webpack_require__(148);
+	var isTextInputElement = __webpack_require__(72);
 	var keyOf = __webpack_require__(25);
-	var shallowEqual = __webpack_require__(137);
+	var shallowEqual = __webpack_require__(124);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -20944,7 +19222,7 @@
 	module.exports = SelectEventPlugin;
 
 /***/ },
-/* 164 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20962,24 +19240,24 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var EventConstants = __webpack_require__(54);
-	var EventListener = __webpack_require__(151);
-	var EventPropagators = __webpack_require__(55);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var SyntheticAnimationEvent = __webpack_require__(165);
-	var SyntheticClipboardEvent = __webpack_require__(166);
-	var SyntheticEvent = __webpack_require__(66);
-	var SyntheticFocusEvent = __webpack_require__(167);
-	var SyntheticKeyboardEvent = __webpack_require__(168);
-	var SyntheticMouseEvent = __webpack_require__(88);
-	var SyntheticDragEvent = __webpack_require__(171);
-	var SyntheticTouchEvent = __webpack_require__(172);
-	var SyntheticTransitionEvent = __webpack_require__(173);
-	var SyntheticUIEvent = __webpack_require__(89);
-	var SyntheticWheelEvent = __webpack_require__(174);
+	var EventConstants = __webpack_require__(41);
+	var EventListener = __webpack_require__(138);
+	var EventPropagators = __webpack_require__(42);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var SyntheticAnimationEvent = __webpack_require__(152);
+	var SyntheticClipboardEvent = __webpack_require__(153);
+	var SyntheticEvent = __webpack_require__(53);
+	var SyntheticFocusEvent = __webpack_require__(154);
+	var SyntheticKeyboardEvent = __webpack_require__(155);
+	var SyntheticMouseEvent = __webpack_require__(75);
+	var SyntheticDragEvent = __webpack_require__(158);
+	var SyntheticTouchEvent = __webpack_require__(159);
+	var SyntheticTransitionEvent = __webpack_require__(160);
+	var SyntheticUIEvent = __webpack_require__(76);
+	var SyntheticWheelEvent = __webpack_require__(161);
 
 	var emptyFunction = __webpack_require__(12);
-	var getEventCharCode = __webpack_require__(169);
+	var getEventCharCode = __webpack_require__(156);
 	var invariant = __webpack_require__(8);
 	var keyOf = __webpack_require__(25);
 
@@ -21585,7 +19863,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 165 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21601,7 +19879,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
 	/**
 	 * @interface Event
@@ -21629,7 +19907,7 @@
 	module.exports = SyntheticAnimationEvent;
 
 /***/ },
-/* 166 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21645,7 +19923,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
 	/**
 	 * @interface Event
@@ -21672,7 +19950,7 @@
 	module.exports = SyntheticClipboardEvent;
 
 /***/ },
-/* 167 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21688,7 +19966,7 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(89);
+	var SyntheticUIEvent = __webpack_require__(76);
 
 	/**
 	 * @interface FocusEvent
@@ -21713,7 +19991,7 @@
 	module.exports = SyntheticFocusEvent;
 
 /***/ },
-/* 168 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21729,11 +20007,11 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(89);
+	var SyntheticUIEvent = __webpack_require__(76);
 
-	var getEventCharCode = __webpack_require__(169);
-	var getEventKey = __webpack_require__(170);
-	var getEventModifierState = __webpack_require__(91);
+	var getEventCharCode = __webpack_require__(156);
+	var getEventKey = __webpack_require__(157);
+	var getEventModifierState = __webpack_require__(78);
 
 	/**
 	 * @interface KeyboardEvent
@@ -21802,7 +20080,7 @@
 	module.exports = SyntheticKeyboardEvent;
 
 /***/ },
-/* 169 */
+/* 156 */
 /***/ function(module, exports) {
 
 	/**
@@ -21857,7 +20135,7 @@
 	module.exports = getEventCharCode;
 
 /***/ },
-/* 170 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21873,7 +20151,7 @@
 
 	'use strict';
 
-	var getEventCharCode = __webpack_require__(169);
+	var getEventCharCode = __webpack_require__(156);
 
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -21964,7 +20242,7 @@
 	module.exports = getEventKey;
 
 /***/ },
-/* 171 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21980,7 +20258,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(88);
+	var SyntheticMouseEvent = __webpack_require__(75);
 
 	/**
 	 * @interface DragEvent
@@ -22005,7 +20283,7 @@
 	module.exports = SyntheticDragEvent;
 
 /***/ },
-/* 172 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22021,9 +20299,9 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(89);
+	var SyntheticUIEvent = __webpack_require__(76);
 
-	var getEventModifierState = __webpack_require__(91);
+	var getEventModifierState = __webpack_require__(78);
 
 	/**
 	 * @interface TouchEvent
@@ -22055,7 +20333,7 @@
 	module.exports = SyntheticTouchEvent;
 
 /***/ },
-/* 173 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22071,7 +20349,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(66);
+	var SyntheticEvent = __webpack_require__(53);
 
 	/**
 	 * @interface Event
@@ -22099,7 +20377,7 @@
 	module.exports = SyntheticTransitionEvent;
 
 /***/ },
-/* 174 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22115,7 +20393,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(88);
+	var SyntheticMouseEvent = __webpack_require__(75);
 
 	/**
 	 * @interface WheelEvent
@@ -22158,7 +20436,7 @@
 	module.exports = SyntheticWheelEvent;
 
 /***/ },
-/* 175 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22176,27 +20454,27 @@
 
 	var _prodInvariant = __webpack_require__(7);
 
-	var DOMLazyTree = __webpack_require__(95);
-	var DOMProperty = __webpack_require__(50);
-	var ReactBrowserEventEmitter = __webpack_require__(120);
+	var DOMLazyTree = __webpack_require__(82);
+	var DOMProperty = __webpack_require__(37);
+	var ReactBrowserEventEmitter = __webpack_require__(107);
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactDOMContainerInfo = __webpack_require__(176);
-	var ReactDOMFeatureFlags = __webpack_require__(177);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactDOMContainerInfo = __webpack_require__(163);
+	var ReactDOMFeatureFlags = __webpack_require__(164);
 	var ReactElement = __webpack_require__(9);
-	var ReactFeatureFlags = __webpack_require__(71);
-	var ReactInstanceMap = __webpack_require__(132);
-	var ReactInstrumentation = __webpack_require__(75);
-	var ReactMarkupChecksum = __webpack_require__(178);
-	var ReactReconciler = __webpack_require__(72);
-	var ReactUpdateQueue = __webpack_require__(144);
-	var ReactUpdates = __webpack_require__(69);
+	var ReactFeatureFlags = __webpack_require__(58);
+	var ReactInstanceMap = __webpack_require__(119);
+	var ReactInstrumentation = __webpack_require__(62);
+	var ReactMarkupChecksum = __webpack_require__(165);
+	var ReactReconciler = __webpack_require__(59);
+	var ReactUpdateQueue = __webpack_require__(131);
+	var ReactUpdates = __webpack_require__(56);
 
 	var emptyObject = __webpack_require__(19);
-	var instantiateReactComponent = __webpack_require__(134);
+	var instantiateReactComponent = __webpack_require__(121);
 	var invariant = __webpack_require__(8);
-	var setInnerHTML = __webpack_require__(97);
-	var shouldUpdateReactComponent = __webpack_require__(138);
+	var setInnerHTML = __webpack_require__(84);
+	var shouldUpdateReactComponent = __webpack_require__(125);
 	var warning = __webpack_require__(11);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -22698,7 +20976,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 176 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22714,7 +20992,7 @@
 
 	'use strict';
 
-	var validateDOMNesting = __webpack_require__(145);
+	var validateDOMNesting = __webpack_require__(132);
 
 	var DOC_NODE_TYPE = 9;
 
@@ -22737,7 +21015,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 177 */
+/* 164 */
 /***/ function(module, exports) {
 
 	/**
@@ -22760,7 +21038,7 @@
 	module.exports = ReactDOMFeatureFlags;
 
 /***/ },
-/* 178 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22776,7 +21054,7 @@
 
 	'use strict';
 
-	var adler32 = __webpack_require__(179);
+	var adler32 = __webpack_require__(166);
 
 	var TAG_END = /\/?>/;
 	var COMMENT_START = /^<\!\-\-/;
@@ -22815,7 +21093,7 @@
 	module.exports = ReactMarkupChecksum;
 
 /***/ },
-/* 179 */
+/* 166 */
 /***/ function(module, exports) {
 
 	/**
@@ -22864,7 +21142,7 @@
 	module.exports = adler32;
 
 /***/ },
-/* 180 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22883,10 +21161,10 @@
 	var _prodInvariant = __webpack_require__(7);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactDOMComponentTree = __webpack_require__(49);
-	var ReactInstanceMap = __webpack_require__(132);
+	var ReactDOMComponentTree = __webpack_require__(36);
+	var ReactInstanceMap = __webpack_require__(119);
 
-	var getHostComponentFromComposite = __webpack_require__(181);
+	var getHostComponentFromComposite = __webpack_require__(168);
 	var invariant = __webpack_require__(8);
 	var warning = __webpack_require__(11);
 
@@ -22930,7 +21208,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 181 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22946,7 +21224,7 @@
 
 	'use strict';
 
-	var ReactNodeTypes = __webpack_require__(136);
+	var ReactNodeTypes = __webpack_require__(123);
 
 	function getHostComponentFromComposite(inst) {
 	  var type;
@@ -22965,7 +21243,7 @@
 	module.exports = getHostComponentFromComposite;
 
 /***/ },
-/* 182 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22981,12 +21259,12 @@
 
 	'use strict';
 
-	var ReactMount = __webpack_require__(175);
+	var ReactMount = __webpack_require__(162);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 183 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23002,8 +21280,8 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(50);
-	var EventPluginRegistry = __webpack_require__(57);
+	var DOMProperty = __webpack_require__(37);
+	var EventPluginRegistry = __webpack_require__(44);
 	var ReactComponentTreeHook = __webpack_require__(28);
 
 	var warning = __webpack_require__(11);
@@ -23104,7 +21382,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 184 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23151,6 +21429,1779 @@
 
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _nav = __webpack_require__(173);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	var _sidebar = __webpack_require__(174);
+
+	var _sidebar2 = _interopRequireDefault(_sidebar);
+
+	var _job_form = __webpack_require__(175);
+
+	var _job_form2 = _interopRequireDefault(_job_form);
+
+	var _job = __webpack_require__(176);
+
+	var _job2 = _interopRequireDefault(_job);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Main = function (_React$Component) {
+	  _inherits(Main, _React$Component);
+
+	  function Main() {
+	    _classCallCheck(this, Main);
+
+	    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
+
+	    _this.state = {
+	      jobs: []
+	    };
+	    _this.handleNewJob = _this.handleNewJob.bind(_this);
+	    _this.handleJobDelete = _this.handleJobDelete.bind(_this);
+	    _this.handleJobUpdate = _this.handleJobUpdate.bind(_this);
+	    _this.handleResize = _this.handleResize.bind(_this);
+	    _this.handleJobClick = _this.handleJobClick.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Main, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      $.getJSON('/api/v1/jobs.json', function (response) {
+	        _this2.setState({ jobs: response });
+	      });
+	      window.addEventListener('resize', this.handleResize);
+	      window.addEventListener('load', this.handleResize);
+	    }
+	  }, {
+	    key: 'handleResize',
+	    value: function handleResize() {
+	      window.innerWidth < 768 ? this.setState({ small: true }) : this.setState({ small: false });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_nav2.default, { small: this.state.small, user_email: this.props.user_email,
+	          jobs: this.state.jobs, handleJobClick: this.handleJobClick }),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'container-fluid' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(_sidebar2.default, { jobs: this.state.jobs, handleJobClick: this.handleJobClick }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main' },
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  this.jobsToDisplay()
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'handleJobClick',
+	    value: function handleJobClick(e, job) {
+	      e.preventDefault();
+	      this.setState({ jobToDisplay: job });
+	    }
+	  }, {
+	    key: 'jobsToDisplay',
+	    value: function jobsToDisplay() {
+	      if (this.state.jobToDisplay) {
+	        return _react2.default.createElement(_job2.default, { key: this.state.jobToDisplay.id, id: this.state.jobToDisplay.id, job: this.state.jobToDisplay,
+	          handleUpdate: this.handleJobUpdate, handleDelete: this.handleJobDelete.bind(this, this.state.jobToDisplay.id) });
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Add a new job'
+	        ),
+	        _react2.default.createElement(_job_form2.default, { handleNewJob: this.handleNewJob })
+	      );
+	    }
+	  }, {
+	    key: 'handleJobUpdate',
+	    value: function handleJobUpdate(job) {
+	      var _this3 = this;
+
+	      $.ajax({
+	        url: 'api/v1/jobs/' + job.id,
+	        method: 'PUT',
+	        data: { job: job },
+	        success: function success() {
+	          _this3.updateJobs(job);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'updateJobs',
+	    value: function updateJobs(job) {
+	      var jobs = this.state.jobs.filter(function (oldJob) {
+	        return oldJob.id != job.id;
+	      });
+	      jobs.push(job);
+	      this.setState({ jobs: jobs, jobToDisplay: job });
+	    }
+	  }, {
+	    key: 'handleJobDelete',
+	    value: function handleJobDelete(id) {
+	      var _this4 = this;
+
+	      var result = confirm('Are you sure? This will delete the job and all associated entries.');
+	      if (result) {
+	        $.ajax({
+	          url: 'api/v1/jobs/' + id,
+	          method: 'DELETE',
+	          dataType: 'JSON',
+	          success: function success() {
+	            _this4.removeDeletedJob(id);
+	          }
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'removeDeletedJob',
+	    value: function removeDeletedJob(id) {
+	      var newJobs = this.state.jobs.filter(function (job) {
+	        return job.id != id;
+	      });
+	      this.setState({ jobs: newJobs, jobToDisplay: null });
+	    }
+	  }, {
+	    key: 'handleNewJob',
+	    value: function handleNewJob(job) {
+	      var newState = this.state.jobs.concat(job);
+	      this.setState({ jobs: newState, jobToDisplay: job });
+	    }
+	  }]);
+
+	  return Main;
+	}(_react2.default.Component);
+
+	exports.default = Main;
+
+
+	Main.propTypes = {
+	  user_email: _react2.default.PropTypes.string
+	};
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Nav = function (_React$Component) {
+	  _inherits(Nav, _React$Component);
+
+	  function Nav() {
+	    _classCallCheck(this, Nav);
+
+	    return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).apply(this, arguments));
+	  }
+
+	  _createClass(Nav, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'nav',
+	        { className: 'navbar navbar-inverse navbar-fixed-top' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container-fluid' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'navbar-header' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-controls': 'navbar' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'sr-only' },
+	                'Toggle navigation'
+	              ),
+	              _react2.default.createElement('span', { className: 'icon-bar' }),
+	              _react2.default.createElement('span', { className: 'icon-bar' }),
+	              _react2.default.createElement('span', { className: 'icon-bar' })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'navbar-brand', href: '#' },
+	              'Invoice App'
+	            )
+	          ),
+	          this.props.small ? this.addJobsToHamburgerMenu() : this.doNotIncludeJobsInHamburgerMenu()
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'addJobsToHamburgerMenu',
+	    value: function addJobsToHamburgerMenu() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'navbar', className: 'navbar-collapse collapse' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'nav navbar-nav navbar-right' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#' },
+	              this.props.user_email
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { 'data-method': 'delete', href: '/users/sign_out', rel: 'nofollow' },
+	              'Sign out?'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#', onClick: function onClick(e) {
+	                  return _this2.props.handleJobClick(e, null);
+	                } },
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Your Jobs'
+	              )
+	            )
+	          ),
+	          this.listJobs(),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#', 'data-toggle': 'collapse', 'data-target': '.navbar-collapse', onClick: function onClick(e) {
+	                  return _this2.props.handleJobClick(e, null);
+	                } },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
+	              ' Add a new job'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'doNotIncludeJobsInHamburgerMenu',
+	    value: function doNotIncludeJobsInHamburgerMenu() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'navbar', className: 'navbar-collapse collapse' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'nav navbar-nav navbar-right' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#' },
+	              this.props.user_email
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { 'data-method': 'delete', href: '/users/sign_out', rel: 'nofollow' },
+	              'Sign out?'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'listJobs',
+	    value: function listJobs() {
+	      var _this3 = this;
+
+	      return this.props.jobs.map(function (job) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: job.id },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', 'data-toggle': 'collapse', 'data-target': '.navbar-collapse', onClick: function onClick(e) {
+	                return _this3.props.handleJobClick(e, job);
+	              } },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              job.title
+	            )
+	          )
+	        );
+	      });
+	    }
+	  }]);
+
+	  return Nav;
+	}(_react2.default.Component);
+
+	exports.default = Nav;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Sidebar = function (_React$Component) {
+	  _inherits(Sidebar, _React$Component);
+
+	  function Sidebar() {
+	    _classCallCheck(this, Sidebar);
+
+	    return _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).apply(this, arguments));
+	  }
+
+	  _createClass(Sidebar, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-3 col-md-2 sidebar' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'nav nav-sidebar' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#', onClick: function onClick(e) {
+	                  return _this2.props.handleJobClick(e, null);
+	                } },
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Your Jobs'
+	              )
+	            )
+	          ),
+	          this.listJobs(),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#', onClick: function onClick(e) {
+	                  return _this2.props.handleJobClick(e, null);
+	                } },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
+	              ' Add a new job'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'listJobs',
+	    value: function listJobs() {
+	      var _this3 = this;
+
+	      return this.props.jobs.map(function (job) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: job.id },
+	          _react2.default.createElement(
+	            'a',
+	            { href: '#', onClick: function onClick(e) {
+	                return _this3.props.handleJobClick(e, job);
+	              } },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              job.title
+	            )
+	          )
+	        );
+	      });
+	    }
+	  }]);
+
+	  return Sidebar;
+	}(_react2.default.Component);
+
+	exports.default = Sidebar;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var JobForm = function (_React$Component) {
+	  _inherits(JobForm, _React$Component);
+
+	  function JobForm() {
+	    _classCallCheck(this, JobForm);
+
+	    var _this = _possibleConstructorReturn(this, (JobForm.__proto__ || Object.getPrototypeOf(JobForm)).call(this));
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.state = _this.blankState();
+	    return _this;
+	  }
+
+	  _createClass(JobForm, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'form', onSubmit: this.handleSubmit },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group', id: 'title_form' },
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'title',
+	            placeholder: 'Title', value: this.state.title, onChange: this.handleChange })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'input-group', id: 'hourly_rate_group' },
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'input-group-addon', id: 'basic-addon1' },
+	            '$'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'number', min: '0',
+	            step: 'any', name: 'hourly_rate', placeholder: 'Hourly rate',
+	            value: this.state.hourly_rate, onChange: this.handleChange })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'input-group', id: 'tax_rate_group' },
+	          _react2.default.createElement('input', { className: 'form-control', type: 'number', min: '0',
+	            step: 'any', name: 'tax_rate', placeholder: 'Tax rate',
+	            value: this.state.tax_rate, onChange: this.handleChange }),
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'input-group-addon', id: 'basic-addon2' },
+	            '%'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement('input', { className: 'btn btn-primary', id: 'new_job_button', type: 'submit',
+	            disabled: !this.valid(), value: 'Add a new job' })
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'blankState',
+	    value: function blankState() {
+	      return {
+	        title: '',
+	        tax_rate: '',
+	        hourly_rate: ''
+	      };
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      var _this2 = this;
+
+	      e.preventDefault();
+	      $.post('/api/v1/jobs', { job: this.state }, function (data) {
+	        _this2.props.handleNewJob(data);
+	        _this2.setState(_this2.blankState());
+	      }, 'JSON');
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
+	      var name = e.target.name,
+	          obj = {};
+
+	      obj[name] = e.target.value;
+	      this.setState(obj);
+	    }
+	  }, {
+	    key: 'valid',
+	    value: function valid() {
+	      return this.state.title && this.state.tax_rate && this.state.hourly_rate;
+	    }
+	  }]);
+
+	  return JobForm;
+	}(_react2.default.Component);
+
+	exports.default = JobForm;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _job_header_editable = __webpack_require__(177);
+
+	var _job_header_editable2 = _interopRequireDefault(_job_header_editable);
+
+	var _job_header_non_editable = __webpack_require__(178);
+
+	var _job_header_non_editable2 = _interopRequireDefault(_job_header_non_editable);
+
+	var _time_entry_form = __webpack_require__(179);
+
+	var _time_entry_form2 = _interopRequireDefault(_time_entry_form);
+
+	var _time_entry = __webpack_require__(180);
+
+	var _time_entry2 = _interopRequireDefault(_time_entry);
+
+	var _invoice_form = __webpack_require__(183);
+
+	var _invoice_form2 = _interopRequireDefault(_invoice_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Job = function (_React$Component) {
+	  _inherits(Job, _React$Component);
+
+	  function Job() {
+	    _classCallCheck(this, Job);
+
+	    var _this = _possibleConstructorReturn(this, (Job.__proto__ || Object.getPrototypeOf(Job)).call(this));
+
+	    _this.state = {
+	      editable: false,
+	      hideInvoice: true,
+	      hideTimeEntryForm: true,
+	      time_entries: []
+	    };
+	    _this.handleEdit = _this.handleEdit.bind(_this);
+	    _this.cancel = _this.cancel.bind(_this);
+	    _this.showTimeEntryForm = _this.showTimeEntryForm.bind(_this);
+	    _this.handleNewTimeEntry = _this.handleNewTimeEntry.bind(_this);
+	    _this.onInvoiceCreation = _this.onInvoiceCreation.bind(_this);
+	    _this.handleTimeEntryUpdate = _this.handleTimeEntryUpdate.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Job, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      $.getJSON('/api/v1/jobs/' + this.props.job.id + '/time_entries.json', function (response) {
+	        _this2.sortByDateAndSetState(response);
+	      });
+	    }
+	  }, {
+	    key: 'sortByDateAndSetState',
+	    value: function sortByDateAndSetState(timeEntries) {
+	      var sortedByDate = timeEntries.sort(function (timeEntry1, timeEntry2) {
+	        return new Date(timeEntry2.date) - new Date(timeEntry1.date);
+	      });
+	      this.setState({ time_entries: sortedByDate });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.header(),
+	        this.timeEntryForm(),
+	        this.invoice(),
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'sub-header' },
+	          'Time Entries'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'table-responsive' },
+	          _react2.default.createElement(
+	            'table',
+	            { className: 'table table-striped' },
+	            _react2.default.createElement(
+	              'thead',
+	              null,
+	              _react2.default.createElement(
+	                'tr',
+	                null,
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Date'
+	                ),
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Time Spent',
+	                  _react2.default.createElement('br', null),
+	                  '(min)'
+	                ),
+	                _react2.default.createElement(
+	                  'th',
+	                  null,
+	                  'Summary'
+	                ),
+	                _react2.default.createElement('th', null)
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tbody',
+	              null,
+	              this.displayTimeEntries()
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'header',
+	    value: function header() {
+	      if (this.state.editable) {
+	        return _react2.default.createElement(_job_header_editable2.default, { job: this.props.job, handleEdit: this.handleEdit,
+	          cancel: this.cancel, handleDelete: this.props.handleDelete });
+	      }
+	      return _react2.default.createElement(_job_header_non_editable2.default, { job: this.props.job, handleEdit: this.handleEdit,
+	        cancel: this.cancel, handleDelete: this.props.handleDelete });
+	    }
+	  }, {
+	    key: 'handleEdit',
+	    value: function handleEdit(refs) {
+	      if (this.state.editable) {
+	        var title = refs.title.value || 'N/A',
+	            hourly_rate = parseFloat(refs.hourly_rate.value) || 0,
+	            tax_rate = parseFloat(refs.tax_rate.value) || 0,
+	            id = this.props.job.id;
+
+	        var job = { id: id, title: title, hourly_rate: hourly_rate, tax_rate: tax_rate };
+	        this.props.handleUpdate(job);
+	      }
+	      this.setState({ editable: !this.state.editable });
+	    }
+	  }, {
+	    key: 'cancel',
+	    value: function cancel() {
+	      this.setState({ editable: false });
+	    }
+	  }, {
+	    key: 'timeEntryForm',
+	    value: function timeEntryForm() {
+	      var _this3 = this;
+
+	      if (this.state.hideTimeEntryForm) {
+	        return _react2.default.createElement(
+	          'a',
+	          { href: '#', onClick: function onClick(e) {
+	              return _this3.showTimeEntryForm(e);
+	            } },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-plus' }),
+	            'Add A Time Entry'
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(_time_entry_form2.default, { job_id: this.props.job.id, onTimeEntryCreation: this.showTimeEntryForm,
+	        handleNewTimeEntry: this.handleNewTimeEntry });
+	    }
+	  }, {
+	    key: 'showTimeEntryForm',
+	    value: function showTimeEntryForm(e) {
+	      if (e) {
+	        e.preventDefault();
+	      }
+	      this.setState({ hideTimeEntryForm: !this.state.hideTimeEntryForm });
+	    }
+	  }, {
+	    key: 'handleNewTimeEntry',
+	    value: function handleNewTimeEntry(timeEntry) {
+	      var timeEntriesWithNewEntry = this.state.time_entries.concat(timeEntry);
+	      this.sortByDateAndSetState(timeEntriesWithNewEntry);
+	    }
+	  }, {
+	    key: 'invoice',
+	    value: function invoice() {
+	      var _this4 = this;
+
+	      if (this.state.hideInvoice) {
+	        return _react2.default.createElement(
+	          'a',
+	          { href: '#', onClick: function onClick(e) {
+	              return _this4.showInvoice(e);
+	            } },
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            _react2.default.createElement('span', { className: 'glyphicon glyphicon-save' }),
+	            'Create An Invoice'
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(_invoice_form2.default, { job_id: this.props.job.id, onInvoiceCreation: this.onInvoiceCreation });
+	    }
+	  }, {
+	    key: 'showInvoice',
+	    value: function showInvoice(e) {
+	      e.preventDefault();
+	      this.setState({ hideInvoice: false });
+	    }
+	  }, {
+	    key: 'onInvoiceCreation',
+	    value: function onInvoiceCreation(create) {
+	      var _this5 = this;
+
+	      if (create) {
+	        $('#invoice_form').html('<a href="#"><h4>Rendering invoice, please wait...</h4></a>');
+	        this.sleep(7000).then(function () {
+	          _this5.setState({ hideInvoice: true });
+	        });
+	      } else {
+	        this.setState({ hideInvoice: true });
+	      }
+	    }
+	  }, {
+	    key: 'sleep',
+	    value: function sleep(time) {
+	      return new Promise(function (resolve) {
+	        return setTimeout(resolve, time);
+	      });
+	    }
+	  }, {
+	    key: 'displayTimeEntries',
+	    value: function displayTimeEntries() {
+	      if (this.timeEntries().length > 0) {
+	        return this.timeEntries();
+	      }
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'h4',
+	            null,
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'No entries yet!'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement('td', null),
+	        _react2.default.createElement('td', null)
+	      );
+	    }
+	  }, {
+	    key: 'timeEntries',
+	    value: function timeEntries() {
+	      var _this6 = this;
+
+	      return this.state.time_entries.map(function (timeEntry) {
+	        return _react2.default.createElement(_time_entry2.default, { key: timeEntry.id, id: timeEntry.id, time_spent: timeEntry.time_spent,
+	          date: timeEntry.date, summary: timeEntry.summary, handleUpdate: _this6.handleTimeEntryUpdate,
+	          handleDelete: _this6.handleTimeEntryDelete.bind(_this6, timeEntry.id) });
+	      });
+	    }
+	  }, {
+	    key: 'handleTimeEntryUpdate',
+	    value: function handleTimeEntryUpdate(timeEntry) {
+	      var _this7 = this;
+
+	      $.ajax({
+	        url: 'api/v1/jobs/' + this.props.job.id + '/time_entries/' + timeEntry.id,
+	        method: 'PUT',
+	        data: { time_entry: timeEntry },
+	        success: function success() {
+	          _this7.updateTimeEntriesWithNew(timeEntry);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'updateTimeEntriesWithNew',
+	    value: function updateTimeEntriesWithNew(timeEntry) {
+	      var timeEntries = this.state.time_entries.filter(function (oldTimeEntry) {
+	        return oldTimeEntry.id != timeEntry.id;
+	      });
+	      timeEntries.push(timeEntry);
+	      this.sortByDateAndSetState(timeEntries);
+	    }
+	  }, {
+	    key: 'handleTimeEntryDelete',
+	    value: function handleTimeEntryDelete(id) {
+	      var _this8 = this;
+
+	      $.ajax({
+	        url: 'api/v1/jobs/' + this.props.job.id + '/time_entries/' + id,
+	        method: 'DELETE',
+	        dataType: 'JSON',
+	        success: function success() {
+	          _this8.removeDeletedTimeEntry(id);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'removeDeletedTimeEntry',
+	    value: function removeDeletedTimeEntry(id) {
+	      var timeEntriesWithoutOldTimeEntry = this.state.time_entries.filter(function (timeEntry) {
+	        return timeEntry.id != id;
+	      });
+	      this.sortByDateAndSetState(timeEntriesWithoutOldTimeEntry);
+	    }
+	  }]);
+
+	  return Job;
+	}(_react2.default.Component);
+
+	exports.default = Job;
+
+
+	Job.propTypes = {
+	  title: _react2.default.PropTypes.string,
+	  hourlyRate: _react2.default.PropTypes.number,
+	  taxRate: _react2.default.PropTypes.number
+	};
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var JobHeaderEditable = function (_React$Component) {
+	  _inherits(JobHeaderEditable, _React$Component);
+
+	  function JobHeaderEditable() {
+	    _classCallCheck(this, JobHeaderEditable);
+
+	    return _possibleConstructorReturn(this, (JobHeaderEditable.__proto__ || Object.getPrototypeOf(JobHeaderEditable)).apply(this, arguments));
+	  }
+
+	  _createClass(JobHeaderEditable, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'table',
+	          null,
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    'Title: '
+	                  ),
+	                  _react2.default.createElement('input', { className: 'job_edit', id: 'job_edit_title', ref: 'title',
+	                    type: 'text', defaultValue: this.props.job.title })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'btn-group btn-group-xs', role: 'group' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: function onClick() {
+	                        return _this2.props.handleEdit(_this2.refs);
+	                      } },
+	                    'Submit'
+	                  ),
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: this.props.cancel },
+	                    'Cancel'
+	                  ),
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-danger', onClick: this.props.handleDelete.bind(this.props.job.id) },
+	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove' })
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'table',
+	          null,
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Hourly Rate: '
+	                ),
+	                '$',
+	                _react2.default.createElement('input', { className: 'job_edit', id: 'job_edit_hourly', ref: 'hourly_rate', type: 'number',
+	                  min: '0', step: 'any', defaultValue: this.props.job.hourly_rate })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Tax Rate: '
+	                ),
+	                _react2.default.createElement('input', { className: 'job_edit', id: 'job_edit_tax', ref: 'tax_rate', type: 'number',
+	                  min: '0', step: 'any', defaultValue: this.props.job.tax_rate }),
+	                '%'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return JobHeaderEditable;
+	}(_react2.default.Component);
+
+	exports.default = JobHeaderEditable;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var JobHeaderNonEditable = function (_React$Component) {
+	  _inherits(JobHeaderNonEditable, _React$Component);
+
+	  function JobHeaderNonEditable() {
+	    _classCallCheck(this, JobHeaderNonEditable);
+
+	    return _possibleConstructorReturn(this, (JobHeaderNonEditable.__proto__ || Object.getPrototypeOf(JobHeaderNonEditable)).apply(this, arguments));
+	  }
+
+	  _createClass(JobHeaderNonEditable, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'table',
+	          null,
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  _react2.default.createElement(
+	                    'h2',
+	                    { id: 'job_title' },
+	                    this.props.job.title
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'btn-group btn-group-xs', role: 'group' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', onClick: this.props.handleEdit },
+	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+	                  ),
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-danger', onClick: this.props.handleDelete.bind(this.props.job.id) },
+	                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove' })
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'table',
+	          null,
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Hourly Rate: '
+	                ),
+	                '$',
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  this.showAtLeastTwoDecimals(this.props.job.hourly_rate)
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Tax Rate: '
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  this.showAtLeastTwoDecimals(this.props.job.tax_rate)
+	                ),
+	                '%'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'showAtLeastTwoDecimals',
+	    value: function showAtLeastTwoDecimals(num) {
+	      return num.toFixed(Math.max(2, (num.toString().split('.')[1] || []).length));
+	    }
+	  }]);
+
+	  return JobHeaderNonEditable;
+	}(_react2.default.Component);
+
+	exports.default = JobHeaderNonEditable;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TimeEntryForm = function (_React$Component) {
+	  _inherits(TimeEntryForm, _React$Component);
+
+	  function TimeEntryForm() {
+	    _classCallCheck(this, TimeEntryForm);
+
+	    var _this = _possibleConstructorReturn(this, (TimeEntryForm.__proto__ || Object.getPrototypeOf(TimeEntryForm)).call(this));
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.state = _this.blankState();
+	    return _this;
+	  }
+
+	  _createClass(TimeEntryForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      $('#datepicker').datepicker({
+	        format: 'yyyy-mm-dd',
+	        orientation: 'bottom' }).on('changeDate', function (e) {
+	        $('#datepicker').val(e.target.value);
+	        _this2.handleChange(e);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'form-inline', onSubmit: this.handleSubmit },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement('input', { className: 'form-control', type: 'number', min: '0', name: 'time_spent', placeholder: 'Time Spent (min)', value: this.state.time_spent, onChange: this.handleChange })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement('input', { className: 'form-control', id: 'datepicker', type: 'text', name: 'date', placeholder: 'Date', value: this.state.date })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'summary', placeholder: 'Summary', value: this.state.summary, onChange: this.handleChange })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'btn-group', role: 'group' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-primary', disabled: !this.valid() },
+	              'Add Entry'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'btn btn-default', onClick: this.props.onTimeEntryCreation },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'blankState',
+	    value: function blankState() {
+	      return {
+	        time_spent: '',
+	        date: '',
+	        summary: ''
+	      };
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      var _this3 = this;
+
+	      e.preventDefault();
+	      $.post('/api/v1/jobs/' + this.props.job_id + '/time_entries', { time_entry: this.state }, function (data) {
+	        _this3.props.handleNewTimeEntry(data);
+	        _this3.setState(_this3.blankState());
+	        _this3.props.onTimeEntryCreation();
+	      }, 'JSON');
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
+	      var name = e.target.name,
+	          obj = {};
+
+	      obj[name] = e.target.value;
+	      this.setState(obj);
+	    }
+	  }, {
+	    key: 'valid',
+	    value: function valid() {
+	      return this.state.time_spent && this.state.date && this.state.summary;
+	    }
+	  }]);
+
+	  return TimeEntryForm;
+	}(_react2.default.Component);
+
+	exports.default = TimeEntryForm;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _time_entry_editable = __webpack_require__(181);
+
+	var _time_entry_editable2 = _interopRequireDefault(_time_entry_editable);
+
+	var _time_entry_non_editable = __webpack_require__(182);
+
+	var _time_entry_non_editable2 = _interopRequireDefault(_time_entry_non_editable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TimeEntry = function (_React$Component) {
+	  _inherits(TimeEntry, _React$Component);
+
+	  function TimeEntry() {
+	    _classCallCheck(this, TimeEntry);
+
+	    var _this = _possibleConstructorReturn(this, (TimeEntry.__proto__ || Object.getPrototypeOf(TimeEntry)).call(this));
+
+	    _this.handleEdit = _this.handleEdit.bind(_this);
+	    _this.cancel = _this.cancel.bind(_this);
+	    _this.state = {
+	      editable: false
+	    };
+	    return _this;
+	  }
+
+	  _createClass(TimeEntry, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.editable) {
+	        return _react2.default.createElement(_time_entry_editable2.default, { date: this.props.date, time_spent: this.props.time_spent,
+	          summary: this.props.summary, handleEdit: this.handleEdit,
+	          cancel: this.cancel, handleDelete: this.props.handleDelete });
+	      }
+	      return _react2.default.createElement(_time_entry_non_editable2.default, { date: this.props.date, time_spent: this.props.time_spent,
+	        summary: this.props.summary, handleEdit: this.handleEdit,
+	        handleDelete: this.props.handleDelete });
+	    }
+	  }, {
+	    key: 'cancel',
+	    value: function cancel() {
+	      this.setState({ editable: false });
+	    }
+	  }, {
+	    key: 'handleEdit',
+	    value: function handleEdit(refs) {
+	      if (this.state.editable) {
+	        var time_spent = parseInt(refs.time_spent.value) || 0,
+	            date = refs.date.value || '2000-01-01',
+	            summary = refs.summary.value || 'N/A',
+	            id = this.props.id;
+
+	        var time_entry = { id: id, time_spent: time_spent, date: date, summary: summary };
+	        this.props.handleUpdate(time_entry);
+	      }
+	      this.setState({ editable: !this.state.editable });
+	    }
+	  }]);
+
+	  return TimeEntry;
+	}(_react2.default.Component);
+
+	exports.default = TimeEntry;
+
+
+	TimeEntry.propTypes = {
+	  time_spent: _react2.default.PropTypes.number,
+	  date: _react2.default.PropTypes.string,
+	  summary: _react2.default.PropTypes.string
+	};
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TimeEntryEditable = function (_React$Component) {
+	  _inherits(TimeEntryEditable, _React$Component);
+
+	  function TimeEntryEditable() {
+	    _classCallCheck(this, TimeEntryEditable);
+
+	    return _possibleConstructorReturn(this, (TimeEntryEditable.__proto__ || Object.getPrototypeOf(TimeEntryEditable)).apply(this, arguments));
+	  }
+
+	  _createClass(TimeEntryEditable, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('#datepicker_edit').datepicker({
+	        format: 'yyyy-mm-dd',
+	        orientation: 'bottom' }).on('changeDate', function (e) {
+	        $('#datepicker').val(e.target.value);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { className: 'form-control', id: 'datepicker_edit', type: 'text',
+	            ref: 'date', defaultValue: this.props.date })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { className: 'form-control', type: 'number', ref: 'time_spent',
+	            defaultValue: this.props.time_spent })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text', ref: 'summary',
+	            defaultValue: this.props.summary })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-sm btn-default', onClick: function onClick() {
+	                return _this2.props.handleEdit(_this2.refs);
+	              } },
+	            'Submit'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-sm btn-default', onClick: this.props.cancel },
+	            'Cancel'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-sm btn-danger', onClick: this.props.handleDelete },
+	            'Delete'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TimeEntryEditable;
+	}(_react2.default.Component);
+
+	exports.default = TimeEntryEditable;
+
+
+	TimeEntryEditable.propTypes = {
+	  time_spent: _react2.default.PropTypes.number,
+	  date: _react2.default.PropTypes.string,
+	  summary: _react2.default.PropTypes.string
+	};
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TimeEntryNonEditable = function (_React$Component) {
+	  _inherits(TimeEntryNonEditable, _React$Component);
+
+	  function TimeEntryNonEditable() {
+	    _classCallCheck(this, TimeEntryNonEditable);
+
+	    return _possibleConstructorReturn(this, (TimeEntryNonEditable.__proto__ || Object.getPrototypeOf(TimeEntryNonEditable)).apply(this, arguments));
+	  }
+
+	  _createClass(TimeEntryNonEditable, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.date
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.time_spent
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.props.summary
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-sm btn-default', onClick: this.props.handleEdit },
+	            'Edit'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-sm btn-danger', onClick: this.props.handleDelete },
+	            'Delete'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TimeEntryNonEditable;
+	}(_react2.default.Component);
+
+	exports.default = TimeEntryNonEditable;
+
+
+	TimeEntryNonEditable.propTypes = {
+	  time_spent: _react2.default.PropTypes.number,
+	  date: _react2.default.PropTypes.string,
+	  summary: _react2.default.PropTypes.string
+	};
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InvoiceForm = function (_React$Component) {
+	  _inherits(InvoiceForm, _React$Component);
+
+	  function InvoiceForm() {
+	    _classCallCheck(this, InvoiceForm);
+
+	    return _possibleConstructorReturn(this, (InvoiceForm.__proto__ || Object.getPrototypeOf(InvoiceForm)).apply(this, arguments));
+	  }
+
+	  _createClass(InvoiceForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('#invoice_datepicker').datepicker({
+	        format: 'yyyy-mm-dd',
+	        orientation: 'bottom'
+	      }).on('changeDate', function () {
+	        $('#invoice_submit').removeAttr('disabled');
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'invoice_form' },
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'form-inline', action: '/api/v1/invoices', method: 'GET', onSubmit: function onSubmit() {
+	              return _this2.props.onInvoiceCreation(true);
+	            } },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-daterange', id: 'invoice_datepicker' },
+	              _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'invoice[start_date]', placeholder: 'Start Date' }),
+	              _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'invoice[end_date]', placeholder: 'End Date' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement('input', { type: 'hidden', name: 'invoice[job_id]', value: this.props.job_id })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'btn-group', role: 'group' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-primary', id: 'invoice_submit', type: 'submit', disabled: 'true' },
+	                'Download PDF Invoice'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-default', type: 'button', onClick: function onClick() {
+	                    return _this2.props.onInvoiceCreation();
+	                  } },
+	                'Cancel'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return InvoiceForm;
+	}(_react2.default.Component);
+
+	exports.default = InvoiceForm;
 
 /***/ }
 /******/ ]);

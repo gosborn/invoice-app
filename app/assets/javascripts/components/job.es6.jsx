@@ -1,3 +1,5 @@
+import React from './../../../../node_modules/react'
+
 import JobHeaderEditable from './job_header_editable.es6'
 import JobHeaderNonEditable from './job_header_non_editable.es6'
 import TimeEntryForm from './time_entry_form.es6'

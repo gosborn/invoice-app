@@ -1,3 +1,5 @@
+import React from './../../../../node_modules/react'
+
 export default class JobHeaderNonEditable extends React.Component {
 
   render () {
