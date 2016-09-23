@@ -60,8 +60,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	console.log('hello world1');
-
 	_reactDom2.default.render(_react2.default.createElement(_main2.default, { user_email: 'greg' }), document.getElementById('container'));
 
 /***/ },
