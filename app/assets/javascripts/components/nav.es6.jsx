@@ -25,7 +25,7 @@ export default class Nav extends React.Component {
     return (
       <div id='navbar' className='navbar-collapse collapse'>
         <ul className='nav navbar-nav navbar-right'>
-          <li><a href='#'>{this.props.user_email}</a></li>
+          <li><a href='#'>{this.props.userEmail}</a></li>
           <li><a data-method='delete' href='/users/sign_out' rel='nofollow'>Sign out?</a></li>
           <li>
             <a href='#' onClick={(e) => this.props.handleJobClick(e, null)}>
@@ -47,7 +47,7 @@ export default class Nav extends React.Component {
     return (
       <div id='navbar' className='navbar-collapse collapse'>
         <ul className='nav navbar-nav navbar-right'>
-          <li><a href='#'>{this.props.user_email}</a></li>
+          <li><a href='#'>{this.props.userEmail}</a></li>
           <li><a data-method='delete' href='/users/sign_out' rel='nofollow'>Sign out?</a></li>
         </ul>
       </div>

@@ -20,6 +20,7 @@ export default class Main extends React.Component {
 
   componentDidMount() {
     $.getJSON('/api/v1/jobs.json', response => { this.setState({ jobs: response }) })
+    $.getJSON('/api/v1/users.json', response => { this.setState({ userEmail: response.user_email }) })
     window.addEventListener('resize', this.handleResize)
     window.addEventListener('load', this.handleResize)
   }
@@ -31,7 +32,7 @@ export default class Main extends React.Component {
   render () {
     return (
       <div>
-        <Nav small={this.state.small} user_email={this.props.user_email}
+        <Nav small={this.state.small} userEmail={this.state.userEmail}
              jobs={this.state.jobs} handleJobClick={this.handleJobClick} />
         <div>
           <div className='container-fluid'>
