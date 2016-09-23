@@ -1,6 +1,5 @@
 var gulp = require('gulp'),
-webpack = require('gulp-webpack');
-var babel = require('gulp-babel')
+    webpack = require('gulp-webpack');
 
 gulp.task("webpack", function() {
   return gulp.src("app/assets/javascripts/entry.js")
