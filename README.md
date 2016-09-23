@@ -49,7 +49,7 @@ Run `$ ./bin/setup`. This will install all Gemfiles with bundler, install all ne
 Once setup, the app can be run in two ways.
 
 1. Run `$ foreman start`
-  - Foreman is used to run both rails server and a gulptask together. The gulptask watches for any changes to the javascript files that make up the bundle produced by webpack. Therefore, any changes made to these files can be observed by refreshing the browser.
+  - Foreman is used to run both rails server and [gulp](https://github.com/gulpjs/gulp) together. Gulp watches for any changes to the javascript files that make up the bundle produced by webpack. Therefore, any changes made to these files can be observed by refreshing the browser.
 2. Run '$ rails s'
   - This will only run the server, any changes made to the javascript files that make up bundle.js will not be updated in the browser.
 
