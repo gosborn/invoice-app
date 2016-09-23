@@ -2,7 +2,11 @@
 
 ##Implementation Details
 
-This app utilizes Rails and React (specifically the [react-rails gem](https://github.com/reactjs/react-rails)) to store work history and create invoices for users.  
+This app utilizes Rails and React to store work history and create invoices for users.
+
+React, ReactDOM and React Components are managed with [webpack](https://github.com/webpack/webpack).
+
+npm is used to manage React, Webpack and [Babel](https://github.com/babel/babel) javascript dependencies.
 
 The invoices are created with the [wicked_pdf gem](https://github.com/mileszs/wicked_pdf), which interfaces with [wkhtmltopdf](http://wkhtmltopdf.org/) to generate PDFs from html templates.
 
@@ -30,7 +34,7 @@ The app produces invoices for each user, which contain the data of one or more T
   - $ tax (subtotal * tax_rate)
   - $ total
 
-##Running the app
+##Setting up the app
 
 This project requires ruby to be installed. If not, follow directions at https://www.ruby-lang.org/en/documentation/installation/ to install for your machine.
 
@@ -38,11 +42,16 @@ Bundler is also required. Directions for installation are located at: http://bun
 
 Navigate to the directory of the project.
 
-Run `$ bundle install` in the command line to install the dependencies for the project.
+Run `$ ./bin/setup`. This will install all Gemfiles with bundler, install all necessary npm packages (React, ReactDOM, webpack etc), set up the database, and run the application on localhost:3000.
 
-Run pending migrations and seed the database by running `$ rake db:setup` in the command line.
+##Running the app
 
-Via the command line run `$ rails c -p 3000` and visit `localhost:3000` in a web browser.
+Once setup, the app can be run in two ways.
+
+1. Run `$ foreman start`
+  - Foreman is used to run both rails server and a gulptask together. The gulptask watches for any changes to the javascript files that make up the bundle produced by webpack. Therefore, any changes made to these files can be observed by refreshing the browser.
+2. Run '$ rails s'
+  - This will only run the server, any changes made to the javascript files that make up bundle.js will not be updated in the browser.
 
 ###Authentication
 
