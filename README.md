@@ -1,6 +1,6 @@
-#Invoice App
+# Invoice App
 
-##Implementation Details
+## Implementation Details
 
 This app utilizes Rails and React (specifically the [react-rails gem](https://github.com/reactjs/react-rails)) to store work history and create invoices for users.  
 
@@ -8,7 +8,7 @@ The invoices are created with the [wicked_pdf gem](https://github.com/mileszs/wi
 
 The app is mainly styled with [Bootstrap V3](http://getbootstrap.com/) for layouts and responsiveness. [Bootstrap Datepicker](https://github.com/eternicode/bootstrap-datepicker) is used for all date selections.
 
-##Domain Details
+## Domain Details
 
 Each User has:
   - 0 or more jobs with attributes of:
@@ -30,7 +30,7 @@ The app produces invoices for each user, which contain the data of one or more T
   - $ tax (subtotal * tax_rate)
   - $ total
 
-##Running the app
+## Running the app
 
 This project requires ruby to be installed. If not, follow directions at https://www.ruby-lang.org/en/documentation/installation/ to install for your machine.
 
@@ -44,15 +44,15 @@ Run pending migrations and seed the database by running `$ rake db:setup` in the
 
 Via the command line run `$ rails c -p 3000` and visit `localhost:3000` in a web browser.
 
-###Authentication
+### Authentication
 
 The app uses [Devise](https://github.com/plataformatec/devise) for user authentication. To login without creating a new user, use the credentials `user: user@user.com pw: test1234`.
 
-###Code linting
+### Code linting
 
 This project uses [Rubocop](https://github.com/bbatsov/rubocop) to check the style of the code. Run by typing `rubocop` in the directory of the project.
 
-###Testing
+### Testing
 
 This project uses rspec for test cases. Run by typing `rspec` to recursively run all test suites.
 
