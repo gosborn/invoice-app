@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.10'
 gem 'pg'
+gem 'rake', '< 11.0'
+
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -17,6 +19,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'bootstrap-datepicker-rails'
+
+gem 'json', '~> 1.8.5'
 
 group :development, :test do
   gem 'rubocop'
@@ -35,6 +39,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'webmock'
-  gem 'capybara'
+  gem 'capybara', '2.8.1'
   gem 'database_cleaner'
 end
