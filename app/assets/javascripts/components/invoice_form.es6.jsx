@@ -12,7 +12,7 @@ class InvoiceForm extends React.Component {
   render() {
     return (
       <div id='invoice_form'>
-        <form className='form-inline' action='/api/v1/invoices' method='GET' onSubmit={() => this.props.onInvoiceCreation(true)}>
+        <form className='form-inline' action='/api/v1/invoices' method='GET'>
           <div className='form-group'>
             <div className='input-daterange' id='invoice_datepicker'>
               <input className='form-control' type='text' name='invoice[start_date]' placeholder='Start Date' />
